@@ -24,8 +24,29 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TeleportService = game:GetService("TeleportService")
 local UserInputService = game:GetService("UserInputService")
 
-local Cargando = require(script:WaitForChild("Cargando"))
-local anunciarDestino = Cargando.Preparar()
+--[[
+	Cargando es HERMANO de este script, no hijo: rojo mete los dos dentro de la
+	misma ScreenGui. Buscarlo con script:WaitForChild lo dejaba esperando para
+	siempre y el menu no llegaba a construirse.
+
+	Y va con tiempo limite a proposito: la pantalla de teletransporte es un
+	adorno, y un adorno no puede impedir que se vea el menu.
+]]
+local anunciarDestino = function () end
+
+do
+	local modulo = script.Parent:WaitForChild("Cargando", 5)
+	if modulo then
+		local ok, resultado = pcall(function ()
+			return require(modulo).Preparar()
+		end)
+		if ok and type(resultado) == "function" then
+			anunciarDestino = resultado
+		else
+			warn("[Menu] La pantalla de carga fallo: " .. tostring(resultado))
+		end
+	end
+end
 
 local player = Players.LocalPlayer
 local screen = script.Parent
@@ -33,6 +54,9 @@ local screen = script.Parent
 local TOUCH = UserInputService.TouchEnabled and not UserInputService.MouseEnabled
 
 local canal = ReplicatedStorage:WaitForChild("Constructor", 20)
+if not canal then
+	warn("[Menu] No aparecio ReplicatedStorage.Constructor; la galeria no funcionara.")
+end
 local studioId = ReplicatedStorage:WaitForChild("StudioPlaceId", 10)
 local playId = ReplicatedStorage:WaitForChild("PlayPlaceId", 10)
 
