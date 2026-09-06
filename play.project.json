@@ -1,5 +1,5 @@
 {
-	"name": "Bygone Play",
+	"name": "Bygone Arcade",
 	"tree": {
 		"$className": "DataModel",
 		"Workspace": {
@@ -28,13 +28,49 @@
 				],
 				"Brightness": 1,
 				"GlobalShadows": false,
+				"EnvironmentDiffuseScale": 0,
+				"EnvironmentSpecularScale": 0,
 				"ClockTime": 14,
-				"FogEnd": 100000
+				"GeographicLatitude": 41.733242,
+				"FogEnd": 100000,
+				"FogStart": 0
+			}
+		},
+		"Chat": {
+			"$className": "Chat",
+			"$properties": {
+				"LoadDefaultChat": false
+			}
+		},
+		"TextChatService": {
+			"$className": "TextChatService",
+			"$ignoreUnknownInstances": true,
+			"$properties": {
+				"ChatVersion": "TextChatService",
+				"CreateDefaultTextChannels": true
+			}
+		},
+		"Players": {
+			"$className": "Players",
+			"$properties": {
+				"CharacterAutoLoads": false,
+				"RespawnTime": 5
+			}
+		},
+		"ReplicatedFirst": {
+			"$className": "ReplicatedFirst",
+			"$ignoreUnknownInstances": true,
+			"JoinScript": {
+				"$path": "join.client.lua",
+				"UI": {
+					"$path": "UI"
+				}
 			}
 		},
 		"ReplicatedStorage": {
 			"$className": "ReplicatedStorage",
 			"$ignoreUnknownInstances": true,
+			"$path": "Shared",
 			"Serializer": {
 				"$path": "Builder/Shared/Serializer.lua"
 			},
@@ -43,26 +79,82 @@
 				"$properties": {
 					"Value": 119520946831406
 				}
+			},
+			"StudioPlaceId": {
+				"$className": "IntValue",
+				"$properties": {
+					"Value": 103297526789905
+				}
 			}
 		},
 		"ServerStorage": {
 			"$className": "ServerStorage",
 			"$ignoreUnknownInstances": true,
+			"$path": "Server/Resources",
+			"StandardTools": {
+				"$path": "Tools"
+			},
 			"CreationStore": {
 				"$path": "Builder/Server/CreationStore.lua"
+			},
+			"LoadTools": {
+				"$className": "StringValue",
+				"$properties": {
+					"Value": "Reset"
+				}
+			},
+			"LoadLeaderboard": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": false
+				}
+			},
+			"EnableBevels": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": false
+				}
+			},
+			"DevTestMode": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": false
+				}
 			}
 		},
 		"ServerScriptService": {
 			"$className": "ServerScriptService",
 			"$ignoreUnknownInstances": true,
+			"$path": "Server/Scripts",
+			"Bootstrap": {
+				"$path": "Local/Bootstrap.server.lua"
+			},
 			"PlayCreation": {
 				"$path": "Builder/Server/PlayCreation.server.lua"
 			}
 		},
-		"Players": {
-			"$className": "Players",
+		"StarterPlayer": {
+			"$className": "StarterPlayer",
 			"$properties": {
-				"CharacterAutoLoads": false
+				"DevComputerMovementMode": "KeyboardMouse",
+				"DevComputerCameraMovementMode": "Classic",
+				"DevTouchMovementMode": "UserChoice",
+				"DevTouchCameraMovementMode": "Classic",
+				"LoadCharacterAppearance": false,
+				"EnableMouseLockOption": false,
+				"GameSettingsAvatar": "R6",
+				"HealthDisplayDistance": 0,
+				"NameDisplayDistance": 0
+			},
+			"StarterCharacterScripts": {
+				"$className": "StarterCharacterScripts",
+				"$ignoreUnknownInstances": true,
+				"$path": "Player"
+			},
+			"StarterPlayerScripts": {
+				"$className": "StarterPlayerScripts",
+				"$ignoreUnknownInstances": true,
+				"$path": "Client"
 			}
 		}
 	}

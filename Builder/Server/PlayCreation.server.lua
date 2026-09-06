@@ -136,7 +136,16 @@ local function alEntrar(player)
 		return
 	end
 
-	player:LoadCharacter()
+	--[[
+		Quien pide el personaje es la pantalla de carga del motor, a traves de
+		ReplicatedStorage.RequestCharacter. Si lo cargamos tambien aqui, el
+		jugador aparece dos veces y el segundo cuerpo empuja al primero.
+
+		Asi que solo se carga a mano cuando el motor no esta presente.
+	]]
+	if not ReplicatedStorage:FindFirstChild("RequestCharacter") then
+		player:LoadCharacter()
+	end
 end
 
 suelo()

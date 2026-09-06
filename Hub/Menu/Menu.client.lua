@@ -279,12 +279,39 @@ local playBtn = new("TextButton", {
 }, der)
 bisel(playBtn, 13)
 
+-- Gestion de lo propio. Solo salen si la creacion es tuya: el servidor lo
+-- vuelve a comprobar de todas formas, pero no tiene sentido ensenar un boton
+-- que va a ser rechazado.
+local gestion = new("Frame", {
+	Name = "Gestion", BackgroundTransparency = 1, ZIndex = 13, Visible = false,
+	AnchorPoint = Vector2.new(0, 1),
+	Position = UDim2.new(0, 10, 1, -64), Size = UDim2.fromOffset(ANCHO_DER - 20, 34),
+}, der)
+new("UIListLayout", { FillDirection = Enum.FillDirection.Horizontal,
+	Padding = UDim.new(0, 6) }, gestion)
+
+local editBtn = new("TextButton", {
+	Name = "Edit", BackgroundColor3 = FONDO, BorderSizePixel = 1,
+	BorderColor3 = OSCURO, ZIndex = 13, Font = FONT, TextSize = 16,
+	TextColor3 = TEXTO, Text = "Edit", AutoButtonColor = true, LayoutOrder = 1,
+	Size = UDim2.fromOffset(math.floor((ANCHO_DER - 26) / 2), 34),
+}, gestion)
+bisel(editBtn, 13)
+
+local delBtn = new("TextButton", {
+	Name = "Delete", BackgroundColor3 = FONDO, BorderSizePixel = 1,
+	BorderColor3 = OSCURO, ZIndex = 13, Font = FONT, TextSize = 16,
+	TextColor3 = ROJO, Text = "Delete", AutoButtonColor = true, LayoutOrder = 2,
+	Size = UDim2.fromOffset(math.floor((ANCHO_DER - 26) / 2), 34),
+}, gestion)
+bisel(delBtn, 13)
+
 local status = new("TextLabel", {
 	BackgroundTransparency = 1, Font = FONT, TextSize = 12, ZIndex = 13,
 	TextColor3 = TENUE, TextXAlignment = Enum.TextXAlignment.Left,
 	TextWrapped = true, TextYAlignment = Enum.TextYAlignment.Bottom, Text = "",
 	AnchorPoint = Vector2.new(0, 1),
-	Position = UDim2.new(0, 12, 1, -62), Size = UDim2.fromOffset(ANCHO_DER - 24, 38),
+	Position = UDim2.new(0, 12, 1, -104), Size = UDim2.fromOffset(ANCHO_DER - 24, 38),
 }, der)
 
 --------------------------------------------------------------------------------
@@ -379,6 +406,7 @@ local function pintarDetalle()
 		dCifras.Text = ""
 		playBtn.Active = false
 		playBtn.TextColor3 = TENUE
+		gestion.Visible = false
 		status.Text = ""
 		return
 	end
@@ -396,6 +424,8 @@ local function pintarDetalle()
 	dCifras.Text = ("Parts         %d\nPlays         %d\nVisibility    %s")
 		:format(seleccion.partes or 0, seleccion.visitas or 0,
 			seleccion.publicada and "public" or "private")
+
+	gestion.Visible = (seleccion.duenoId == player.UserId)
 
 	local jugable = seleccion.publicada and playId and playId.Value > 0
 	playBtn.Active = jugable and true or false
@@ -712,7 +742,61 @@ playBtn.Activated:Connect(function ()
 	canal.Jugar:FireServer(seleccion.id)
 end)
 
-buildBtn.Activated:Connect(irAlEditor)
+buildBtn.Activated:Connect(function ()
+	if canal then
+		mostrarVelo("Bygone Studios")
+		anunciarDestino("Bygone Studios")
+		canal.Editar:FireServer(nil)
+	else
+		irAlEditor()
+	end
+end)
+
+editBtn.Activated:Connect(function ()
+	if not (seleccion and canal) then return end
+	mostrarVelo("Editing " .. (seleccion.nombre or ""))
+	anunciarDestino("Bygone Studios")
+	canal.Editar:FireServer(seleccion.id)
+end)
+
+-- Borrar pide confirmacion en el propio boton: un dialogo mas para esto es
+-- ceremonia, pero borrar sin preguntar tampoco.
+local confirmandoBorrado = nil
+
+delBtn.Activated:Connect(function ()
+	if not (seleccion and canal) then return end
+
+	if confirmandoBorrado ~= seleccion.id then
+		confirmandoBorrado = seleccion.id
+		delBtn.Text = "Sure? Tap again"
+		task.delay(4, function ()
+			if confirmandoBorrado == seleccion.id then
+				confirmandoBorrado = nil
+				delBtn.Text = "Delete"
+			end
+		end)
+		return
+	end
+
+	confirmandoBorrado = nil
+	delBtn.Text = "Deleting..."
+
+	task.spawn(function ()
+		local ok, r = pcall(function ()
+			return canal.Borrar:InvokeServer(seleccion.id)
+		end)
+		delBtn.Text = "Delete"
+
+		if ok and r and r.ok then
+			status.TextColor3 = TENUE
+			status.Text = "Deleted."
+			cargar(pestana)
+		else
+			status.TextColor3 = ROJO
+			status.Text = (r and r.error) or "Could not delete it."
+		end
+	end)
+end)
 
 -- Si el servidor rechaza el salto, hay que quitar el velo y decir por que.
 if canal then

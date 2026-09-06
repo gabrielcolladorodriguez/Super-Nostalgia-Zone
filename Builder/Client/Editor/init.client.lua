@@ -836,4 +836,36 @@ RunService.RenderStepped:Connect(function (dt)
 end)
 
 api.modo("mover")
+
+--------------------------------------------------------------------------------
+-- Abrir lo que venia en el teletransporte
+--------------------------------------------------------------------------------
+-- Si has llegado desde el menu pulsando "Edit", el identificador viene en los
+-- datos del salto. Se carga solo, sin tener que buscarlo otra vez en Open.
+
+task.spawn(function ()
+	local datos = player:GetJoinData()
+	local id = datos and datos.TeleportData and datos.TeleportData.abrir
+
+	if type(id) ~= "string" or not canal then
+		return
+	end
+
+	local ok, r = pcall(function ()
+		return canal.Cargar:InvokeServer(id)
+	end)
+
+	if ok and r and r.ok then
+		restaurar(r.datos)
+		estado.id = r.meta.id
+		estado.nombre = r.meta.nombre
+		estado.descripcion = r.meta.descripcion or ""
+		estado.sucio = false
+		pintarSeleccion()
+		ui.decir("Opened: " .. r.meta.nombre)
+	else
+		ui.decir((r and r.error) or "Could not open that creation.", true)
+	end
+end)
+
 print("[Bygone Studios] Editor listo.")

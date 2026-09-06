@@ -51,6 +51,10 @@ local Jugar = Instance.new("RemoteEvent")
 Jugar.Name = "Jugar"
 Jugar.Parent = canal
 
+local Editar = Instance.new("RemoteEvent")
+Editar.Name = "Editar"
+Editar.Parent = canal
+
 --------------------------------------------------------------------------------
 -- Ritmo
 --------------------------------------------------------------------------------
@@ -64,6 +68,7 @@ local ESPERA = {
 	Galeria = 3,
 	Borrar = 4,
 	Jugar = 3,
+	Editar = 3,
 }
 
 local function vaMuyRapido(player, accion)
@@ -288,5 +293,54 @@ Jugar.OnServerEvent:Connect(function (player, id)
 	if not ok then
 		warn("[BuilderService] Teleport fallo: " .. tostring(err))
 		Aviso:FireClient(player, "no se pudo entrar, prueba otra vez")
+	end
+end)
+
+
+--------------------------------------------------------------------------------
+-- Abrir una creacion propia en el editor
+--------------------------------------------------------------------------------
+-- Mismo motivo que Jugar: TeleportAsync es de servidor. Y aqui ademas hay que
+-- comprobar el dueno, porque abrir en el editor da permiso de escritura.
+
+local lugarDeEditor = ReplicatedStorage:FindFirstChild("StudioPlaceId")
+
+Editar.OnServerEvent:Connect(function (player, id)
+	local rapido, motivo = vaMuyRapido(player, "Editar")
+	if rapido then
+		Aviso:FireClient(player, motivo)
+		return
+	end
+
+	if not (lugarDeEditor and lugarDeEditor.Value > 0) then
+		Aviso:FireClient(player, "Bygone Studios no esta configurado")
+		return
+	end
+
+	local opciones = Instance.new("TeleportOptions")
+
+	if type(id) == "string" then
+		local entrada = CreationStore.Obtener(id)
+
+		if not entrada then
+			Aviso:FireClient(player, "esa creacion ya no existe")
+			return
+		end
+
+		if entrada.meta.duenoId ~= player.UserId then
+			Aviso:FireClient(player, "solo puedes editar lo tuyo")
+			return
+		end
+
+		opciones:SetTeleportData({ abrir = id })
+	end
+
+	local ok, err = pcall(function ()
+		TeleportService:TeleportAsync(lugarDeEditor.Value, { player }, opciones)
+	end)
+
+	if not ok then
+		warn("[BuilderService] Teleport al editor fallo: " .. tostring(err))
+		Aviso:FireClient(player, "no se pudo abrir el editor, prueba otra vez")
 	end
 end)
