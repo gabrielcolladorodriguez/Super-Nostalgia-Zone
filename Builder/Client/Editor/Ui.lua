@@ -1,20 +1,19 @@
 --!nocheck
 --[[
-	Ui -- la interfaz del editor, con la pinta del Studio de 2008.
+	Ui -- la interfaz de Bygone Studios.
 
-	Vive aparte del editor a proposito: init.client.lua se ocupa de que hace el
-	raton con el mundo, y esto de los paneles. Se hablan por la tabla `api`, que
-	init pasa al crear la interfaz.
+	Regla de colocacion, y no es un capricho: la esquina superior izquierda es
+	del boton de Roblox y del menu del movil. Nada nuestro se ancla ahi. La
+	barra de herramientas va CENTRADA arriba, los paneles a la DERECHA, y los
+	avisos abajo. En tactil la barra baja al pie, que es donde llega el pulgar.
 
-	Cuatro zonas:
-	  arriba      barra de menu: nuevo, abrir, guardar, publicar, salir
-	  izquierda   formas que insertar
-	  derecha     propiedades de lo seleccionado
-	  abajo       contador de partes y avisos
+	Todo esta en `offset` dentro de un contenedor con UIScale, asi que la
+	interfaz entera encoge de golpe en pantallas pequenas sin recolocar nada.
 ]]
 
+local GuiService = game:GetService("GuiService")
 local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
 
 local Ui = {}
 
@@ -31,196 +30,234 @@ function Ui.Crear(api)
 	local UI = api.Palette.UI
 	local Palette = api.Palette
 	local estado = api.estado
+	local TACTIL = api.TACTIL
 	local player = Players.LocalPlayer
 
 	local pantalla = new("ScreenGui", {
-		Name = "BygoneStudio", ResetOnSpawn = false, IgnoreGuiInset = true,
-		ZIndexBehavior = Enum.ZIndexBehavior.Sibling, DisplayOrder = 5000,
+		Name = "BygoneStudios", ResetOnSpawn = false, IgnoreGuiInset = true,
+		ZIndexBehavior = Enum.ZIndexBehavior.Sibling, DisplayOrder = 4000,
 	}, player:WaitForChild("PlayerGui"))
 
-	local function boton(texto, ancho, padre, alLlamar)
+	local raiz = new("Frame", {
+		Name = "Raiz", BackgroundTransparency = 1, Size = UDim2.fromScale(1, 1),
+	}, pantalla)
+
+	local escala = new("UIScale", { Scale = 1 }, raiz)
+
+	local function ajustar()
+		local vp = workspace.CurrentCamera and workspace.CurrentCamera.ViewportSize
+		if not vp or vp.X == 0 then return end
+		-- Por debajo de 900 px de ancho la interfaz encoge; nunca crece de mas.
+		escala.Scale = math.clamp(math.min(vp.X / 1100, vp.Y / 700), 0.62, 1)
+	end
+
+	----------------------------------------------------------------------------
+	-- Piezas basicas
+	----------------------------------------------------------------------------
+
+	local function bisel(marco, hundido)
+		new("Frame", { BackgroundColor3 = hundido and UI.OSCURO or UI.LUZ,
+			BorderSizePixel = 0, Size = UDim2.new(1, 0, 0, 1), ZIndex = marco.ZIndex,
+		}, marco)
+		new("Frame", { BackgroundColor3 = hundido and UI.LUZ or UI.OSCURO,
+			BorderSizePixel = 0, Size = UDim2.new(1, 0, 0, 1),
+			Position = UDim2.new(0, 0, 1, -1), ZIndex = marco.ZIndex,
+		}, marco)
+	end
+
+	local function boton(texto, ancho, alto, padre, alPulsar)
 		local b = new("TextButton", {
 			BackgroundColor3 = UI.FONDO, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
-			Font = UI.FUENTE, TextSize = 15, TextColor3 = UI.TEXTO, Text = texto,
-			AutoButtonColor = true, Size = UDim2.fromOffset(ancho, 26),
+			Font = UI.FUENTE, TextSize = TACTIL and 15 or 14, TextColor3 = UI.TEXTO,
+			Text = texto, AutoButtonColor = true,
+			Size = UDim2.fromOffset(ancho, alto or (TACTIL and 34 or 26)),
 		}, padre)
-		if alLlamar then
-			b.Activated:Connect(alLlamar)
+		bisel(b)
+		if alPulsar then
+			b.Activated:Connect(alPulsar)
 		end
 		return b
 	end
 
+	local function panel(nombre, ancho, alto, padre)
+		local p = new("Frame", {
+			Name = nombre, BackgroundColor3 = UI.FONDO, BorderSizePixel = 1,
+			BorderColor3 = UI.OSCURO, Size = UDim2.fromOffset(ancho, alto),
+		}, padre)
+		bisel(p)
+
+		new("TextLabel", {
+			BackgroundColor3 = UI.TITULO, BorderSizePixel = 0, Font = UI.FUENTE,
+			TextSize = 13, TextColor3 = UI.BLANCO, Text = " " .. nombre,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			Size = UDim2.new(1, -2, 0, 20), Position = UDim2.fromOffset(1, 1),
+		}, p)
+
+		local cuerpo = new("Frame", {
+			Name = "Cuerpo", BackgroundTransparency = 1,
+			Position = UDim2.fromOffset(5, 24), Size = UDim2.new(1, -10, 1, -29),
+		}, p)
+
+		return p, cuerpo
+	end
+
 	----------------------------------------------------------------------------
-	-- Aviso de abajo
+	-- Aviso
 	----------------------------------------------------------------------------
 
 	local aviso = new("TextLabel", {
-		BackgroundColor3 = UI.FONDO, BackgroundTransparency = 1, BorderSizePixel = 0,
-		Font = UI.FUENTE, TextSize = 15, TextColor3 = UI.TEXTO, Text = "",
-		TextXAlignment = Enum.TextXAlignment.Center,
-		AnchorPoint = Vector2.new(0.5, 1),
-		Position = UDim2.new(0.5, 0, 1, -42), Size = UDim2.fromOffset(560, 26),
-	}, pantalla)
+		BackgroundColor3 = UI.FONDO, BackgroundTransparency = 1, BorderSizePixel = 1,
+		BorderColor3 = UI.OSCURO, Font = UI.FUENTE, TextSize = 15,
+		TextColor3 = UI.TEXTO, Text = "", AnchorPoint = Vector2.new(0.5, 1),
+		Position = UDim2.new(0.5, 0, 1, -54), Size = UDim2.fromOffset(520, 28),
+		Visible = false,
+	}, raiz)
 
-	local avisoToken = 0
-
+	local token = 0
 	local function decir(texto, malo)
-		avisoToken += 1
-		local mio = avisoToken
-
+		token += 1
+		local mio = token
 		aviso.Text = texto
-		aviso.TextColor3 = malo and Color3.fromRGB(150, 40, 40) or UI.TEXTO
-		aviso.BackgroundTransparency = 0.15
-
-		task.delay(4, function ()
-			if avisoToken == mio then
-				aviso.Text = ""
-				aviso.BackgroundTransparency = 1
-			end
+		aviso.TextColor3 = malo and UI.PELIGRO or UI.TEXTO
+		aviso.BackgroundTransparency = 0.05
+		aviso.Visible = true
+		task.delay(4.5, function ()
+			if token == mio then aviso.Visible = false end
 		end)
 	end
 
 	----------------------------------------------------------------------------
-	-- Barra superior
+	-- Barra principal: CENTRADA arriba, o abajo en tactil
 	----------------------------------------------------------------------------
 
 	local barra = new("Frame", {
-		Name = "Barra", BackgroundColor3 = UI.TITULO, BorderSizePixel = 0,
-		Size = UDim2.new(1, 0, 0, 32),
-	}, pantalla)
+		Name = "Barra", BackgroundColor3 = UI.FONDO, BorderSizePixel = 1,
+		BorderColor3 = UI.OSCURO, AnchorPoint = Vector2.new(0.5, 0),
+		Position = TACTIL and UDim2.new(0.5, 0, 1, -62)
+			or UDim2.new(0.5, 0, 0, UI.MARGEN_SUPERIOR - 46),
+		Size = UDim2.fromOffset(TACTIL and 660 or 720, TACTIL and 46 or 38),
+	}, raiz)
+	bisel(barra)
 
+	if TACTIL then
+		barra.AnchorPoint = Vector2.new(0.5, 1)
+		barra.Position = UDim2.new(0.5, 0, 1, -10)
+	end
+
+	local filaBarra = new("Frame", {
+		BackgroundTransparency = 1, Position = UDim2.fromOffset(6, 5),
+		Size = UDim2.new(1, -12, 1, -10),
+	}, barra)
 	new("UIListLayout", {
 		FillDirection = Enum.FillDirection.Horizontal, Padding = UDim.new(0, 4),
 		VerticalAlignment = Enum.VerticalAlignment.Center,
-	}, barra)
-	new("UIPadding", { PaddingLeft = UDim.new(0, 6) }, barra)
-
-	local titulo = new("TextLabel", {
-		BackgroundTransparency = 1, Font = UI.FUENTE, TextSize = 16,
-		TextColor3 = Color3.fromRGB(245, 245, 245),
-		TextXAlignment = Enum.TextXAlignment.Left,
-		Text = "  Bygone Studio", Size = UDim2.fromOffset(190, 26), LayoutOrder = 0,
-	}, barra)
+	}, filaBarra)
 
 	----------------------------------------------------------------------------
 	-- Dialogos
 	----------------------------------------------------------------------------
 
-	local function dialogo(tituloTexto, alto)
+	local function dialogo(titulo, ancho, alto)
 		local fondo = new("Frame", {
-			BackgroundColor3 = Color3.new(0, 0, 0), BackgroundTransparency = 0.5,
-			BorderSizePixel = 0, Size = UDim2.fromScale(1, 1), ZIndex = 50,
+			BackgroundColor3 = Color3.new(0, 0, 0), BackgroundTransparency = 0.55,
+			BorderSizePixel = 0, Size = UDim2.fromScale(1, 1), ZIndex = 60,
 			Visible = false,
-		}, pantalla)
+		}, raiz)
 
 		local caja = new("Frame", {
-			BackgroundColor3 = UI.FONDO, BorderSizePixel = 0, ZIndex = 51,
-			AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.5),
-			Size = UDim2.fromOffset(460, alto),
+			BackgroundColor3 = UI.FONDO, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
+			ZIndex = 61, AnchorPoint = Vector2.new(0.5, 0.5),
+			Position = UDim2.fromScale(0.5, 0.5), Size = UDim2.fromOffset(ancho, alto),
 		}, fondo)
+		bisel(caja)
 
 		local cabecera = new("Frame", {
-			BackgroundColor3 = UI.TITULO, BorderSizePixel = 0, ZIndex = 52,
-			Size = UDim2.new(1, -2, 0, 26), Position = UDim2.fromOffset(1, 1),
+			BackgroundColor3 = UI.TITULO, BorderSizePixel = 0, ZIndex = 62,
+			Size = UDim2.new(1, -2, 0, 24), Position = UDim2.fromOffset(1, 1),
 		}, caja)
 
 		new("TextLabel", {
-			BackgroundTransparency = 1, Font = UI.FUENTE, TextSize = 16, ZIndex = 53,
-			TextColor3 = Color3.fromRGB(245, 245, 245),
-			TextXAlignment = Enum.TextXAlignment.Left,
-			Text = "  " .. tituloTexto, Size = UDim2.new(1, -30, 1, 0),
+			BackgroundTransparency = 1, Font = UI.FUENTE, TextSize = 15, ZIndex = 63,
+			TextColor3 = UI.BLANCO, TextXAlignment = Enum.TextXAlignment.Left,
+			Text = "  " .. titulo, Size = UDim2.new(1, -30, 1, 0),
 		}, cabecera)
 
 		local cerrar = new("TextButton", {
-			BackgroundColor3 = UI.FONDO, BorderSizePixel = 0, ZIndex = 53,
-			Font = UI.FUENTE, TextSize = 16, TextColor3 = UI.TEXTO, Text = "X",
-			Size = UDim2.fromOffset(24, 20), Position = UDim2.new(1, -27, 0, 3),
+			BackgroundColor3 = UI.FONDO, BorderSizePixel = 0, ZIndex = 63,
+			Font = UI.FUENTE, TextSize = 15, TextColor3 = UI.TEXTO, Text = "X",
+			Size = UDim2.fromOffset(22, 18), Position = UDim2.new(1, -25, 0, 3),
 		}, cabecera)
 		cerrar.Activated:Connect(function () fondo.Visible = false end)
 
 		return fondo, caja
 	end
 
+	local function campo(marcador, ancho, alto, padre, y, multi)
+		local c = new("TextBox", {
+			BackgroundColor3 = Color3.fromRGB(246, 246, 246), BorderSizePixel = 1,
+			BorderColor3 = UI.OSCURO, ZIndex = 62, Font = UI.FUENTE, TextSize = 14,
+			TextColor3 = UI.TEXTO, PlaceholderText = marcador, Text = "",
+			TextXAlignment = Enum.TextXAlignment.Left,
+			TextYAlignment = multi and Enum.TextYAlignment.Top
+				or Enum.TextYAlignment.Center,
+			MultiLine = multi or false, ClearTextOnFocus = false,
+			Size = UDim2.fromOffset(ancho, alto), Position = UDim2.fromOffset(14, y),
+		}, padre)
+		new("UIPadding", { PaddingLeft = UDim.new(0, 6), PaddingTop = UDim.new(0, 3) }, c)
+		return c
+	end
+
 	----------------------------------------------------------------------------
-	-- Guardar y publicar
+	-- Guardar
 	----------------------------------------------------------------------------
 
-	local fondoGuardar, cajaGuardar = dialogo("Save creation", 250)
+	local fondoGuardar, cajaGuardar = dialogo("Save creation", 470, 262)
+	local campoNombre = campo("Name", 440, 28, cajaGuardar, 40)
+	local campoDesc = campo("Description (optional)", 440, 74, cajaGuardar, 76, true)
 
-	local campoNombre = new("TextBox", {
-		BackgroundColor3 = Color3.fromRGB(240, 240, 240), BorderSizePixel = 1,
-		BorderColor3 = UI.OSCURO, ZIndex = 52, Font = UI.FUENTE, TextSize = 15,
-		TextColor3 = UI.TEXTO, PlaceholderText = "Name", Text = "",
-		TextXAlignment = Enum.TextXAlignment.Left, ClearTextOnFocus = false,
-		Size = UDim2.new(1, -24, 0, 28), Position = UDim2.fromOffset(12, 46),
-	}, cajaGuardar)
-	new("UIPadding", { PaddingLeft = UDim.new(0, 6) }, campoNombre)
-
-	local campoDesc = new("TextBox", {
-		BackgroundColor3 = Color3.fromRGB(240, 240, 240), BorderSizePixel = 1,
-		BorderColor3 = UI.OSCURO, ZIndex = 52, Font = UI.FUENTE, TextSize = 14,
-		TextColor3 = UI.TEXTO, PlaceholderText = "Description (optional)", Text = "",
-		TextXAlignment = Enum.TextXAlignment.Left,
-		TextYAlignment = Enum.TextYAlignment.Top, MultiLine = true,
-		ClearTextOnFocus = false,
-		Size = UDim2.new(1, -24, 0, 70), Position = UDim2.fromOffset(12, 82),
-	}, cajaGuardar)
-	new("UIPadding", { PaddingLeft = UDim.new(0, 6), PaddingTop = UDim.new(0, 4) },
-		campoDesc)
-
-	local publicarMarcado = false
-	local btnPublicar = boton("[ ] Publish to the gallery", 240, cajaGuardar)
-	btnPublicar.Position = UDim2.fromOffset(12, 162)
-	btnPublicar.ZIndex = 52
+	local publicar = false
+	local btnPublicar = boton("[  ]  Publish to the gallery", 250, 28, cajaGuardar)
+	btnPublicar.Position = UDim2.fromOffset(14, 160)
+	btnPublicar.ZIndex = 62
 	btnPublicar.TextXAlignment = Enum.TextXAlignment.Left
 	btnPublicar.Activated:Connect(function ()
-		publicarMarcado = not publicarMarcado
-		btnPublicar.Text = (publicarMarcado and "[x]" or "[ ]")
-			.. " Publish to the gallery"
+		publicar = not publicar
+		btnPublicar.Text = (publicar and "[X]" or "[  ]") .. "  Publish to the gallery"
+		btnPublicar.BackgroundColor3 = publicar and UI.SELECCION or UI.FONDO
+		btnPublicar.TextColor3 = publicar and UI.BLANCO or UI.TEXTO
 	end)
 
 	local guardando = false
+	local btnGuardar = boton("Save", 130, 32, cajaGuardar)
+	btnGuardar.Position = UDim2.fromOffset(14, 200)
+	btnGuardar.ZIndex = 62
 
-	local btnConfirmar = boton("Save", 120, cajaGuardar)
-	btnConfirmar.Position = UDim2.fromOffset(12, 200)
-	btnConfirmar.ZIndex = 52
-
-	btnConfirmar.Activated:Connect(function ()
-		if guardando then
-			return
-		end
-
-		local partes = api.contarPartes()
-		if partes == 0 then
+	btnGuardar.Activated:Connect(function ()
+		if guardando then return end
+		if api.contarPartes() == 0 then
 			decir("There is nothing to save yet.", true)
 			return
 		end
 
 		guardando = true
-		btnConfirmar.Text = "Saving..."
-
-		local datos = api.instantanea()
-		local peticion = {
-			id = estado.id,
-			nombre = campoNombre.Text,
-			descripcion = campoDesc.Text,
-			datos = datos,
-			publicar = publicarMarcado,
-		}
+		btnGuardar.Text = "Saving..."
 
 		local ok, respuesta = pcall(function ()
-			return api.canal.Guardar:InvokeServer(peticion)
+			return api.canal.Guardar:InvokeServer({
+				id = estado.id,
+				nombre = campoNombre.Text,
+				descripcion = campoDesc.Text,
+				datos = api.instantanea(),
+				publicar = publicar,
+			})
 		end)
 
 		guardando = false
-		btnConfirmar.Text = "Save"
+		btnGuardar.Text = "Save"
 
 		if not ok then
 			decir("The server did not answer. Try again.", true)
-			return
-		end
-
-		if respuesta and respuesta.ok then
+		elseif respuesta and respuesta.ok then
 			estado.id = respuesta.id
 			estado.nombre = campoNombre.Text
 			estado.sucio = false
@@ -241,72 +278,68 @@ function Ui.Crear(api)
 	-- Abrir
 	----------------------------------------------------------------------------
 
-	local fondoAbrir, cajaAbrir = dialogo("My creations", 340)
+	local fondoAbrir, cajaAbrir = dialogo("My creations", 470, 340)
 
 	local lista = new("ScrollingFrame", {
-		BackgroundColor3 = UI.PANEL, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
-		ZIndex = 52, Size = UDim2.new(1, -24, 1, -80),
-		Position = UDim2.fromOffset(12, 40),
-		CanvasSize = UDim2.new(), AutomaticCanvasSize = Enum.AutomaticSize.Y,
-		ScrollBarThickness = 10,
+		BackgroundColor3 = UI.HUECO, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
+		ZIndex = 62, Size = UDim2.new(1, -28, 1, -46),
+		Position = UDim2.fromOffset(14, 32), CanvasSize = UDim2.new(),
+		AutomaticCanvasSize = Enum.AutomaticSize.Y, ScrollBarThickness = 10,
 	}, cajaAbrir)
 	new("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder }, lista)
 
-	local function pintarLista(fichas)
-		for _, hijo in ipairs(lista:GetChildren()) do
-			if hijo:IsA("TextButton") then hijo:Destroy() end
+	local function pintarLista(fichas, vacio)
+		for _, h in ipairs(lista:GetChildren()) do
+			if not h:IsA("UIListLayout") then h:Destroy() end
 		end
 
 		if #fichas == 0 then
-			local vacio = new("TextLabel", {
-				BackgroundTransparency = 1, Font = UI.FUENTE, TextSize = 15,
-				TextColor3 = UI.TENUE, ZIndex = 53,
-				Text = "  You have not saved anything yet.",
+			new("TextLabel", {
+				BackgroundTransparency = 1, Font = UI.FUENTE, TextSize = 14,
+				TextColor3 = UI.TENUE, ZIndex = 63, Text = "  " .. vacio,
 				TextXAlignment = Enum.TextXAlignment.Left,
-				Size = UDim2.new(1, 0, 0, 28),
+				Size = UDim2.new(1, 0, 0, 30),
 			}, lista)
-			vacio.Name = "Vacio"
 			return
 		end
 
 		for i, ficha in ipairs(fichas) do
 			local fila = new("TextButton", {
 				BackgroundColor3 = UI.SELECCION, BackgroundTransparency = 1,
-				BorderSizePixel = 0, ZIndex = 53, LayoutOrder = i,
-				Font = UI.FUENTE, TextSize = 15, TextColor3 = UI.TEXTO,
-				TextXAlignment = Enum.TextXAlignment.Left, AutoButtonColor = false,
-				Text = ("  %s"):format(ficha.nombre),
-				Size = UDim2.new(1, -6, 0, 28),
+				BorderSizePixel = 0, ZIndex = 63, LayoutOrder = i, Font = UI.FUENTE,
+				TextSize = 15, TextColor3 = UI.TEXTO, AutoButtonColor = false,
+				TextXAlignment = Enum.TextXAlignment.Left,
+				Text = "  " .. (ficha.nombre or "Untitled"),
+				Size = UDim2.new(1, -6, 0, TACTIL and 34 or 26),
 			}, lista)
 
 			new("TextLabel", {
 				BackgroundTransparency = 1, Font = UI.FUENTE, TextSize = 13,
-				TextColor3 = UI.TENUE, ZIndex = 53,
+				TextColor3 = UI.TENUE, ZIndex = 63,
 				TextXAlignment = Enum.TextXAlignment.Right,
 				Text = ("%d parts%s  "):format(ficha.partes or 0,
-					ficha.publicada and "  ·  published" or ""),
-				Size = UDim2.new(0, 180, 1, 0), Position = UDim2.new(1, -180, 0, 0),
+					ficha.publicada and "  published" or ""),
+				Size = UDim2.new(0, 170, 1, 0), Position = UDim2.new(1, -170, 0, 0),
 			}, fila)
 
-			fila.MouseEnter:Connect(function () fila.BackgroundTransparency = 0.7 end)
+			fila.MouseEnter:Connect(function () fila.BackgroundTransparency = 0.72 end)
 			fila.MouseLeave:Connect(function () fila.BackgroundTransparency = 1 end)
 
 			fila.Activated:Connect(function ()
-				local ok, respuesta = pcall(function ()
+				local ok, r = pcall(function ()
 					return api.canal.Cargar:InvokeServer(ficha.id)
 				end)
-
-				if ok and respuesta and respuesta.ok then
+				if ok and r and r.ok then
 					api.apuntar()
-					api.restaurar(respuesta.datos)
-					estado.id = respuesta.meta.id
-					estado.nombre = respuesta.meta.nombre
-					estado.descripcion = respuesta.meta.descripcion or ""
+					api.restaurar(r.datos)
+					estado.id = r.meta.id
+					estado.nombre = r.meta.nombre
+					estado.descripcion = r.meta.descripcion or ""
 					estado.sucio = false
 					fondoAbrir.Visible = false
-					decir(("Opened: %s"):format(respuesta.meta.nombre))
+					decir("Opened: " .. r.meta.nombre)
 				else
-					decir((respuesta and respuesta.error) or "Could not open it.", true)
+					decir((r and r.error) or "Could not open it.", true)
 				end
 			end)
 		end
@@ -314,112 +347,277 @@ function Ui.Crear(api)
 
 	local function abrirAbrir()
 		fondoAbrir.Visible = true
-		pintarLista({})
-
+		pintarLista({}, "Loading...")
 		task.spawn(function ()
-			local ok, respuesta = pcall(function ()
+			local ok, r = pcall(function ()
 				return api.canal.MisCreaciones:InvokeServer()
 			end)
-
-			if ok and respuesta and respuesta.ok then
-				pintarLista(respuesta.fichas)
+			if ok and r and r.ok then
+				pintarLista(r.fichas, "You have not saved anything yet.")
 			else
-				decir((respuesta and respuesta.error) or "Could not read the list.", true)
+				pintarLista({}, (r and r.error) or "Could not read the list.")
 			end
 		end)
 	end
 
 	----------------------------------------------------------------------------
+	-- Insertar por identificador de asset
+	----------------------------------------------------------------------------
+
+	local fondoAsset, cajaAsset = dialogo("Insert from an asset ID", 470, 250)
+
+	new("TextLabel", {
+		BackgroundTransparency = 1, Font = UI.FUENTE, TextSize = 13, ZIndex = 62,
+		TextColor3 = UI.TENUE, TextXAlignment = Enum.TextXAlignment.Left,
+		TextWrapped = true,
+		Text = "Paste a Roblox mesh, image or decal ID. Only public assets load;"
+			.. " Roblox blocks anything private to another account.",
+		Size = UDim2.fromOffset(440, 34), Position = UDim2.fromOffset(14, 32),
+	}, cajaAsset)
+
+	local campoAsset = campo("rbxassetid://... or just the number", 440, 28,
+	                         cajaAsset, 72)
+	local campoTextura = campo("Texture ID (optional, for meshes)", 440, 28,
+	                           cajaAsset, 108)
+
+	local function normalizarId(texto)
+		local numero = tostring(texto):match("%d+")
+		return numero and ("rbxassetid://" .. numero) or nil
+	end
+
+	local function aplicarAsset(tipo)
+		local id = normalizarId(campoAsset.Text)
+		if not id then
+			decir("That does not look like an asset ID.", true)
+			return
+		end
+		if #estado.seleccion == 0 then
+			decir("Select a part first.", true)
+			return
+		end
+
+		if tipo == "malla" then
+			local textura = normalizarId(campoTextura.Text) or ""
+			api.aplicar(function (p) api.Extras.Malla(p, id, textura) end)
+			decir("Mesh applied to " .. #estado.seleccion .. " part(s).")
+		else
+			api.aplicar(function (p) api.Extras.Calcomania(p, id) end)
+			decir("Decal applied to " .. #estado.seleccion .. " part(s).")
+		end
+		fondoAsset.Visible = false
+	end
+
+	boton("Apply as mesh", 160, 30, cajaAsset, function () aplicarAsset("malla") end)
+		.Position = UDim2.fromOffset(14, 152)
+	boton("Apply as decal", 160, 30, cajaAsset, function () aplicarAsset("calco") end)
+		.Position = UDim2.fromOffset(182, 152)
+
+	for _, b in ipairs(cajaAsset:GetChildren()) do
+		if b:IsA("TextButton") then b.ZIndex = 62 end
+	end
+
+	----------------------------------------------------------------------------
+	-- Cartel
+	----------------------------------------------------------------------------
+
+	local fondoCartel, cajaCartel = dialogo("Put a sign on it", 470, 200)
+	local campoCartel = campo("Sign text", 440, 28, cajaCartel, 44)
+
+	local caraElegida = Enum.NormalId.Front
+	local filaCaras = new("Frame", {
+		BackgroundTransparency = 1, ZIndex = 62,
+		Position = UDim2.fromOffset(14, 82), Size = UDim2.fromOffset(440, 30),
+	}, cajaCartel)
+	new("UIListLayout", { FillDirection = Enum.FillDirection.Horizontal,
+		Padding = UDim.new(0, 4) }, filaCaras)
+
+	local botonesCara = {}
+	for _, cara in ipairs({ "Front", "Back", "Top", "Left", "Right" }) do
+		local b = boton(cara, 84, 26, filaCaras, nil)
+		b.ZIndex = 62
+		botonesCara[cara] = b
+		b.Activated:Connect(function ()
+			caraElegida = Enum.NormalId[cara]
+			for nombre, otro in pairs(botonesCara) do
+				otro.BackgroundColor3 = (nombre == cara) and UI.SELECCION or UI.FONDO
+				otro.TextColor3 = (nombre == cara) and UI.BLANCO or UI.TEXTO
+			end
+		end)
+	end
+	botonesCara.Front.BackgroundColor3 = UI.SELECCION
+	botonesCara.Front.TextColor3 = UI.BLANCO
+
+	local btnCartel = boton("Add sign", 150, 30, cajaCartel, function ()
+		if #estado.seleccion == 0 then
+			decir("Select a part first.", true)
+			return
+		end
+		local texto = campoCartel.Text
+		if #texto == 0 then
+			decir("Write something on it first.", true)
+			return
+		end
+		api.aplicar(function (p) api.Extras.Cartel(p, texto, caraElegida) end)
+		fondoCartel.Visible = false
+		decir("Sign added.")
+	end)
+	btnCartel.Position = UDim2.fromOffset(14, 126)
+	btnCartel.ZIndex = 62
+
+	----------------------------------------------------------------------------
 	-- Botones de la barra
 	----------------------------------------------------------------------------
 
-	boton("New", 60, barra, function ()
+	local orden = 0
+	local function enBarra(texto, ancho, fn)
+		orden += 1
+		local b = boton(texto, ancho, nil, filaBarra, fn)
+		b.LayoutOrder = orden
+		return b
+	end
+
+	local botonesModo = {}
+
+	local function refrescarModo()
+		for modo, b in pairs(botonesModo) do
+			local activo = (estado.modo == modo)
+			b.BackgroundColor3 = activo and UI.SELECCION or UI.FONDO
+			b.TextColor3 = activo and UI.BLANCO or UI.TEXTO
+		end
+	end
+
+	for _, par in ipairs({ { "Move", "mover" }, { "Rotate", "girar" },
+	                       { "Scale", "escalar" } }) do
+		local b = enBarra(par[1], 64, function ()
+			api.modo(par[2])
+			refrescarModo()
+		end)
+		botonesModo[par[2]] = b
+	end
+
+	enBarra("|", 8, nil).Active = false
+
+	enBarra("New", 54, function ()
 		api.vaciar()
 		estado.id = nil
 		estado.nombre = "Untitled"
 		estado.descripcion = ""
 		decir("New creation.")
-	end).LayoutOrder = 1
+	end)
+	enBarra("Open", 58, abrirAbrir)
+	enBarra("Save", 58, abrirGuardar)
 
-	boton("Open", 60, barra, abrirAbrir).LayoutOrder = 2
-	boton("Save", 60, barra, abrirGuardar).LayoutOrder = 3
-	boton("Undo", 60, barra, api.deshacer).LayoutOrder = 4
-	boton("Redo", 60, barra, api.rehacer).LayoutOrder = 5
+	enBarra("|", 8, nil).Active = false
 
-	boton("Exit", 60, barra, function ()
+	enBarra("Undo", 58, api.deshacer)
+	enBarra("Redo", 58, api.rehacer)
+
+	enBarra("|", 8, nil).Active = false
+
+	enBarra("Exit", 54, function ()
 		local hub = game:GetService("ReplicatedStorage"):FindFirstChild("HubPlaceId")
 		if hub and hub.Value > 0 then
 			pcall(function ()
 				game:GetService("TeleportService"):Teleport(hub.Value, player)
 			end)
 		end
-	end).LayoutOrder = 6
+	end)
 
 	----------------------------------------------------------------------------
-	-- Panel de formas
+	-- Panel de insertar (derecha, arriba)
 	----------------------------------------------------------------------------
 
-	local panelFormas = new("Frame", {
-		Name = "Formas", BackgroundColor3 = UI.FONDO, BorderSizePixel = 1,
-		BorderColor3 = UI.OSCURO,
-		Position = UDim2.fromOffset(8, 42), Size = UDim2.fromOffset(104, 300),
-	}, pantalla)
+	local ladoDerecho = new("Frame", {
+		Name = "LadoDerecho", BackgroundTransparency = 1,
+		AnchorPoint = Vector2.new(1, 0),
+		Position = UDim2.new(1, -10, 0, UI.MARGEN_SUPERIOR),
+		Size = UDim2.fromOffset(250, 640), Visible = not TACTIL,
+	}, raiz)
 
-	new("TextLabel", {
-		BackgroundColor3 = UI.TITULO, BorderSizePixel = 0, Font = UI.FUENTE,
-		TextSize = 14, TextColor3 = Color3.fromRGB(245, 245, 245), Text = "Insert",
-		Size = UDim2.new(1, 0, 0, 22),
-	}, panelFormas)
+	local pInsertar, cInsertar = panel("Insert", 250, 176, ladoDerecho)
 
-	local listaFormas = new("Frame", {
-		BackgroundTransparency = 1, Position = UDim2.fromOffset(4, 26),
-		Size = UDim2.new(1, -8, 1, -30),
-	}, panelFormas)
-	new("UIListLayout", { Padding = UDim.new(0, 3) }, listaFormas)
+	local rejillaFormas = new("Frame", {
+		BackgroundTransparency = 1, Size = UDim2.fromScale(1, 1),
+	}, cInsertar)
+	new("UIGridLayout", {
+		CellSize = UDim2.fromOffset(76, 26), CellPadding = UDim2.fromOffset(4, 4),
+		SortOrder = Enum.SortOrder.LayoutOrder,
+	}, rejillaFormas)
 
 	local botonesForma = {}
-
 	for i, forma in ipairs(Palette.FORMAS) do
-		local b = boton(forma.nombre, 96, listaFormas)
-		b.LayoutOrder = i
+		local b = new("TextButton", {
+			BackgroundColor3 = UI.PANEL, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
+			Font = UI.FUENTE, TextSize = 13, TextColor3 = UI.TEXTO,
+			Text = forma.nombre, AutoButtonColor = true, LayoutOrder = i,
+		}, rejillaFormas)
 		botonesForma[i] = b
 
 		b.Activated:Connect(function ()
 			estado.forma = i
 			for j, otro in ipairs(botonesForma) do
-				otro.BackgroundColor3 = (j == i) and UI.SELECCION or UI.FONDO
+				otro.BackgroundColor3 = (j == i) and UI.SELECCION or UI.PANEL
 				otro.TextColor3 = (j == i) and UI.BLANCO or UI.TEXTO
 			end
-			api.colocar()
+			local _, err = api.colocar()
+			if err then decir(err, true) end
 		end)
 	end
-
 	botonesForma[1].BackgroundColor3 = UI.SELECCION
 	botonesForma[1].TextColor3 = UI.BLANCO
 
-	----------------------------------------------------------------------------
-	-- Panel de propiedades
-	----------------------------------------------------------------------------
+	-- Extras
+	local pExtras, cExtras = panel("Add to selection", 250, 96, ladoDerecho)
+	pExtras.Position = UDim2.fromOffset(0, 182)
 
-	local props = new("Frame", {
-		Name = "Propiedades", BackgroundColor3 = UI.FONDO, BorderSizePixel = 1,
-		BorderColor3 = UI.OSCURO, AnchorPoint = Vector2.new(1, 0),
-		Position = UDim2.new(1, -8, 0, 42), Size = UDim2.fromOffset(232, 430),
-	}, pantalla)
-
-	new("TextLabel", {
-		BackgroundColor3 = UI.TITULO, BorderSizePixel = 0, Font = UI.FUENTE,
-		TextSize = 14, TextColor3 = Color3.fromRGB(245, 245, 245),
-		Text = "Properties", Size = UDim2.new(1, 0, 0, 22),
-	}, props)
-
-	-- Paleta de colores clasica
-	local rejillaColor = new("Frame", {
-		BackgroundTransparency = 1, Position = UDim2.fromOffset(6, 28),
-		Size = UDim2.fromOffset(220, 128),
-	}, props)
+	local rejillaExtras = new("Frame", {
+		BackgroundTransparency = 1, Size = UDim2.fromScale(1, 1),
+	}, cExtras)
 	new("UIGridLayout", {
-		CellSize = UDim2.fromOffset(26, 14), CellPadding = UDim2.fromOffset(1, 1),
+		CellSize = UDim2.fromOffset(76, 26), CellPadding = UDim2.fromOffset(4, 4),
+	}, rejillaExtras)
+
+	local function extraBoton(texto, fn)
+		local b = new("TextButton", {
+			BackgroundColor3 = UI.PANEL, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
+			Font = UI.FUENTE, TextSize = 13, TextColor3 = UI.TEXTO, Text = texto,
+			AutoButtonColor = true,
+		}, rejillaExtras)
+		b.Activated:Connect(fn)
+		return b
+	end
+
+	extraBoton("Light", function ()
+		if not api.aplicar(function (p) api.Extras.Luz(p, "Point") end) then
+			decir("Select a part first.", true)
+		end
+	end)
+	extraBoton("Spotlight", function ()
+		if not api.aplicar(function (p) api.Extras.Luz(p, "Spot") end) then
+			decir("Select a part first.", true)
+		end
+	end)
+	extraBoton("Sign", function () fondoCartel.Visible = true end)
+	extraBoton("Asset ID", function () fondoAsset.Visible = true end)
+	extraBoton("Clear", function ()
+		if not api.aplicar(api.Extras.Limpiar) then
+			decir("Select a part first.", true)
+		end
+	end)
+	extraBoton("Baseplate", function ()
+		api.seleccionar({ api.suelo }, false)
+		decir("Baseplate selected: change its colour, surface or size.")
+	end)
+
+	-- Propiedades
+	local pProps, cProps = panel("Properties", 250, 348, ladoDerecho)
+	pProps.Position = UDim2.fromOffset(0, 284)
+
+	local rejillaColor = new("Frame", {
+		BackgroundTransparency = 1, Size = UDim2.fromOffset(238, 120),
+	}, cProps)
+	new("UIGridLayout", {
+		CellSize = UDim2.fromOffset(28, 14), CellPadding = UDim2.fromOffset(1, 1),
 		SortOrder = Enum.SortOrder.LayoutOrder,
 	}, rejillaColor)
 
@@ -429,136 +627,152 @@ function Ui.Crear(api)
 			BackgroundColor3 = bc.Color, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
 			Text = "", AutoButtonColor = true, LayoutOrder = i,
 		}, rejillaColor)
-
 		celda.Activated:Connect(function ()
 			estado.color = numero
-			api.aplicar(function (parte) parte.BrickColor = bc end)
+			api.aplicar(function (p) p.BrickColor = bc end)
 			decir(bc.Name)
 		end)
 	end
 
-	local function seccion(texto, y)
+	local function seccion(texto, y, padre)
 		return new("TextLabel", {
-			BackgroundTransparency = 1, Font = UI.FUENTE, TextSize = 13,
+			BackgroundTransparency = 1, Font = UI.FUENTE, TextSize = 12,
 			TextColor3 = UI.TENUE, Text = texto,
 			TextXAlignment = Enum.TextXAlignment.Left,
-			Position = UDim2.fromOffset(8, y), Size = UDim2.fromOffset(200, 16),
-		}, props)
+			Position = UDim2.fromOffset(0, y), Size = UDim2.fromOffset(230, 14),
+		}, padre)
 	end
 
-	seccion("Material", 162)
-	local filaMaterial = new("Frame", {
-		BackgroundTransparency = 1, Position = UDim2.fromOffset(6, 180),
-		Size = UDim2.fromOffset(220, 60),
-	}, props)
-	new("UIGridLayout", {
-		CellSize = UDim2.fromOffset(52, 18), CellPadding = UDim2.fromOffset(2, 2),
-	}, filaMaterial)
+	seccion("Material", 124, cProps)
+	local filaMat = new("Frame", { BackgroundTransparency = 1,
+		Position = UDim2.fromOffset(0, 140), Size = UDim2.fromOffset(238, 60) }, cProps)
+	new("UIGridLayout", { CellSize = UDim2.fromOffset(57, 17),
+		CellPadding = UDim2.fromOffset(2, 2) }, filaMat)
 
 	for _, mat in ipairs(Palette.MATERIALES) do
 		local b = new("TextButton", {
 			BackgroundColor3 = UI.PANEL, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
-			Font = UI.FUENTE, TextSize = 12, TextColor3 = UI.TEXTO,
+			Font = UI.FUENTE, TextSize = 11, TextColor3 = UI.TEXTO,
 			Text = mat.nombre, AutoButtonColor = true,
-		}, filaMaterial)
-
+		}, filaMat)
 		b.Activated:Connect(function ()
 			estado.material = mat.indice
 			local enum = api.Serializer.MATERIALES[mat.indice]
-			api.aplicar(function (parte) parte.Material = enum end)
+			api.aplicar(function (p) p.Material = enum end)
 		end)
 	end
 
-	seccion("Top surface", 246)
-	local filaSup = new("Frame", {
-		BackgroundTransparency = 1, Position = UDim2.fromOffset(6, 264),
-		Size = UDim2.fromOffset(220, 42),
-	}, props)
-	new("UIGridLayout", {
-		CellSize = UDim2.fromOffset(70, 18), CellPadding = UDim2.fromOffset(2, 2),
-	}, filaSup)
+	seccion("Surface (top)", 204, cProps)
+	local filaSup = new("Frame", { BackgroundTransparency = 1,
+		Position = UDim2.fromOffset(0, 220), Size = UDim2.fromOffset(238, 40) }, cProps)
+	new("UIGridLayout", { CellSize = UDim2.fromOffset(77, 17),
+		CellPadding = UDim2.fromOffset(2, 2) }, filaSup)
 
 	for _, sup in ipairs(Palette.SUPERFICIES) do
 		local b = new("TextButton", {
 			BackgroundColor3 = UI.PANEL, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
-			Font = UI.FUENTE, TextSize = 12, TextColor3 = UI.TEXTO,
+			Font = UI.FUENTE, TextSize = 11, TextColor3 = UI.TEXTO,
 			Text = sup.nombre, AutoButtonColor = true,
 		}, filaSup)
-
 		b.Activated:Connect(function ()
 			estado.superficieArriba = sup.enum
-			api.aplicar(function (parte) parte.TopSurface = sup.enum end)
+			api.aplicar(function (p) p.TopSurface = sup.enum end)
 		end)
 	end
 
-	seccion("Selection", 312)
-	local filaAcciones = new("Frame", {
-		BackgroundTransparency = 1, Position = UDim2.fromOffset(6, 330),
-		Size = UDim2.fromOffset(220, 90),
-	}, props)
-	new("UIGridLayout", {
-		CellSize = UDim2.fromOffset(70, 24), CellPadding = UDim2.fromOffset(3, 3),
-	}, filaAcciones)
+	seccion("Selection", 264, cProps)
+	local filaSel = new("Frame", { BackgroundTransparency = 1,
+		Position = UDim2.fromOffset(0, 280), Size = UDim2.fromOffset(238, 60) }, cProps)
+	new("UIGridLayout", { CellSize = UDim2.fromOffset(57, 24),
+		CellPadding = UDim2.fromOffset(2, 2) }, filaSel)
 
 	local acciones = {
-		{ "Duplicate", function () api.duplicar() end },
+		{ "Copy", function () api.duplicar() end },
 		{ "Delete", function () api.borrar() end },
-		{ "Rotate Y", function () api.girar(Vector3.yAxis) end },
-		{ "Rotate X", function () api.girar(Vector3.xAxis) end },
-		{ "Anchor", function ()
-			api.aplicar(function (p) p.Anchored = true end)
-			decir("Anchored")
-		end },
-		{ "Unanchor", function ()
-			api.aplicar(function (p) p.Anchored = false end)
-			decir("Free to fall")
-		end },
+		{ "Anchor", function () api.aplicar(function (p) p.Anchored = true end) end },
+		{ "Free", function () api.aplicar(function (p) p.Anchored = false end) end },
 		{ "Ghost", function ()
 			api.aplicar(function (p)
 				p.Transparency = p.Transparency > 0 and 0 or 0.5
 			end)
 		end },
-		{ "Grid on/off", function ()
+		{ "Focus", function () api.centrar() end },
+		{ "Grid", function ()
 			estado.rejilla = estado.rejilla > 0 and 0 or 1
 			decir(estado.rejilla > 0 and "Grid: on" or "Grid: off")
+		end },
+		{ "Snap 45", function ()
+			estado.giro = estado.giro == 45 and 15 or (estado.giro == 15 and 90 or 45)
+			decir(("Rotation step: %d degrees"):format(estado.giro))
 		end },
 	}
 
 	for _, accion in ipairs(acciones) do
 		local b = new("TextButton", {
 			BackgroundColor3 = UI.PANEL, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
-			Font = UI.FUENTE, TextSize = 12, TextColor3 = UI.TEXTO,
-			Text = accion[1], AutoButtonColor = true,
-		}, filaAcciones)
+			Font = UI.FUENTE, TextSize = 12, TextColor3 = UI.TEXTO, Text = accion[1],
+			AutoButtonColor = true,
+		}, filaSel)
 		b.Activated:Connect(accion[2])
 	end
 
 	----------------------------------------------------------------------------
-	-- Contador
+	-- En tactil los paneles se abren y cierran, no ocupan la pantalla
+	----------------------------------------------------------------------------
+
+	if TACTIL then
+		local btnPaneles = new("TextButton", {
+			BackgroundColor3 = UI.FONDO, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
+			Font = UI.FUENTE, TextSize = 15, TextColor3 = UI.TEXTO, Text = "Tools",
+			AutoButtonColor = true, AnchorPoint = Vector2.new(1, 0),
+			Position = UDim2.new(1, -10, 0, UI.MARGEN_SUPERIOR),
+			Size = UDim2.fromOffset(96, 40),
+		}, raiz)
+		bisel(btnPaneles)
+
+		btnPaneles.Activated:Connect(function ()
+			ladoDerecho.Visible = not ladoDerecho.Visible
+			btnPaneles.BackgroundColor3 = ladoDerecho.Visible and UI.SELECCION or UI.FONDO
+			btnPaneles.TextColor3 = ladoDerecho.Visible and UI.BLANCO or UI.TEXTO
+		end)
+
+		ladoDerecho.Position = UDim2.new(1, -10, 0, UI.MARGEN_SUPERIOR + 48)
+	end
+
+	----------------------------------------------------------------------------
+	-- Contador, abajo a la derecha
 	----------------------------------------------------------------------------
 
 	local contador = new("TextLabel", {
 		BackgroundColor3 = UI.FONDO, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
-		Font = UI.FUENTE, TextSize = 14, TextColor3 = UI.TEXTO, Text = "",
-		AnchorPoint = Vector2.new(0, 1),
-		Position = UDim2.new(0, 8, 1, -8), Size = UDim2.fromOffset(300, 24),
-	}, pantalla)
+		Font = UI.FUENTE, TextSize = 13, TextColor3 = UI.TEXTO, Text = "",
+		AnchorPoint = Vector2.new(1, 1),
+		Position = UDim2.new(1, -10, 1, TACTIL and -68 or -10),
+		Size = UDim2.fromOffset(300, 22),
+	}, raiz)
+	bisel(contador)
 
-	local ultimoConteo, ultimaSeleccion = -1, -1
+	local ultimo, ultimaSel, ultimoModo = -1, -1, ""
 
 	local function refrescarContador()
 		local n = api.contarPartes()
 		local sel = #estado.seleccion
 
-		if n ~= ultimoConteo or sel ~= ultimaSeleccion then
-			ultimoConteo, ultimaSeleccion = n, sel
-			contador.Text = ("  %d / %d parts    %d selected    grid %s")
-				:format(n, api.Serializer.MAX_PARTES, sel,
+		if n ~= ultimo or sel ~= ultimaSel or estado.modo ~= ultimoModo then
+			ultimo, ultimaSel, ultimoModo = n, sel, estado.modo
+			contador.Text = ("  %d / %d parts   %d selected   %s   grid %s  ")
+				:format(n, api.Serializer.MAX_PARTES, sel, estado.modo,
 					estado.rejilla > 0 and "on" or "off")
 			contador.TextColor3 = (n > api.Serializer.MAX_PARTES * 0.9)
-				and Color3.fromRGB(150, 40, 40) or UI.TEXTO
+				and UI.PELIGRO or UI.TEXTO
 		end
 	end
+
+	if workspace.CurrentCamera then
+		workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(ajustar)
+	end
+	ajustar()
+	refrescarModo()
 
 	return {
 		pantalla = pantalla,
@@ -566,6 +780,7 @@ function Ui.Crear(api)
 		abrirGuardar = abrirGuardar,
 		abrirAbrir = abrirAbrir,
 		refrescarContador = refrescarContador,
+		refrescarModo = refrescarModo,
 		refrescarEstado = refrescarContador,
 	}
 end
