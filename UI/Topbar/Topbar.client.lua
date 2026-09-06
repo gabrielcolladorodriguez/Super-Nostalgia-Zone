@@ -11,6 +11,13 @@ local UserGameSettings = UserSettings():GetService("UserGameSettings")
 
 local topbar = script.Parent
 
+-- [fork] En el vestibulo la barra clasica no aporta nada: no hay juego del que
+-- salir, y su boton Exit confunde. Un valor en ReplicatedStorage la apaga.
+if game:GetService("ReplicatedStorage"):FindFirstChild("OcultarTopbar") then
+    topbar.Visible = false
+    return
+end
+
 local ui = topbar.Parent
 local config = require(topbar:WaitForChild("Config"))
 

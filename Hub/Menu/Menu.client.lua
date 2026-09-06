@@ -29,6 +29,9 @@ local screen = script.Parent
 
 local TOUCH = UserInputService.TouchEnabled and not UserInputService.MouseEnabled
 
+local Cargando = require(script:WaitForChild("Cargando"))
+local anunciarDestino = Cargando.Preparar()
+
 local canal = ReplicatedStorage:WaitForChild("Constructor", 20)
 local studioId = ReplicatedStorage:WaitForChild("StudioPlaceId", 10)
 local playId = ReplicatedStorage:WaitForChild("PlayPlaceId", 10)
@@ -484,6 +487,7 @@ local function irA(placeId, datos)
 
 	status.TextColor3 = TEXT_DIM
 	status.Text = "Loading..."
+	anunciarDestino(datos and "Entering the creation" or "Bygone Studios")
 
 	local ok, err = pcall(function ()
 		if datos then

@@ -422,7 +422,26 @@ function Ui.Crear(api)
 	botonesCara.Front.BackgroundColor3 = UI.SELECCION
 	botonesCara.Front.TextColor3 = UI.BLANCO
 
-	local bCartel = boton("Add sign", 160, 32, cajaCartel, function ()
+	local function abrirCartel()
+		local p = estado.seleccion[1]
+		local texto, cara = nil, nil
+		if p then
+			texto, cara = api.Extras.LeerCartel(p)
+		end
+		campoCartel.Text = texto or ""
+		if cara then
+			for nombre, b in pairs(botonesCara) do
+				local activo = (Enum.NormalId[nombre] == cara)
+				b.BackgroundColor3 = activo and UI.SELECCION or UI.FONDO
+				b.TextColor3 = activo and UI.BLANCO or UI.TEXTO
+				if activo then caraElegida = cara end
+			end
+		end
+		fondoCartel.Visible = true
+	end
+
+	local bCartel = boton(#estado.seleccion > 0 and "Apply text" or "Add sign",
+	                      160, 32, cajaCartel, function ()
 		if #estado.seleccion == 0 then decir("Select a part first.", true) return end
 		if #campoCartel.Text == 0 then decir("Write something first.", true) return end
 		api.aplicar(function (p) api.Extras.Cartel(p, campoCartel.Text, caraElegida) end)
@@ -544,7 +563,7 @@ function Ui.Crear(api)
 				decir("Select a part first.", true)
 			end
 		end)
-		celda("Sign", rejE, function () fondoCartel.Visible = true end)
+		celda("Sign / text", rejE, abrirCartel)
 		celda("Asset ID", rejE, function () fondoAsset.Visible = true end)
 		celda("Clear", rejE, function ()
 			if not api.aplicar(api.Extras.Limpiar) then

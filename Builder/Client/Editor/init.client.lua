@@ -333,6 +333,16 @@ function Extras.Malla(parte, meshId, textureId)
 	malla.Parent = parte
 end
 
+--- Texto del cartel que ya lleve la parte, o nil.
+function Extras.LeerCartel(parte)
+	local gui = parte:FindFirstChildWhichIsA("SurfaceGui")
+	if not gui then
+		return nil
+	end
+	local etiqueta = gui:FindFirstChildWhichIsA("TextLabel")
+	return etiqueta and etiqueta.Text or nil, gui.Face
+end
+
 function Extras.Limpiar(parte)
 	quitarDeTipo(parte, { "PointLight", "SpotLight", "SurfaceLight",
 	                      "SurfaceGui", "Decal", "SpecialMesh" })
@@ -744,7 +754,21 @@ UserInputService.InputChanged:Connect(function (input, procesado)
 			seguirArrastre()
 		end
 	elseif input.UserInputType == Enum.UserInputType.MouseWheel and not procesado then
-		velocidad = math.clamp(velocidad + input.Position.Z * 12, 12, 320)
+		if UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
+			-- Con shift, la rueda regula lo rapido que vuelas.
+			velocidad = math.clamp(velocidad + input.Position.Z * 12, 12, 320)
+			if ui then ui.decir(("Fly speed: %d"):format(velocidad)) end
+		else
+			-- Sin shift hace lo que espera cualquiera: acercar y alejar. El paso
+			-- crece con la distancia a lo que miras, para que desde lejos no
+			-- tarde una eternidad y de cerca no se pase de largo.
+			local golpe = rayoDelRaton()
+			local distancia = golpe and (golpe.Position - camera.CFrame.Position).Magnitude
+				or 60
+			local paso = math.clamp(distancia * 0.12, 2, 90)
+			camera.CFrame = camera.CFrame
+				+ camera.CFrame.LookVector * input.Position.Z * paso
+		end
 	end
 end)
 

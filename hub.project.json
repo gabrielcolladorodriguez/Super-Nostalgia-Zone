@@ -39,28 +39,6 @@
 				"FogStart": 0
 			}
 		},
-		"Teams": {
-			"$className": "Teams",
-			"$ignoreUnknownInstances": true,
-			"Red Team": {
-				"$className": "Team",
-				"$properties": {
-					"TeamColor": {
-						"BrickColor": 21
-					},
-					"AutoAssignable": true
-				}
-			},
-			"Blue Team": {
-				"$className": "Team",
-				"$properties": {
-					"TeamColor": {
-						"BrickColor": 23
-					},
-					"AutoAssignable": true
-				}
-			}
-		},
 		"Chat": {
 			"$className": "Chat",
 			"$properties": {
@@ -115,6 +93,12 @@
 				"$className": "IntValue",
 				"$properties": {
 					"Value": 119520946831406
+				}
+			},
+			"OcultarTopbar": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": true
 				}
 			}
 		},
