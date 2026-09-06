@@ -1,21 +1,21 @@
 --!nocheck
 --[[
-	Bygone -- lobby menu, styled like a 2008 ROBLOX dialog.
+	Bygone -- el menu del vestibulo.
 
-	This is no longer a catalogue of archived places. Bygone is a builder now:
-	people make their own classic-style places inside Bygone Studio, publish
-	them, and this menu is where everyone else finds them.
+	Es la unica via para construir y para jugar: ya no hay portales en el mapa.
+	Eso obliga a que aqui este todo y se entienda de un vistazo, asi que la
+	pantalla se reparte en tres columnas:
 
-	Three tabs:
-	  Recent     what has just been published
-	  Popular    ordered by visits
-	  Mine       your own creations, published or not
+	  izquierda   que quieres hacer: BUILD, que lista mirar, y el buscador
+	  centro      rejilla de fichas con la foto de quien la hizo
+	  derecha     la ficha elegida en grande, con el boton de jugar
 
-	The gallery comes from the server (ReplicatedStorage.Constructor.Galeria),
-	never from the client, so a tampered client cannot list private work.
+	Las miniaturas se piden en segundo plano. GetUserThumbnailAsync espera
+	respuesta de Roblox, y con veinte fichas serian veinte esperas seguidas
+	antes de ver nada en pantalla.
 
-	Scales for phones and tablets: everything is laid out in scale and the
-	window is driven by a UIScale that shrinks on small screens.
+	Todo se dibuja en offset dentro de un UIScale, asi que en movil y tablet
+	encoge de golpe sin recolocar nada.
 ]]
 
 local GuiService = game:GetService("GuiService")
@@ -24,182 +24,253 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TeleportService = game:GetService("TeleportService")
 local UserInputService = game:GetService("UserInputService")
 
+local Cargando = require(script:WaitForChild("Cargando"))
+local anunciarDestino = Cargando.Preparar()
+
 local player = Players.LocalPlayer
 local screen = script.Parent
 
 local TOUCH = UserInputService.TouchEnabled and not UserInputService.MouseEnabled
-
-local Cargando = require(script:WaitForChild("Cargando"))
-local anunciarDestino = Cargando.Preparar()
 
 local canal = ReplicatedStorage:WaitForChild("Constructor", 20)
 local studioId = ReplicatedStorage:WaitForChild("StudioPlaceId", 10)
 local playId = ReplicatedStorage:WaitForChild("PlayPlaceId", 10)
 
 --------------------------------------------------------------------------------
--- Period palette
+-- Paleta
 --------------------------------------------------------------------------------
 
-local GREY_BG    = Color3.fromRGB(177, 177, 177)
-local GREY_PANEL = Color3.fromRGB(199, 199, 199)
-local GREY_DARK  = Color3.fromRGB(128, 128, 128)
-local GREY_TITLE = Color3.fromRGB(151, 151, 151)
-local TEXT_MAIN  = Color3.fromRGB( 51,  51,  51)
-local TEXT_DIM   = Color3.fromRGB(102, 102, 102)
-local SEL_BG     = Color3.fromRGB(102, 153, 204)
-local WHITE      = Color3.fromRGB(255, 255, 255)
-local RED        = Color3.fromRGB(140, 45, 45)
+local FONDO  = Color3.fromRGB(196, 196, 196)
+local PANEL  = Color3.fromRGB(212, 212, 212)
+local HUECO  = Color3.fromRGB(172, 172, 172)
+local OSCURO = Color3.fromRGB(120, 120, 120)
+local LUZ    = Color3.fromRGB(236, 236, 236)
+local TITULO = Color3.fromRGB(92, 102, 118)
+local TEXTO  = Color3.fromRGB(36, 36, 36)
+local TENUE  = Color3.fromRGB(106, 106, 106)
+local SEL    = Color3.fromRGB(74, 128, 190)
+local ACENTO = Color3.fromRGB(176, 132, 40)
+local BLANCO = Color3.fromRGB(252, 252, 252)
+local ROJO   = Color3.fromRGB(148, 52, 52)
 
 local FONT = Enum.Font.Cartoon
+local ANCHO, ALTO = 860, 540
 
-local function new(class, props, parent)
-	local inst = Instance.new(class)
+local function new(clase, props, padre)
+	local i = Instance.new(clase)
 	for k, v in pairs(props) do
-		inst[k] = v
+		i[k] = v
 	end
-	inst.Parent = parent
-	return inst
+	i.Parent = padre
+	return i
+end
+
+local function bisel(marco, z)
+	new("Frame", { BackgroundColor3 = LUZ, BorderSizePixel = 0, ZIndex = z or 1,
+		Size = UDim2.new(1, 0, 0, 1) }, marco)
+	new("Frame", { BackgroundColor3 = OSCURO, BorderSizePixel = 0, ZIndex = z or 1,
+		Size = UDim2.new(1, 0, 0, 1), Position = UDim2.new(0, 0, 1, -1) }, marco)
 end
 
 --------------------------------------------------------------------------------
--- Window
+-- Ventana
 --------------------------------------------------------------------------------
 
 local dim = new("Frame", {
-	Name = "Dim", BackgroundColor3 = Color3.new(0, 0, 0), BackgroundTransparency = 0.5,
+	Name = "Dim", BackgroundColor3 = Color3.new(0, 0, 0), BackgroundTransparency = 0.55,
 	BorderSizePixel = 0, Size = UDim2.fromScale(1, 1), Visible = false, ZIndex = 10,
 }, screen)
 
 local window = new("Frame", {
-	Name = "Window", BackgroundColor3 = GREY_BG, BorderSizePixel = 0, ZIndex = 11,
-	AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.5),
-	Size = UDim2.fromOffset(680, 450),
+	Name = "Window", BackgroundColor3 = FONDO, BorderSizePixel = 1,
+	BorderColor3 = OSCURO, ZIndex = 11, AnchorPoint = Vector2.new(0.5, 0.5),
+	Position = UDim2.fromScale(0.5, 0.5), Size = UDim2.fromOffset(ANCHO, ALTO),
 }, dim)
+bisel(window, 11)
 
 local scaler = new("UIScale", { Scale = 1 }, window)
 
-local function fitToScreen()
+local function ajustar()
 	local vp = workspace.CurrentCamera and workspace.CurrentCamera.ViewportSize
-	if not vp or vp.X == 0 then
-		return
-	end
-	local margin = TOUCH and 0.96 or 0.9
+	if not vp or vp.X == 0 then return end
+	local margen = TOUCH and 0.97 or 0.92
 	scaler.Scale = math.clamp(
-		math.min((vp.X * margin) / 680, (vp.Y * margin) / 450), 0.42, 1.25)
+		math.min((vp.X * margen) / ANCHO, (vp.Y * margen) / ALTO), 0.4, 1.15)
 end
 
-new("Frame", {
-	BorderSizePixel = 0, ZIndex = 11, BackgroundColor3 = Color3.fromRGB(222, 222, 222),
-	Size = UDim2.new(1, 0, 0, 1),
-}, window)
-new("Frame", {
-	BorderSizePixel = 0, ZIndex = 11, BackgroundColor3 = GREY_DARK,
-	Size = UDim2.new(1, 0, 0, 1), Position = UDim2.new(0, 0, 1, -1),
-}, window)
-
 local titleBar = new("Frame", {
-	BackgroundColor3 = GREY_TITLE, BorderSizePixel = 0, ZIndex = 12,
-	Size = UDim2.new(1, -2, 0, 26), Position = UDim2.fromOffset(1, 1),
+	BackgroundColor3 = TITULO, BorderSizePixel = 0, ZIndex = 12,
+	Size = UDim2.new(1, -2, 0, 28), Position = UDim2.fromOffset(1, 1),
 }, window)
 
 new("TextLabel", {
-	BackgroundTransparency = 1, Font = FONT, TextSize = 17, ZIndex = 13,
-	TextColor3 = Color3.fromRGB(245, 245, 245),
-	TextXAlignment = Enum.TextXAlignment.Left,
-	Text = "  Bygone  -  community creations", Size = UDim2.new(1, -170, 1, 0),
+	BackgroundTransparency = 1, Font = FONT, TextSize = 18, ZIndex = 13,
+	TextColor3 = BLANCO, TextXAlignment = Enum.TextXAlignment.Left,
+	Text = "  Bygone", Size = UDim2.new(1, -180, 1, 0),
 }, titleBar)
 
 local creditsBtn = new("TextButton", {
-	BackgroundColor3 = GREY_BG, BorderSizePixel = 0, ZIndex = 13, Font = FONT,
-	TextSize = 14, TextColor3 = TEXT_MAIN, Text = "Credits", AutoButtonColor = true,
-	Size = UDim2.fromOffset(66, 20), Position = UDim2.new(1, -99, 0, 3),
+	BackgroundColor3 = FONDO, BorderSizePixel = 0, ZIndex = 13, Font = FONT,
+	TextSize = 14, TextColor3 = TEXTO, Text = "Credits", AutoButtonColor = true,
+	Size = UDim2.fromOffset(70, 20), Position = UDim2.new(1, -104, 0, 4),
 }, titleBar)
 
 local closeBtn = new("TextButton", {
-	BackgroundColor3 = GREY_BG, BorderSizePixel = 0, ZIndex = 13, Font = FONT,
-	TextSize = 17, TextColor3 = TEXT_MAIN, Text = "X", AutoButtonColor = true,
-	Size = UDim2.fromOffset(26, 20), Position = UDim2.new(1, -29, 0, 3),
+	BackgroundColor3 = FONDO, BorderSizePixel = 0, ZIndex = 13, Font = FONT,
+	TextSize = 16, TextColor3 = TEXTO, Text = "x", AutoButtonColor = true,
+	Size = UDim2.fromOffset(26, 20), Position = UDim2.new(1, -30, 0, 4),
 }, titleBar)
 
 --------------------------------------------------------------------------------
--- Tabs and list
+-- Columna izquierda
 --------------------------------------------------------------------------------
 
-local tabBar = new("Frame", {
-	BackgroundTransparency = 1, ZIndex = 12,
-	Position = UDim2.fromOffset(10, 32), Size = UDim2.new(1, -20, 0, 28),
+local izq = new("Frame", {
+	Name = "Izquierda", BackgroundTransparency = 1, ZIndex = 12,
+	Position = UDim2.fromOffset(10, 38), Size = UDim2.fromOffset(178, ALTO - 48),
 }, window)
-new("UIListLayout", {
-	FillDirection = Enum.FillDirection.Horizontal, Padding = UDim.new(0, 4),
-}, tabBar)
-
-local listPanel = new("Frame", {
-	BackgroundColor3 = GREY_PANEL, BorderSizePixel = 1, BorderColor3 = GREY_DARK,
-	ZIndex = 12, Position = UDim2.fromOffset(10, 64), Size = UDim2.new(1, -20, 1, -160),
-}, window)
-
-local list = new("ScrollingFrame", {
-	BackgroundTransparency = 1, BorderSizePixel = 0, ZIndex = 12,
-	Size = UDim2.fromScale(1, 1), CanvasSize = UDim2.new(),
-	AutomaticCanvasSize = Enum.AutomaticSize.Y,
-	ScrollBarThickness = TOUCH and 14 or 8,
-}, listPanel)
-new("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder }, list)
-
-local info = new("Frame", {
-	BackgroundColor3 = GREY_PANEL, BorderSizePixel = 1, BorderColor3 = GREY_DARK,
-	ZIndex = 12, Size = UDim2.new(1, -20, 0, 78), Position = UDim2.new(0, 10, 1, -88),
-}, window)
-
-local infoTitle = new("TextLabel", {
-	BackgroundTransparency = 1, Font = FONT, TextSize = 19, ZIndex = 13,
-	TextColor3 = TEXT_MAIN, TextXAlignment = Enum.TextXAlignment.Left,
-	Text = "Select a creation", Size = UDim2.new(1, -300, 0, 24),
-	Position = UDim2.fromOffset(10, 6),
-}, info)
-
-local infoSub = new("TextLabel", {
-	BackgroundTransparency = 1, Font = FONT, TextSize = 15, ZIndex = 13,
-	TextColor3 = TEXT_DIM, TextXAlignment = Enum.TextXAlignment.Left, Text = "",
-	Size = UDim2.new(1, -300, 0, 18), Position = UDim2.fromOffset(10, 31),
-}, info)
-
-local infoDesc = new("TextLabel", {
-	BackgroundTransparency = 1, Font = FONT, TextSize = 13, ZIndex = 13,
-	TextColor3 = TEXT_DIM, TextXAlignment = Enum.TextXAlignment.Left,
-	TextTruncate = Enum.TextTruncate.AtEnd, Text = "",
-	Size = UDim2.new(1, -300, 0, 18), Position = UDim2.fromOffset(10, 51),
-}, info)
-
-local playBtn = new("TextButton", {
-	BackgroundColor3 = GREY_BG, BorderSizePixel = 1, BorderColor3 = GREY_DARK,
-	ZIndex = 13, Font = FONT, TextSize = 20, TextColor3 = TEXT_DIM, Text = "Play",
-	AutoButtonColor = true, Active = false,
-	Size = UDim2.fromOffset(132, 40), Position = UDim2.new(1, -144, 0.5, -20),
-}, info)
 
 local buildBtn = new("TextButton", {
-	BackgroundColor3 = GREY_BG, BorderSizePixel = 1, BorderColor3 = GREY_DARK,
-	ZIndex = 13, Font = FONT, TextSize = 20, TextColor3 = TEXT_MAIN,
-	Text = "Build", AutoButtonColor = true,
-	Size = UDim2.fromOffset(132, 40), Position = UDim2.new(1, -286, 0.5, -20),
-}, info)
+	Name = "Build", BackgroundColor3 = ACENTO, BorderSizePixel = 1,
+	BorderColor3 = OSCURO, ZIndex = 13, Font = FONT, TextSize = 22,
+	TextColor3 = BLANCO, Text = "BUILD", AutoButtonColor = true,
+	Size = UDim2.fromOffset(178, 52),
+}, izq)
+bisel(buildBtn, 13)
 
-local status = new("TextLabel", {
-	BackgroundTransparency = 1, Font = FONT, TextSize = 14, ZIndex = 13,
-	TextColor3 = TEXT_DIM, TextXAlignment = Enum.TextXAlignment.Right, Text = "",
-	Size = UDim2.fromOffset(360, 18), Position = UDim2.new(1, -372, 1, -20),
-}, window)
+new("TextLabel", {
+	BackgroundTransparency = 1, Font = FONT, TextSize = 12, ZIndex = 13,
+	TextColor3 = TENUE, TextWrapped = true,
+	TextXAlignment = Enum.TextXAlignment.Left,
+	Text = "Open Bygone Studios and make a place of your own.",
+	Position = UDim2.fromOffset(2, 56), Size = UDim2.fromOffset(174, 32),
+}, izq)
+
+new("TextLabel", {
+	BackgroundTransparency = 1, Font = FONT, TextSize = 13, ZIndex = 13,
+	TextColor3 = TENUE, TextXAlignment = Enum.TextXAlignment.Left,
+	Text = "BROWSE", Position = UDim2.fromOffset(2, 96),
+	Size = UDim2.fromOffset(174, 16),
+}, izq)
+
+local tabHolder = new("Frame", {
+	BackgroundTransparency = 1, ZIndex = 13,
+	Position = UDim2.fromOffset(0, 114), Size = UDim2.fromOffset(178, 110),
+}, izq)
+new("UIListLayout", { Padding = UDim.new(0, 4) }, tabHolder)
+
+local searchBox = new("TextBox", {
+	Name = "Search", BackgroundColor3 = Color3.fromRGB(246, 246, 246),
+	BorderSizePixel = 1, BorderColor3 = OSCURO, ZIndex = 13, Font = FONT,
+	TextSize = 14, TextColor3 = TEXTO, PlaceholderText = "Search...", Text = "",
+	TextXAlignment = Enum.TextXAlignment.Left, ClearTextOnFocus = false,
+	Position = UDim2.fromOffset(0, 232), Size = UDim2.fromOffset(178, 26),
+}, izq)
+new("UIPadding", { PaddingLeft = UDim.new(0, 6) }, searchBox)
+
+local contadorLbl = new("TextLabel", {
+	BackgroundTransparency = 1, Font = FONT, TextSize = 12, ZIndex = 13,
+	TextColor3 = TENUE, TextXAlignment = Enum.TextXAlignment.Left, Text = "",
+	Position = UDim2.fromOffset(2, 264), Size = UDim2.fromOffset(174, 16),
+}, izq)
 
 --------------------------------------------------------------------------------
--- Credits
+-- Rejilla del centro
+--------------------------------------------------------------------------------
+
+local centro = new("Frame", {
+	Name = "Centro", BackgroundColor3 = HUECO, BorderSizePixel = 1,
+	BorderColor3 = OSCURO, ZIndex = 12,
+	Position = UDim2.fromOffset(196, 38), Size = UDim2.fromOffset(410, ALTO - 48),
+}, window)
+
+local lista = new("ScrollingFrame", {
+	BackgroundTransparency = 1, BorderSizePixel = 0, ZIndex = 12,
+	Position = UDim2.fromOffset(6, 6), Size = UDim2.new(1, -12, 1, -12),
+	CanvasSize = UDim2.new(), AutomaticCanvasSize = Enum.AutomaticSize.Y,
+	ScrollBarThickness = TOUCH and 12 or 7,
+}, centro)
+new("UIGridLayout", {
+	CellSize = UDim2.fromOffset(190, 78), CellPadding = UDim2.fromOffset(6, 6),
+	SortOrder = Enum.SortOrder.LayoutOrder,
+}, lista)
+
+--------------------------------------------------------------------------------
+-- Columna derecha
+--------------------------------------------------------------------------------
+
+local ANCHO_DER = ANCHO - 624
+
+local der = new("Frame", {
+	Name = "Detalle", BackgroundColor3 = PANEL, BorderSizePixel = 1,
+	BorderColor3 = OSCURO, ZIndex = 12,
+	Position = UDim2.fromOffset(614, 38), Size = UDim2.fromOffset(ANCHO_DER, ALTO - 48),
+}, window)
+
+local dRetratoMarco = new("Frame", {
+	BackgroundColor3 = HUECO, BorderSizePixel = 1, BorderColor3 = OSCURO, ZIndex = 13,
+	Position = UDim2.fromOffset(10, 12), Size = UDim2.fromOffset(72, 72),
+}, der)
+local dRetrato = new("ImageLabel", {
+	BackgroundTransparency = 1, ZIndex = 14, Size = UDim2.fromScale(1, 1),
+	Image = "", ScaleType = Enum.ScaleType.Fit,
+}, dRetratoMarco)
+
+local dTitulo = new("TextLabel", {
+	BackgroundTransparency = 1, Font = FONT, TextSize = 19, ZIndex = 13,
+	TextColor3 = TEXTO, TextXAlignment = Enum.TextXAlignment.Left,
+	TextYAlignment = Enum.TextYAlignment.Top, TextWrapped = true,
+	Text = "Nothing selected",
+	Position = UDim2.fromOffset(92, 12), Size = UDim2.fromOffset(ANCHO_DER - 102, 46),
+}, der)
+
+local dAutor = new("TextLabel", {
+	BackgroundTransparency = 1, Font = FONT, TextSize = 14, ZIndex = 13,
+	TextColor3 = SEL, TextXAlignment = Enum.TextXAlignment.Left, Text = "",
+	Position = UDim2.fromOffset(92, 62), Size = UDim2.fromOffset(ANCHO_DER - 102, 18),
+}, der)
+
+local dDesc = new("TextLabel", {
+	BackgroundColor3 = HUECO, BorderSizePixel = 1, BorderColor3 = OSCURO,
+	Font = FONT, TextSize = 13, ZIndex = 13, TextColor3 = TEXTO,
+	TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top,
+	TextWrapped = true, Text = "Pick a creation from the list.",
+	Position = UDim2.fromOffset(10, 96), Size = UDim2.fromOffset(ANCHO_DER - 20, 108),
+}, der)
+new("UIPadding", { PaddingLeft = UDim.new(0, 6), PaddingTop = UDim.new(0, 5),
+	PaddingRight = UDim.new(0, 5) }, dDesc)
+
+local dCifras = new("TextLabel", {
+	BackgroundTransparency = 1, Font = FONT, TextSize = 14, ZIndex = 13,
+	TextColor3 = TENUE, TextXAlignment = Enum.TextXAlignment.Left,
+	TextYAlignment = Enum.TextYAlignment.Top, Text = "",
+	Position = UDim2.fromOffset(12, 214), Size = UDim2.fromOffset(ANCHO_DER - 20, 72),
+}, der)
+
+local playBtn = new("TextButton", {
+	Name = "Play", BackgroundColor3 = FONDO, BorderSizePixel = 1, BorderColor3 = OSCURO,
+	ZIndex = 13, Font = FONT, TextSize = 22, TextColor3 = TENUE, Text = "Play",
+	AutoButtonColor = true, Active = false, AnchorPoint = Vector2.new(0, 1),
+	Position = UDim2.new(0, 10, 1, -12), Size = UDim2.fromOffset(ANCHO_DER - 20, 46),
+}, der)
+bisel(playBtn, 13)
+
+local status = new("TextLabel", {
+	BackgroundTransparency = 1, Font = FONT, TextSize = 12, ZIndex = 13,
+	TextColor3 = TENUE, TextXAlignment = Enum.TextXAlignment.Left,
+	TextWrapped = true, TextYAlignment = Enum.TextYAlignment.Bottom, Text = "",
+	AnchorPoint = Vector2.new(0, 1),
+	Position = UDim2.new(0, 12, 1, -62), Size = UDim2.fromOffset(ANCHO_DER - 24, 38),
+}, der)
+
+--------------------------------------------------------------------------------
+-- Creditos
 --------------------------------------------------------------------------------
 
 local CREDITS = [[
 BYGONE
 
-Build and share classic-style ROBLOX places, the way they
-looked in 2008.
+Build and share classic-style ROBLOX places, the way they looked in 2008.
 
 
 ENGINE
@@ -208,9 +279,8 @@ ENGINE
   github.com/MaximumADHD/Super-Nostalgia-Zone
   Licensed MPL-2.0.
 
-  The classic camera, mouse, chat, GUI, stud and inlet
-  surfaces, old heads and faces, and the rewritten classic
-  tools are his work.
+  The classic camera, mouse, chat, GUI, stud and inlet surfaces, the old
+  heads and faces, and the rewritten classic tools are his work.
 
   Our changes are public, as the licence requires:
   github.com/gabrielcolladorodriguez/Super-Nostalgia-Zone
@@ -218,83 +288,57 @@ ENGINE
 
 THE CREATIONS
 
-  Everything in the gallery was built by the players of
-  Bygone, inside Bygone Studio. Each one belongs to whoever
-  made it, and their name is on it.
+  Everything in the gallery was built by the players of Bygone, inside
+  Bygone Studios. Each one belongs to whoever made it, and their name is
+  on it.
 
   Nothing here is copied from anyone else's game.
 ]]
 
-local creditsPanel = new("Frame", {
-	BackgroundColor3 = GREY_BG, BorderSizePixel = 0, ZIndex = 20, Visible = false,
-	Size = UDim2.new(1, -2, 1, -28), Position = UDim2.fromOffset(1, 27),
+local creditos = new("Frame", {
+	BackgroundColor3 = FONDO, BorderSizePixel = 0, ZIndex = 40, Visible = false,
+	Size = UDim2.new(1, -2, 1, -30), Position = UDim2.fromOffset(1, 29),
 }, window)
 
-local creditsScroll = new("ScrollingFrame", {
-	BackgroundTransparency = 1, BorderSizePixel = 0, ZIndex = 20,
-	Size = UDim2.new(1, -16, 1, -50), Position = UDim2.fromOffset(8, 6),
+local creditosScroll = new("ScrollingFrame", {
+	BackgroundTransparency = 1, BorderSizePixel = 0, ZIndex = 40,
+	Position = UDim2.fromOffset(12, 8), Size = UDim2.new(1, -24, 1, -54),
 	CanvasSize = UDim2.new(), AutomaticCanvasSize = Enum.AutomaticSize.Y,
-	ScrollBarThickness = TOUCH and 14 or 8,
-}, creditsPanel)
+	ScrollBarThickness = TOUCH and 12 or 7,
+}, creditos)
 
 new("TextLabel", {
-	BackgroundTransparency = 1, Font = FONT, TextSize = 15, ZIndex = 20,
-	TextColor3 = TEXT_MAIN, TextXAlignment = Enum.TextXAlignment.Left,
+	BackgroundTransparency = 1, Font = FONT, TextSize = 15, ZIndex = 40,
+	TextColor3 = TEXTO, TextXAlignment = Enum.TextXAlignment.Left,
 	TextYAlignment = Enum.TextYAlignment.Top, Text = CREDITS,
 	Size = UDim2.new(1, -8, 0, 0), AutomaticSize = Enum.AutomaticSize.Y,
-}, creditsScroll)
+}, creditosScroll)
 
-local creditsBack = new("TextButton", {
-	BackgroundColor3 = GREY_PANEL, BorderSizePixel = 1, BorderColor3 = GREY_DARK,
-	ZIndex = 21, Font = FONT, TextSize = 16, TextColor3 = TEXT_MAIN, Text = "Back",
-	AutoButtonColor = true,
-	Size = UDim2.fromOffset(110, 32), Position = UDim2.new(0.5, -55, 1, -40),
-}, creditsPanel)
+local creditosBack = new("TextButton", {
+	BackgroundColor3 = PANEL, BorderSizePixel = 1, BorderColor3 = OSCURO,
+	ZIndex = 41, Font = FONT, TextSize = 16, TextColor3 = TEXTO, Text = "Back",
+	AutoButtonColor = true, AnchorPoint = Vector2.new(0.5, 1),
+	Position = UDim2.new(0.5, 0, 1, -10), Size = UDim2.fromOffset(120, 32),
+}, creditos)
 
-creditsBtn.Activated:Connect(function () creditsPanel.Visible = true end)
-creditsBack.Activated:Connect(function () creditsPanel.Visible = false end)
+creditsBtn.Activated:Connect(function () creditos.Visible = true end)
+creditosBack.Activated:Connect(function () creditos.Visible = false end)
 
 --------------------------------------------------------------------------------
--- Behaviour
+-- Datos
 --------------------------------------------------------------------------------
 
-local selected = nil
-local activeTab = "Recent"
-local rows = {}
+local seleccion = nil
+local pestana = "Recent"
+local filtro = ""
+local fichasActuales = {}
+local tarjetas = {}
 
-local function paintInfo()
-	if not selected then
-		infoTitle.Text = "Select a creation"
-		infoSub.Text = ""
-		infoDesc.Text = ""
-		playBtn.Active = false
-		playBtn.TextColor3 = TEXT_DIM
-		return
-	end
-
-	infoTitle.Text = selected.nombre or "Untitled"
-	infoSub.Text = ("by %s  -  %d parts%s"):format(
-		selected.dueno or "?", selected.partes or 0,
-		selected.visitas and selected.visitas > 0
-			and ("  -  %d plays"):format(selected.visitas) or "")
-	infoDesc.Text = selected.descripcion or ""
-
-	local jugable = selected.publicada and playId and playId.Value > 0
-	playBtn.Active = jugable and true or false
-	playBtn.TextColor3 = jugable and TEXT_MAIN or TEXT_DIM
-	status.Text = selected.publicada and ""
-		or "Not published yet - only you can open it, in Bygone Studio."
-end
-
---- Cada creacion se pinta como una ficha con la foto de perfil de quien la
---- hizo. La miniatura se pide aparte y en segundo plano: GetUserThumbnailAsync
---- espera respuesta de Roblox, y con veinte fichas eso serian veinte esperas
---- seguidas antes de ver nada.
 local function retrato(imagen, userId)
 	task.spawn(function ()
 		local ok, url = pcall(function ()
 			return Players:GetUserThumbnailAsync(userId,
-				Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48)
+				Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150)
 		end)
 		if ok and imagen.Parent then
 			imagen.Image = url
@@ -302,192 +346,223 @@ local function retrato(imagen, userId)
 	end)
 end
 
-local ALTO_FICHA = 68
-
-local function paintRows(fichas, vacio)
-	for _, row in ipairs(rows) do
-		row:Destroy()
-	end
-	rows = {}
-	selected = nil
-	paintInfo()
-
-	if #fichas == 0 then
-		local etiqueta = new("TextLabel", {
-			BackgroundTransparency = 1, Font = FONT, TextSize = 15, ZIndex = 13,
-			TextColor3 = TEXT_DIM, Text = "  " .. vacio,
-			TextXAlignment = Enum.TextXAlignment.Left,
-			Size = UDim2.new(1, 0, 0, 30),
-		}, list)
-		table.insert(rows, etiqueta)
+local function pintarDetalle()
+	if not seleccion then
+		dRetrato.Image = ""
+		dTitulo.Text = "Nothing selected"
+		dAutor.Text = ""
+		dDesc.Text = "Pick a creation from the list."
+		dCifras.Text = ""
+		playBtn.Active = false
+		playBtn.TextColor3 = TENUE
+		status.Text = ""
 		return
 	end
 
-	for i, ficha in ipairs(fichas) do
-		local card = new("TextButton", {
-			BackgroundColor3 = GREY_BG, BorderSizePixel = 1, BorderColor3 = GREY_DARK,
-			ZIndex = 13, LayoutOrder = i, Text = "", AutoButtonColor = false,
-			Size = UDim2.new(1, -8, 0, ALTO_FICHA),
-		}, list)
+	dTitulo.Text = seleccion.nombre or "Untitled"
+	dAutor.Text = "@" .. (seleccion.dueno or "unknown")
+	dDesc.Text = (seleccion.descripcion and #seleccion.descripcion > 0)
+		and seleccion.descripcion or "No description."
 
-		-- Foto de perfil
-		local marco = new("Frame", {
-			BackgroundColor3 = GREY_PANEL, BorderSizePixel = 1,
-			BorderColor3 = GREY_DARK, ZIndex = 14,
-			Position = UDim2.fromOffset(6, 6), Size = UDim2.fromOffset(56, 56),
-		}, card)
+	dRetrato.Image = ""
+	if seleccion.duenoId then
+		retrato(dRetrato, seleccion.duenoId)
+	end
 
-		local foto = new("ImageLabel", {
-			BackgroundTransparency = 1, ZIndex = 15, Size = UDim2.fromScale(1, 1),
-			Image = "", ScaleType = Enum.ScaleType.Fit,
-		}, marco)
+	dCifras.Text = ("Parts         %d\nPlays         %d\nVisibility    %s")
+		:format(seleccion.partes or 0, seleccion.visitas or 0,
+			seleccion.publicada and "public" or "private")
 
-		if ficha.duenoId then
-			retrato(foto, ficha.duenoId)
+	local jugable = seleccion.publicada and playId and playId.Value > 0
+	playBtn.Active = jugable and true or false
+	playBtn.TextColor3 = jugable and TEXTO or TENUE
+	status.TextColor3 = TENUE
+	status.Text = seleccion.publicada and ""
+		or "Not published. Only you can open it, in Bygone Studios."
+end
+
+local function pintarRejilla()
+	for _, t in ipairs(tarjetas) do
+		t:Destroy()
+	end
+	tarjetas = {}
+
+	local mostradas = 0
+
+	for i, ficha in ipairs(fichasActuales) do
+		local coincide = true
+		if filtro ~= "" then
+			coincide = (ficha.nombre or ""):lower():find(filtro, 1, true) ~= nil
+				or (ficha.dueno or ""):lower():find(filtro, 1, true) ~= nil
 		end
 
-		-- Titulo
-		new("TextLabel", {
-			BackgroundTransparency = 1, Font = FONT, TextSize = 17, ZIndex = 14,
-			TextColor3 = TEXT_MAIN, TextXAlignment = Enum.TextXAlignment.Left,
-			TextTruncate = Enum.TextTruncate.AtEnd,
-			Text = ficha.nombre or "Untitled",
-			Position = UDim2.fromOffset(70, 6), Size = UDim2.new(1, -240, 0, 20),
-		}, card)
+		if coincide then
+			mostradas += 1
 
-		-- Autor
-		new("TextLabel", {
-			BackgroundTransparency = 1, Font = FONT, TextSize = 14, ZIndex = 14,
-			TextColor3 = SEL_BG, TextXAlignment = Enum.TextXAlignment.Left,
-			Text = "by @" .. (ficha.dueno or "unknown"),
-			Position = UDim2.fromOffset(70, 26), Size = UDim2.new(1, -240, 0, 17),
-		}, card)
+			local card = new("TextButton", {
+				BackgroundColor3 = FONDO, BorderSizePixel = 1, BorderColor3 = OSCURO,
+				ZIndex = 13, LayoutOrder = i, Text = "", AutoButtonColor = false,
+			}, lista)
 
-		-- Descripcion
-		new("TextLabel", {
-			BackgroundTransparency = 1, Font = FONT, TextSize = 13, ZIndex = 14,
-			TextColor3 = TEXT_DIM, TextXAlignment = Enum.TextXAlignment.Left,
-			TextTruncate = Enum.TextTruncate.AtEnd,
-			Text = (ficha.descripcion and #ficha.descripcion > 0)
-				and ficha.descripcion or "No description.",
-			Position = UDim2.fromOffset(70, 44), Size = UDim2.new(1, -240, 0, 17),
-		}, card)
+			local marco = new("Frame", {
+				BackgroundColor3 = HUECO, BorderSizePixel = 1, BorderColor3 = OSCURO,
+				ZIndex = 14, Position = UDim2.fromOffset(6, 6),
+				Size = UDim2.fromOffset(60, 60),
+			}, card)
+			local foto = new("ImageLabel", {
+				BackgroundTransparency = 1, ZIndex = 15, Size = UDim2.fromScale(1, 1),
+				Image = "", ScaleType = Enum.ScaleType.Fit,
+			}, marco)
+			if ficha.duenoId then
+				retrato(foto, ficha.duenoId)
+			end
 
-		-- Cifras
-		new("TextLabel", {
-			BackgroundTransparency = 1, Font = FONT, TextSize = 13, ZIndex = 14,
-			TextColor3 = TEXT_DIM, TextXAlignment = Enum.TextXAlignment.Right,
-			Text = ("%d parts
-%d plays%s"):format(ficha.partes or 0,
-				ficha.visitas or 0, ficha.publicada and "" or "
-private"),
-			Position = UDim2.new(1, -166, 0, 8), Size = UDim2.fromOffset(160, 52),
-		}, card)
+			new("TextLabel", {
+				BackgroundTransparency = 1, Font = FONT, TextSize = 15, ZIndex = 14,
+				TextColor3 = TEXTO, TextXAlignment = Enum.TextXAlignment.Left,
+				TextTruncate = Enum.TextTruncate.AtEnd,
+				Text = ficha.nombre or "Untitled",
+				Position = UDim2.fromOffset(72, 8), Size = UDim2.fromOffset(110, 18),
+			}, card)
 
-		local function resaltar(activo)
-			card.BackgroundColor3 = activo and SEL_BG or GREY_BG
-			for _, hijo in ipairs(card:GetDescendants()) do
-				if hijo:IsA("TextLabel") and hijo.TextColor3 == TEXT_MAIN then
-					hijo.TextColor3 = activo and WHITE or TEXT_MAIN
+			new("TextLabel", {
+				BackgroundTransparency = 1, Font = FONT, TextSize = 12, ZIndex = 14,
+				TextColor3 = SEL, TextXAlignment = Enum.TextXAlignment.Left,
+				TextTruncate = Enum.TextTruncate.AtEnd,
+				Text = "@" .. (ficha.dueno or "unknown"),
+				Position = UDim2.fromOffset(72, 27), Size = UDim2.fromOffset(110, 16),
+			}, card)
+
+			new("TextLabel", {
+				BackgroundTransparency = 1, Font = FONT, TextSize = 12, ZIndex = 14,
+				TextColor3 = TENUE, TextXAlignment = Enum.TextXAlignment.Left,
+				Text = ("%d parts   %d plays"):format(ficha.partes or 0,
+					ficha.visitas or 0),
+				Position = UDim2.fromOffset(72, 46), Size = UDim2.fromOffset(110, 16),
+			}, card)
+
+			if not ficha.publicada then
+				new("TextLabel", {
+					BackgroundColor3 = OSCURO, BorderSizePixel = 0, ZIndex = 16,
+					Font = FONT, TextSize = 10, TextColor3 = BLANCO, Text = "PRIVATE",
+					Position = UDim2.fromOffset(6, 6), Size = UDim2.fromOffset(52, 12),
+				}, card)
+			end
+
+			card.MouseEnter:Connect(function ()
+				if seleccion ~= ficha then card.BackgroundColor3 = PANEL end
+			end)
+			card.MouseLeave:Connect(function ()
+				if seleccion ~= ficha then card.BackgroundColor3 = FONDO end
+			end)
+			card.Activated:Connect(function ()
+				for _, otra in ipairs(tarjetas) do
+					if otra:IsA("TextButton") then
+						otra.BackgroundColor3 = FONDO
+					end
 				end
-			end
+				card.BackgroundColor3 = SEL
+				seleccion = ficha
+				pintarDetalle()
+			end)
+
+			table.insert(tarjetas, card)
 		end
+	end
 
-		card.MouseEnter:Connect(function ()
-			if selected ~= ficha then card.BackgroundColor3 = GREY_PANEL end
-		end)
-		card.MouseLeave:Connect(function ()
-			if selected ~= ficha then card.BackgroundColor3 = GREY_BG end
-		end)
+	contadorLbl.Text = ("%d creation%s"):format(mostradas, mostradas == 1 and "" or "s")
 
-		card.Activated:Connect(function ()
-			for _, otra in ipairs(rows) do
-				if otra:IsA("TextButton") then otra.BackgroundColor3 = GREY_BG end
-			end
-			card.BackgroundColor3 = SEL_BG
-			selected = ficha
-			paintInfo()
-		end)
-
-		table.insert(rows, card)
+	if mostradas == 0 then
+		local vacio = new("TextLabel", {
+			BackgroundTransparency = 1, Font = FONT, TextSize = 14, ZIndex = 14,
+			TextColor3 = TENUE, TextWrapped = true, LayoutOrder = 0,
+			Text = (pestana == "Mine")
+				and "You have not built anything yet. Press BUILD to start."
+				or "Nothing here yet. Press BUILD and be the first.",
+		}, lista)
+		table.insert(tarjetas, vacio)
 	end
 end
 
 local cargando = false
 
-local function cargarPestana(nombre)
-	if cargando or not canal then
-		return
-	end
+local function cargar(nombre)
+	if cargando or not canal then return end
 
-	activeTab = nombre
+	pestana = nombre
 	cargando = true
-	paintRows({}, "Loading...")
+	fichasActuales = {}
+	pintarRejilla()
+	contadorLbl.Text = "Loading..."
 
 	task.spawn(function ()
-		local ok, respuesta
-
+		local ok, r
 		if nombre == "Mine" then
-			ok, respuesta = pcall(function ()
-				return canal.MisCreaciones:InvokeServer()
-			end)
+			ok, r = pcall(function () return canal.MisCreaciones:InvokeServer() end)
 		else
-			ok, respuesta = pcall(function ()
+			ok, r = pcall(function ()
 				return canal.Galeria:InvokeServer(nombre == "Popular")
 			end)
 		end
 
 		cargando = false
 
-		if ok and respuesta and respuesta.ok then
-			paintRows(respuesta.fichas or {},
-				nombre == "Mine"
-					and "You have not built anything yet. Press Build to start."
-					or "Nothing published yet. Be the first: press Build.")
+		if ok and r and r.ok then
+			fichasActuales = r.fichas or {}
 		else
-			paintRows({}, (respuesta and respuesta.error) or "Could not load the list.")
+			fichasActuales = {}
+			status.TextColor3 = ROJO
+			status.Text = (r and r.error) or "Could not load the list."
 		end
+
+		seleccion = nil
+		pintarRejilla()
+		pintarDetalle()
 	end)
 end
 
-local tabButtons = {}
-
+local botonesTab = {}
 for i, nombre in ipairs({ "Recent", "Popular", "Mine" }) do
 	local b = new("TextButton", {
-		BackgroundColor3 = GREY_PANEL, BorderSizePixel = 1, BorderColor3 = GREY_DARK,
-		ZIndex = 13, LayoutOrder = i, Font = FONT, TextSize = 15,
-		TextColor3 = TEXT_MAIN, Text = nombre, AutoButtonColor = false,
-		Size = UDim2.fromOffset(110, 26),
-	}, tabBar)
-
-	tabButtons[nombre] = b
+		BackgroundColor3 = PANEL, BorderSizePixel = 1, BorderColor3 = OSCURO,
+		ZIndex = 14, LayoutOrder = i, Font = FONT, TextSize = 15,
+		TextColor3 = TEXTO, Text = nombre, AutoButtonColor = false,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		Size = UDim2.fromOffset(178, TOUCH and 32 or 28),
+	}, tabHolder)
+	new("UIPadding", { PaddingLeft = UDim.new(0, 10) }, b)
+	botonesTab[nombre] = b
 
 	b.Activated:Connect(function ()
-		for otro, btn in pairs(tabButtons) do
-			btn.BackgroundColor3 = (otro == nombre) and SEL_BG or GREY_PANEL
-			btn.TextColor3 = (otro == nombre) and WHITE or TEXT_MAIN
+		for otro, btn in pairs(botonesTab) do
+			btn.BackgroundColor3 = (otro == nombre) and SEL or PANEL
+			btn.TextColor3 = (otro == nombre) and BLANCO or TEXTO
 		end
-		cargarPestana(nombre)
+		cargar(nombre)
 	end)
 end
+botonesTab.Recent.BackgroundColor3 = SEL
+botonesTab.Recent.TextColor3 = BLANCO
 
-tabButtons.Recent.BackgroundColor3 = SEL_BG
-tabButtons.Recent.TextColor3 = WHITE
+searchBox:GetPropertyChangedSignal("Text"):Connect(function ()
+	filtro = searchBox.Text:lower()
+	pintarRejilla()
+end)
 
 --------------------------------------------------------------------------------
--- Teleporting
+-- Teletransporte
 --------------------------------------------------------------------------------
 
-local function irA(placeId, datos)
+local function irA(placeId, datos, etiqueta)
 	if not placeId or placeId <= 0 then
-		status.TextColor3 = RED
+		status.TextColor3 = ROJO
 		status.Text = "That place is not set up yet."
 		return
 	end
 
-	status.TextColor3 = TEXT_DIM
+	status.TextColor3 = TENUE
 	status.Text = "Loading..."
-	anunciarDestino(datos and "Entering the creation" or "Bygone Studios")
+	anunciarDestino(etiqueta)
 
 	local ok, err = pcall(function ()
 		if datos then
@@ -500,32 +575,33 @@ local function irA(placeId, datos)
 	end)
 
 	if not ok then
-		status.TextColor3 = RED
+		status.TextColor3 = ROJO
 		status.Text = "Teleporting only works in the published game."
 		warn("[Menu] Teleport failed:", err)
 	end
 end
 
 playBtn.Activated:Connect(function ()
-	if selected and playBtn.Active then
-		irA(playId and playId.Value, { creacion = selected.id })
+	if seleccion and playBtn.Active then
+		irA(playId and playId.Value, { creacion = seleccion.id },
+		    seleccion.nombre or "Loading")
 	end
 end)
 
 buildBtn.Activated:Connect(function ()
-	irA(studioId and studioId.Value)
+	irA(studioId and studioId.Value, nil, "Bygone Studios")
 end)
 
 --------------------------------------------------------------------------------
--- Opening
+-- Abrir y cerrar
 --------------------------------------------------------------------------------
 
-local function setOpen(open)
-	dim.Visible = open
-	if open then
-		fitToScreen()
-		if #rows == 0 then
-			cargarPestana(activeTab)
+local function setOpen(abrir)
+	dim.Visible = abrir
+	if abrir then
+		ajustar()
+		if #fichasActuales == 0 and not cargando then
+			cargar(pestana)
 		end
 	end
 end
@@ -533,19 +609,19 @@ end
 closeBtn.Activated:Connect(function () setOpen(false) end)
 
 local openBtn = new("TextButton", {
-	Name = "OpenMenu", BackgroundColor3 = GREY_BG, BorderSizePixel = 1,
-	BorderColor3 = GREY_DARK, ZIndex = 9, Font = FONT, TextSize = 16,
-	TextColor3 = TEXT_MAIN, Text = "Creations", AutoButtonColor = true,
-	AnchorPoint = Vector2.new(1, 0),
-	Size = UDim2.fromOffset(TOUCH and 124 or 106, TOUCH and 44 or 32),
-	Position = UDim2.new(1, -12, 0, 46),
+	Name = "OpenMenu", BackgroundColor3 = FONDO, BorderSizePixel = 1,
+	BorderColor3 = OSCURO, ZIndex = 9, Font = FONT, TextSize = 16,
+	TextColor3 = TEXTO, Text = "Creations", AutoButtonColor = true,
+	AnchorPoint = Vector2.new(0.5, 1),
+	Size = UDim2.fromOffset(TOUCH and 150 or 128, TOUCH and 46 or 36),
+	Position = UDim2.new(0.5, 0, 1, -14),
 }, screen)
+bisel(openBtn, 9)
+
 openBtn.Activated:Connect(function () setOpen(not dim.Visible) end)
 
-UserInputService.InputBegan:Connect(function (input, processed)
-	if processed then
-		return
-	end
+UserInputService.InputBegan:Connect(function (input, procesado)
+	if procesado then return end
 	if input.KeyCode == Enum.KeyCode.M then
 		setOpen(not dim.Visible)
 	elseif input.KeyCode == Enum.KeyCode.Escape and dim.Visible then
@@ -553,36 +629,12 @@ UserInputService.InputBegan:Connect(function (input, processed)
 	end
 end)
 
--- Los portales del vestibulo: uno lleva al editor, otro abre la galeria.
-for _, obj in ipairs(workspace:GetDescendants()) do
-	if obj:IsA("BasePart") then
-		if obj.Name == "PortalConstruir" then
-			local prompt = new("ProximityPrompt", {
-				ActionText = "Build", ObjectText = "Bygone Studio",
-				HoldDuration = 0, RequiresLineOfSight = false,
-				MaxActivationDistance = 14,
-			}, obj)
-			prompt.Triggered:Connect(function ()
-				irA(studioId and studioId.Value)
-			end)
-
-		elseif obj.Name == "PortalGaleria" then
-			local prompt = new("ProximityPrompt", {
-				ActionText = "Browse creations", ObjectText = "Bygone",
-				HoldDuration = 0, RequiresLineOfSight = false,
-				MaxActivationDistance = 14,
-			}, obj)
-			prompt.Triggered:Connect(function () setOpen(true) end)
-		end
-	end
-end
-
 if workspace.CurrentCamera then
-	workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(fitToScreen)
+	workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(ajustar)
 end
-GuiService:GetPropertyChangedSignal("TopbarInset"):Connect(fitToScreen)
+GuiService:GetPropertyChangedSignal("TopbarInset"):Connect(ajustar)
 
-fitToScreen()
-paintInfo()
+ajustar()
+pintarDetalle()
 
 task.delay(1.5, function () setOpen(true) end)

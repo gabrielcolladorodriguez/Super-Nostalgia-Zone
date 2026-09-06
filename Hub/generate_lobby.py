@@ -2,17 +2,22 @@
 """
 Genera Hub/Lobby.model.json: el vestibulo de Bygone.
 
-Tres zonas:
+La version anterior tenia portales de neon, farolas, bancos, jardineras y un
+parkour dando vueltas alrededor, todo a la vez y todo compitiendo por la
+atencion. Quedaba abarrotado.
 
-  la plaza     sala cerrada con suelo de damero, muros con columnas, farolas,
-               bancos y jardineras. Aqui apareces.
-  los portales BUILD y PLAY, grandes y con neon, en la cara norte.
-  el parkour   un circuito de 24 obstaculos que sube en espiral alrededor de la
-               plaza hasta un mirador. Con puntos de control, lava, saltos de
-               fe y escaleras de andamio, como los obbies de 2008.
+Este parte de una idea sola: una sala noble, simetrica y tranquila. Nada de
+portales: para construir o para jugar se usa el menu, que es donde ya esta toda
+la informacion. La sala solo tiene que ser un sitio agradable donde caer.
 
-El punto de aparicion es invisible a proposito: una losa transparente y sin
-colision. Apareces de pie sobre el damero, no encima de un cuadrado blanco.
+  - planta cuadrada de 220, con una nave central marcada por columnas
+  - suelo de damero suave, sin contrastes fuertes
+  - una tarima al fondo con el rotulo, como el escenario de un salon
+  - iluminacion indirecta desde apliques en las columnas
+  - una arcada lateral que da paso al parkour, claramente separada de la sala
+
+Paleta corta a proposito: crema, piedra, madera y un solo acento burdeos. Los
+colores saturados se reservan para el parkour, que si tiene que cantar.
 
 Uso:  python generate_lobby.py
 """
@@ -24,17 +29,18 @@ import os
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 BC = {
-    "rojo": 21, "azul": 23, "amarillo": 24, "verde": 37, "naranja": 106,
-    "verde oscuro": 28, "gris": 194, "gris oscuro": 199, "marron": 192,
-    "blanco": 1001, "negro": 26, "burdeos": 1003, "crema": 1002,
-    "morado": 104, "turquesa": 1018, "rosa": 1032,
+    "crema": 1002, "piedra": 194, "piedra oscura": 199, "madera": 192,
+    "burdeos": 1003, "blanco": 1001, "negro": 26, "cesped": 28,
+    "arena": 5, "laton": 24,
+    # solo para el parkour
+    "azul": 23, "verde": 37, "amarillo": 24, "naranja": 106, "rojo": 21,
+    "morado": 104, "turquesa": 1018,
 }
 
-# Los obstaculos van rotando de color para que se lea la progresion.
 RUTA = ["azul", "verde", "amarillo", "naranja", "rojo", "morado", "turquesa"]
 
 
-def part(name, size, pos, color="gris", top="Studs", bottom="Inlet", rot_y=0.0,
+def part(name, size, pos, color="piedra", top="Studs", bottom="Inlet", rot_y=0.0,
          classname="Part", extra=None, children=None, mat=None):
     a = math.radians(rot_y)
     c, s = math.cos(a), math.sin(a)
@@ -67,251 +73,250 @@ def label(name, texto, color, y, alto):
         "Text": texto, "TextColor3": color}}
 
 
-def panel(textos):
-    """La misma ficha por las dos caras: en Roblox Front mira hacia -Z."""
+def panel(textos, caras=("Back", "Front")):
     return [{"Name": "Ficha" + f, "ClassName": "SurfaceGui", "Properties": {
         "Face": f, "SizingMode": "PixelsPerStud", "PixelsPerStud": 50,
-        "AlwaysOnTop": False}, "Children": textos} for f in ("Back", "Front")]
+        "AlwaysOnTop": False}, "Children": textos} for f in caras]
 
 
-def luz(brillo=2.2, alcance=40, color=(1, 0.94, 0.8)):
+def luz(brillo=1.6, alcance=30, color=(1, 0.95, 0.85)):
     return {"Name": "PointLight", "ClassName": "PointLight", "Properties": {
         "Brightness": brillo, "Range": alcance, "Color": list(color)}}
 
 
 # ---------------------------------------------------------------------------
-# La plaza
+# La sala
 # ---------------------------------------------------------------------------
 
-def plaza():
+LADO = 110          # media anchura de la sala
+ALTO_MURO = 34
+
+
+def sala():
     M = []
 
+    # Suelo: damero suave. Dos grises cercanos, no blanco y negro.
     suelo = []
-    paso = 20
-    for i in range(-5, 5):
-        for j in range(-5, 5):
-            col = "gris" if (i + j) % 2 == 0 else "gris oscuro"
-            suelo.append(part("Baldosa%d_%d" % (i, j), (paso, 2, paso),
-                              (i * paso + paso / 2, 1, j * paso + paso / 2), col))
+    paso = 22
+    n = int(LADO * 2 / paso)
+    for i in range(n):
+        for j in range(n):
+            x = -LADO + paso / 2 + i * paso
+            z = -LADO + paso / 2 + j * paso
+            col = "piedra" if (i + j) % 2 == 0 else "piedra oscura"
+            suelo.append(part("Baldosa%d_%d" % (i, j), (paso, 2, paso), (x, 1, z), col))
     M.append({"Name": "Suelo", "ClassName": "Model", "Children": suelo})
 
+    # Muros lisos, zocalo de madera y cornisa.
     muros = []
-    L = 100
-    for i, (dx, dz, sx, sz) in enumerate([(0, L, 2 * L + 8, 4), (0, -L, 2 * L + 8, 4),
-                                          (L, 0, 4, 2 * L + 8), (-L, 0, 4, 2 * L + 8)]):
-        muros.append(part("Muro%d" % i, (sx, 26, sz), (dx, 15, dz), "crema",
+    for i, (dx, dz, sx, sz) in enumerate([
+            (0, LADO, LADO * 2 + 6, 4), (0, -LADO, LADO * 2 + 6, 4),
+            (LADO, 0, 4, LADO * 2 + 6), (-LADO, 0, 4, LADO * 2 + 6)]):
+        muros.append(part("Zocalo%d" % i, (sx, 6, sz + 1), (dx, 3, dz), "madera",
                           top="Smooth", bottom="Smooth"))
-        muros.append(part("Cornisa%d" % i, (sx + 4, 3, sz + 4), (dx, 29, dz),
-                          "marron", top="Smooth", bottom="Smooth"))
-
-    for i, (x, z) in enumerate([(L, L), (L, -L), (-L, L), (-L, -L),
-                                (0, L), (0, -L), (L, 0), (-L, 0)]):
-        muros.append(part("Columna%d" % i, (8, 32, 8), (x, 17, z), "blanco",
-                          top="Smooth", bottom="Smooth"))
-        muros.append(part("Capitel%d" % i, (11, 3, 11), (x, 34, z), "marron",
+        muros.append(part("Muro%d" % i, (sx, ALTO_MURO, sz), (dx, 6 + ALTO_MURO / 2, dz),
+                          "crema", top="Smooth", bottom="Smooth"))
+        muros.append(part("Cornisa%d" % i, (sx + 5, 4, sz + 5),
+                          (dx, 6 + ALTO_MURO + 2, dz), "madera",
                           top="Smooth", bottom="Smooth"))
     M.append({"Name": "Muros", "ClassName": "Model", "Children": muros})
 
+    # Nave central: dos hileras de columnas con aplique de luz.
+    columnas = []
+    for lado in (-1, 1):
+        for k in range(5):
+            x = lado * 52
+            z = -80 + k * 40
+            columnas.append(part("Basa%d_%d" % (lado, k), (11, 3, 11), (x, 3.5, z),
+                                 "piedra oscura"))
+            columnas.append(part("Fuste%d_%d" % (lado, k), (8, 30, 8), (x, 20, z),
+                                 "blanco", top="Smooth", bottom="Smooth"))
+            columnas.append(part("Capitel%d_%d" % (lado, k), (12, 3, 12), (x, 36.5, z),
+                                 "madera", top="Smooth", bottom="Smooth"))
+            # Aplique: la luz nace de la columna, no de una farola en medio.
+            columnas.append(part("Aplique%d_%d" % (lado, k), (3, 3, 3),
+                                 (x - lado * 6, 28, z), "laton",
+                                 top="Smooth", bottom="Smooth", mat="Neon",
+                                 children=[luz(1.7, 34)]))
+    M.append({"Name": "Columnas", "ClassName": "Model", "Children": columnas})
+
+    # Alfombra que marca el eje de la nave.
     M.append({"Name": "Alfombra", "ClassName": "Model", "Children": [
-        part("Borde", (58, 0.3, 58), (0, 2.2, 0), "amarillo",
+        part("Borde", (34, 0.3, 180), (0, 2.2, 0), "laton",
              top="Smooth", bottom="Smooth"),
-        part("Roja", (52, 0.4, 52), (0, 2.3, 0), "burdeos",
+        part("Centro", (28, 0.4, 174), (0, 2.3, 0), "burdeos",
              top="Smooth", bottom="Smooth"),
     ]})
 
-    faroles = []
-    for i in range(12):
-        a = (i / 12) * math.tau
-        x, z = math.cos(a) * 76, math.sin(a) * 76
-        faroles.append(part("Pie%d" % i, (4, 2, 4), (x, 3, z), "negro", top="Smooth"))
-        faroles.append(part("Poste%d" % i, (1.6, 20, 1.6), (x, 13, z), "negro",
-                            top="Smooth", bottom="Smooth"))
-        faroles.append(part("Fanal%d" % i, (4, 4, 4), (x, 24, z), "amarillo",
-                            top="Smooth", bottom="Smooth", mat="Neon",
-                            children=[luz(2.4, 32)]))
-    M.append({"Name": "Faroles", "ClassName": "Model", "Children": faroles})
+    # Tarima del fondo con el rotulo.
+    tarima = [
+        part("Escalon1", (72, 2, 10), (0, 3, -74), "piedra oscura"),
+        part("Escalon2", (68, 2, 8), (0, 5, -78), "piedra oscura"),
+        part("Plataforma", (64, 2, 30), (0, 7, -92), "piedra oscura"),
+        part("Muro", (64, 26, 3), (0, 20, -104), "crema",
+             top="Smooth", bottom="Smooth"),
+        part("Rotulo", (54, 18, 1), (0, 22, -102), "crema",
+             top="Smooth", bottom="Smooth",
+             children=panel([
+                 label("Titulo", "BYGONE", [0.13, 0.13, 0.13], 0.06, 0.44),
+                 label("Lema", "build classic ROBLOX places, the way they were",
+                       [0.36, 0.36, 0.36], 0.55, 0.14),
+                 label("Sub", "press M, or the Creations button, to begin",
+                       [0.46, 0.46, 0.46], 0.74, 0.12),
+             ], caras=("Front",))),
+        part("ApliqueI", (3, 3, 3), (-24, 34, -100), "laton",
+             top="Smooth", bottom="Smooth", mat="Neon", children=[luz(2, 26)]),
+        part("ApliqueD", (3, 3, 3), (24, 34, -100), "laton",
+             top="Smooth", bottom="Smooth", mat="Neon", children=[luz(2, 26)]),
+    ]
+    M.append({"Name": "Tarima", "ClassName": "Model", "Children": tarima})
 
-    adornos = []
-    for i, (x, z, rot) in enumerate([(-60, 40, 0), (60, 40, 0),
-                                     (-60, -60, 90), (60, -60, 90)]):
-        adornos.append(part("BancoAsiento%d" % i, (16, 1.2, 5), (x, 5, z),
-                            "marron", rot_y=rot))
-        adornos.append(part("BancoPataI%d" % i, (1.5, 4, 4), (x - 6, 3, z),
-                            "negro", rot_y=rot))
-        adornos.append(part("BancoPataD%d" % i, (1.5, 4, 4), (x + 6, 3, z),
-                            "negro", rot_y=rot))
-
-    for i, (x, z) in enumerate([(-76, 0), (76, 0)]):
-        adornos.append(part("Jardinera%d" % i, (12, 6, 12), (x, 5, z), "marron"))
-        adornos.append(part("Tierra%d" % i, (10, 1, 10), (x, 8.5, z), "marron",
-                            top="Smooth"))
-        adornos.append(part("Arbusto%d" % i, (8, 8, 8), (x, 12, z), "verde",
-                            top="Smooth", bottom="Smooth", extra={"Shape": "Ball"}))
-    M.append({"Name": "Adornos", "ClassName": "Model", "Children": adornos})
+    # Bancada discreta contra los muros laterales.
+    bancos = []
+    for lado in (-1, 1):
+        for k in range(3):
+            x = lado * 86
+            z = -50 + k * 50
+            bancos.append(part("Banco%d_%d" % (lado, k), (10, 1.4, 26),
+                               (x, 5, z), "madera"))
+            bancos.append(part("PataA%d_%d" % (lado, k), (8, 4, 3),
+                               (x, 2.6, z - 10), "piedra oscura"))
+            bancos.append(part("PataB%d_%d" % (lado, k), (8, 4, 3),
+                               (x, 2.6, z + 10), "piedra oscura"))
+    M.append({"Name": "Bancos", "ClassName": "Model", "Children": bancos})
 
     return M
 
 
 # ---------------------------------------------------------------------------
-# Los portales
+# La arcada al parkour
 # ---------------------------------------------------------------------------
 
-def portal(nombre, x, color, titulo, sub):
-    tinte = (0.6, 0.8, 1) if color == "azul" else (0.6, 1, 0.6)
-    return {"Name": "Portal_" + nombre, "ClassName": "Model", "Children": [
-        part("Peana", (34, 4, 20), (x, 3, -40), "gris oscuro"),
-        part("Escalon", (38, 2, 6), (x, 2, -28), "gris oscuro"),
-        part(nombre, (22, 26, 3), (x, 18, -40), color, top="Smooth", bottom="Smooth",
-             mat="Neon", extra={"Transparency": 0.35},
-             children=[luz(3, 26, tinte)]),
-        part("JambaI", (4, 32, 6), (x - 13, 19, -40), "blanco",
+def arcada():
+    """Una puerta en el muro sur que separa la sala del circuito."""
+    z = LADO
+    return {"Name": "Arcada", "ClassName": "Model", "Children": [
+        part("Hueco", (26, 26, 8), (0, 19, z), "cesped",
+             extra={"Transparency": 1, "CanCollide": False}),
+        part("JambaI", (6, 26, 8), (-16, 19, z), "madera",
              top="Smooth", bottom="Smooth"),
-        part("JambaD", (4, 32, 6), (x + 13, 19, -40), "blanco",
+        part("JambaD", (6, 26, 8), (16, 19, z), "madera",
              top="Smooth", bottom="Smooth"),
-        part("Dintel", (34, 4, 7), (x, 36, -40), color, top="Smooth", bottom="Smooth"),
-        part("Rotulo", (30, 8, 1), (x, 43, -40), "blanco", top="Smooth", bottom="Smooth",
-             children=panel([label("T", titulo, [0.1, 0.1, 0.1], 0.04, 0.52),
-                             label("S", sub, [0.36, 0.36, 0.36], 0.6, 0.3)])),
+        part("Dintel", (38, 5, 8), (0, 34, z), "madera",
+             top="Smooth", bottom="Smooth"),
+        part("Rotulo", (30, 6, 1), (0, 34, z + 4.6), "crema",
+             top="Smooth", bottom="Smooth",
+             children=panel([
+                 label("T", "PARKOUR", [0.13, 0.13, 0.13], 0.06, 0.5),
+                 label("S", "24 jumps to the top", [0.42, 0.42, 0.42], 0.62, 0.28),
+             ], caras=("Back",))),
+        part("Sendero", (26, 2, 40), (0, 1, z + 22), "piedra"),
     ]}
 
 
 # ---------------------------------------------------------------------------
-# El parkour
+# El parkour, fuera de la sala
 # ---------------------------------------------------------------------------
 
 def parkour():
-    """Circuito en espiral alrededor de la plaza, de 24 obstaculos.
+    """Circuito de 24 obstaculos que sube en espiral, al sur de la sala.
 
-    La regla que sigue todo el trazado: cada salto sube como mucho 4 studs y
-    salva como mucho 20 de hueco. Un R6 clasico llega a eso justo; mas y deja
-    de ser dificil para pasar a ser imposible.
+    Regla del trazado: como mucho 4 studs de subida y 20 de hueco por salto. Es
+    lo que un R6 clasico alcanza justo; pasarse convierte dificil en imposible.
     """
-    M = []
-    partes = []
-    checkpoints = []
+    partes, checkpoints = [], []
 
-    radio = 132
+    centro_z = LADO + 150
+    radio = 92
     n = 24
-    altura = 6
 
-    def punto(i, r=None, alt=None):
-        a = (i / n) * math.tau * 1.35 - math.pi / 2
-        rr = r if r is not None else radio
-        return (math.cos(a) * rr, alt if alt is not None else altura, math.sin(a) * rr)
+    def punto(i, r, alt):
+        a = (i / n) * math.tau * 1.3 + math.pi / 2
+        return (math.cos(a) * r, alt, centro_z + math.sin(a) * r)
 
-    # Arranque: una rampa desde el suelo hasta el primer poyete.
-    partes.append(part("Rampa", (16, 2, 26), (0, 4, 118), "blanco"))
-    partes.append(part("Inicio", (20, 2, 20), (0, 6, 134), "blanco"))
-    partes.append(part("CartelInicio", (18, 6, 1), (0, 13, 143), "blanco",
-                       top="Smooth", bottom="Smooth",
-                       children=panel([
-                           label("T", "PARKOUR", [0.1, 0.1, 0.1], 0.05, 0.5),
-                           label("S", "24 jumps to the top",
-                                 [0.4, 0.4, 0.4], 0.6, 0.3)])))
+    partes.append(part("Rampa", (18, 2, 30), (0, 3, LADO + 56), "blanco"))
+    partes.append(part("Inicio", (24, 2, 24), (0, 5, LADO + 82), "blanco"))
 
     for i in range(n):
         color = RUTA[i % len(RUTA)]
-        alt = 6 + i * 3.4
+        alt = 5 + i * 3.4
         x, _, z = punto(i, radio, alt)
 
         if i % 6 == 5:
-            # Punto de control: plataforma ancha con arco, y se reaparece ahi.
             checkpoints.append(part("Checkpoint%d" % (i // 6), (14, 1, 14),
                                     (x, alt + 0.5, z), "verde",
                                     classname="SpawnLocation",
                                     top="Smooth", bottom="Smooth",
                                     extra={"Neutral": True, "Duration": 0}))
-            partes.append(part("Meseta%d" % i, (20, 2, 20), (x, alt, z), "verde"))
-            partes.append(part("ArcoI%d" % i, (1.4, 12, 1.4), (x - 7, alt + 7, z),
+            partes.append(part("Meseta%d" % i, (22, 2, 22), (x, alt, z), "verde"))
+            partes.append(part("ArcoI%d" % i, (1.4, 12, 1.4), (x - 8, alt + 7, z),
                                "verde", top="Smooth", bottom="Smooth"))
-            partes.append(part("ArcoD%d" % i, (1.4, 12, 1.4), (x + 7, alt + 7, z),
+            partes.append(part("ArcoD%d" % i, (1.4, 12, 1.4), (x + 8, alt + 7, z),
                                "verde", top="Smooth", bottom="Smooth"))
-            partes.append(part("ArcoT%d" % i, (16, 1.4, 1.4), (x, alt + 13, z),
+            partes.append(part("ArcoT%d" % i, (18, 1.4, 1.4), (x, alt + 13, z),
                                "verde", top="Smooth", bottom="Smooth", mat="Neon",
                                children=[luz(1.8, 20, (0.6, 1, 0.6))]))
 
         elif i % 6 == 2:
-            # Tramo de lava: tres losas finas con hueco entre ellas.
             for k in range(3):
-                xk, _, zk = punto(i + k * 0.25, radio, alt)
+                xk, _, zk = punto(i + k * 0.24, radio, alt)
                 partes.append(part("Losa%d_%d" % (i, k), (7, 1.2, 7),
                                    (xk, alt, zk), color))
-            xl, _, zl = punto(i + 0.5, radio, alt - 5)
+            xl, _, zl = punto(i + 0.45, radio, alt - 5)
             partes.append(part("Lava%d" % i, (26, 1, 26), (xl, alt - 5, zl), "rojo",
                                top="Smooth", bottom="Smooth", mat="Neon",
                                children=[luz(1.4, 22, (1, 0.4, 0.3))]))
 
         elif i % 6 == 3:
-            # Andamio: se sube trepando, como en los obbies clasicos.
             partes.append(part("Base%d" % i, (12, 2, 12), (x, alt, z), color))
             partes.append(part("Truss%d" % i, (2, 22, 2), (x, alt + 12, z),
-                               "gris oscuro", classname="TrussPart"))
+                               "piedra oscura", classname="TrussPart"))
             partes.append(part("Alto%d" % i, (10, 2, 10), (x, alt + 23, z), color))
 
         elif i % 6 == 4:
-            # Salto de fe: dos plataformas estrechas y separadas.
             partes.append(part("Salto%dA" % i, (6, 1.6, 6), (x, alt, z), color))
-            xb, _, zb = punto(i + 0.55, radio + 10, alt + 1)
+            xb, _, zb = punto(i + 0.5, radio + 12, alt + 1)
             partes.append(part("Salto%dB" % i, (6, 1.6, 6), (xb, alt + 1, zb), color))
 
         else:
             partes.append(part("Plataforma%d" % i, (14, 2, 14), (x, alt, z), color))
-            if i % 2 == 0:
-                partes.append(part("Poste%d" % i, (1.2, 8, 1.2), (x, alt + 5, z),
-                                   "amarillo", top="Smooth", bottom="Smooth",
-                                   mat="Neon", children=[luz(1.2, 14)]))
 
-    # El mirador de arriba
-    cima = 6 + n * 3.4 + 8
-    xc, _, zc = punto(n, radio - 20, cima)
+    cima = 5 + n * 3.4 + 8
+    xc, _, zc = punto(n, radio - 24, cima)
     partes.append(part("Mirador", (36, 2, 36), (xc, cima, zc), "blanco"))
-    partes.append(part("BarandaN", (36, 4, 1), (xc, cima + 3, zc - 17), "amarillo"))
-    partes.append(part("BarandaS", (36, 4, 1), (xc, cima + 3, zc + 17), "amarillo"))
-    partes.append(part("BarandaE", (1, 4, 36), (xc + 17, cima + 3, zc), "amarillo"))
-    partes.append(part("BarandaO", (1, 4, 36), (xc - 17, cima + 3, zc), "amarillo"))
-    partes.append(part("Trofeo", (6, 6, 6), (xc, cima + 5, zc), "amarillo",
+    for nombre, tam, off in (("BarandaN", (36, 4, 1), (0, 3, -17)),
+                             ("BarandaS", (36, 4, 1), (0, 3, 17)),
+                             ("BarandaE", (1, 4, 36), (17, 3, 0)),
+                             ("BarandaO", (1, 4, 36), (-17, 3, 0))):
+        partes.append(part(nombre, tam, (xc + off[0], cima + off[1], zc + off[2]),
+                           "laton", top="Smooth", bottom="Smooth"))
+    partes.append(part("Trofeo", (6, 6, 6), (xc, cima + 5, zc), "laton",
                        top="Smooth", bottom="Smooth", mat="Neon",
-                       extra={"Shape": "Ball"}, children=[luz(4, 40)]))
-    partes.append(part("CartelCima", (30, 8, 1), (xc, cima + 14, zc), "blanco",
+                       extra={"Shape": "Ball"}, children=[luz(4, 44)]))
+    partes.append(part("CartelCima", (30, 8, 1), (xc, cima + 14, zc), "crema",
                        top="Smooth", bottom="Smooth",
                        children=panel([
-                           label("T", "YOU MADE IT", [0.1, 0.1, 0.1], 0.05, 0.5),
+                           label("T", "YOU MADE IT", [0.13, 0.13, 0.13], 0.05, 0.5),
                            label("S", "now go build something",
-                                 [0.4, 0.4, 0.4], 0.6, 0.3)])))
+                                 [0.42, 0.42, 0.42], 0.6, 0.3)])))
 
-    M.append({"Name": "Parkour", "ClassName": "Model", "Children": partes})
-    M.append({"Name": "Checkpoints", "ClassName": "Model", "Children": checkpoints})
-    return M
+    return [{"Name": "Parkour", "ClassName": "Model", "Children": partes},
+            {"Name": "Checkpoints", "ClassName": "Model", "Children": checkpoints}]
 
 
 # ---------------------------------------------------------------------------
 
 def construir():
-    M = [part("Baseplate", (1400, 20, 1400), (0, -10, 0), "verde oscuro",
+    M = [part("Baseplate", (1400, 20, 1400), (0, -10, 0), "cesped",
               top="Studs", bottom="Smooth", extra={"Locked": True})]
 
-    M.extend(plaza())
-    M.append(portal("PortalConstruir", -38, "verde", "BUILD", "make your own place"))
-    M.append(portal("PortalGaleria", 38, "azul", "PLAY", "what others have built"))
-
-    M.append({"Name": "Cartel", "ClassName": "Model", "Children": [
-        part("Poste1", (5, 40, 5), (-40, 22, 86), "marron"),
-        part("Poste2", (5, 40, 5), (40, 22, 86), "marron"),
-        part("Panel", (84, 22, 2), (0, 44, 86), "blanco", top="Smooth", bottom="Smooth",
-             children=panel([
-                label("Titulo", "BYGONE", [0.1, 0.1, 0.1], 0.04, 0.46),
-                label("Lema", "build classic ROBLOX places, the way they were",
-                      [0.34, 0.34, 0.34], 0.56, 0.16),
-                label("Sub", "every creation here was made by someone who plays here",
-                      [0.44, 0.44, 0.44], 0.76, 0.13)])),
-        part("Marquesina", (88, 3, 7), (0, 56, 86), "burdeos",
-             top="Smooth", bottom="Smooth"),
-    ]})
-
+    M.extend(sala())
+    M.append(arcada())
     M.extend(parkour())
 
-    # Aparicion invisible, en el centro de la plaza.
-    M.append(part("SpawnLocation", (14, 1, 14), (0, 2.6, 44), "blanco",
+    # Apareces en la nave, mirando a la tarima. La losa es invisible y sin
+    # colision: se ve el damero, no un cuadrado blanco.
+    M.append(part("SpawnLocation", (16, 1, 16), (0, 2.6, 30), "blanco",
                   classname="SpawnLocation", top="Smooth", bottom="Smooth",
                   extra={"Transparency": 1, "CanCollide": False,
                          "Neutral": True, "Duration": 0}))
@@ -331,7 +336,7 @@ def main():
         json.dump(salida, f, indent="\t")
 
     texto = json.dumps(salida)
-    print("Vestibulo: %d partes, %d puntos de aparicion -> %s"
+    print("Vestibulo: %d partes, %d apariciones -> %s"
           % (texto.count('"ClassName": "Part"'),
              texto.count('"ClassName": "SpawnLocation"'), ruta))
 
