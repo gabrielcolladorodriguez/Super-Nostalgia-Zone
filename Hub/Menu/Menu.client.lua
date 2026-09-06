@@ -283,6 +283,24 @@ local function paintInfo()
 		or "Not published yet - only you can open it, in Bygone Studio."
 end
 
+--- Cada creacion se pinta como una ficha con la foto de perfil de quien la
+--- hizo. La miniatura se pide aparte y en segundo plano: GetUserThumbnailAsync
+--- espera respuesta de Roblox, y con veinte fichas eso serian veinte esperas
+--- seguidas antes de ver nada.
+local function retrato(imagen, userId)
+	task.spawn(function ()
+		local ok, url = pcall(function ()
+			return Players:GetUserThumbnailAsync(userId,
+				Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48)
+		end)
+		if ok and imagen.Parent then
+			imagen.Image = url
+		end
+	end)
+end
+
+local ALTO_FICHA = 68
+
 local function paintRows(fichas, vacio)
 	for _, row in ipairs(rows) do
 		row:Destroy()
@@ -303,41 +321,92 @@ local function paintRows(fichas, vacio)
 	end
 
 	for i, ficha in ipairs(fichas) do
-		local row = new("TextButton", {
-			BackgroundColor3 = SEL_BG, BackgroundTransparency = 1, BorderSizePixel = 0,
-			ZIndex = 13, LayoutOrder = i, Font = FONT, TextSize = 16,
-			TextColor3 = TEXT_MAIN, TextXAlignment = Enum.TextXAlignment.Left,
-			AutoButtonColor = false, Text = ("  %s"):format(ficha.nombre or "Untitled"),
-			Size = UDim2.new(1, -8, 0, TOUCH and 34 or 24),
+		local card = new("TextButton", {
+			BackgroundColor3 = GREY_BG, BorderSizePixel = 1, BorderColor3 = GREY_DARK,
+			ZIndex = 13, LayoutOrder = i, Text = "", AutoButtonColor = false,
+			Size = UDim2.new(1, -8, 0, ALTO_FICHA),
 		}, list)
 
-		new("TextLabel", {
-			BackgroundTransparency = 1, Font = FONT, TextSize = 14, ZIndex = 13,
-			TextColor3 = TEXT_DIM, TextXAlignment = Enum.TextXAlignment.Right,
-			Text = ("%s  %d parts  "):format(ficha.dueno or "", ficha.partes or 0),
-			Size = UDim2.new(0, 230, 1, 0), Position = UDim2.new(1, -230, 0, 0),
-		}, row)
+		-- Foto de perfil
+		local marco = new("Frame", {
+			BackgroundColor3 = GREY_PANEL, BorderSizePixel = 1,
+			BorderColor3 = GREY_DARK, ZIndex = 14,
+			Position = UDim2.fromOffset(6, 6), Size = UDim2.fromOffset(56, 56),
+		}, card)
 
-		row.MouseEnter:Connect(function ()
-			if selected ~= ficha then row.BackgroundTransparency = 0.6 end
-		end)
-		row.MouseLeave:Connect(function ()
-			if selected ~= ficha then row.BackgroundTransparency = 1 end
-		end)
-		row.Activated:Connect(function ()
-			for _, other in ipairs(rows) do
-				if other:IsA("TextButton") then
-					other.BackgroundTransparency = 1
-					other.TextColor3 = TEXT_MAIN
+		local foto = new("ImageLabel", {
+			BackgroundTransparency = 1, ZIndex = 15, Size = UDim2.fromScale(1, 1),
+			Image = "", ScaleType = Enum.ScaleType.Fit,
+		}, marco)
+
+		if ficha.duenoId then
+			retrato(foto, ficha.duenoId)
+		end
+
+		-- Titulo
+		new("TextLabel", {
+			BackgroundTransparency = 1, Font = FONT, TextSize = 17, ZIndex = 14,
+			TextColor3 = TEXT_MAIN, TextXAlignment = Enum.TextXAlignment.Left,
+			TextTruncate = Enum.TextTruncate.AtEnd,
+			Text = ficha.nombre or "Untitled",
+			Position = UDim2.fromOffset(70, 6), Size = UDim2.new(1, -240, 0, 20),
+		}, card)
+
+		-- Autor
+		new("TextLabel", {
+			BackgroundTransparency = 1, Font = FONT, TextSize = 14, ZIndex = 14,
+			TextColor3 = SEL_BG, TextXAlignment = Enum.TextXAlignment.Left,
+			Text = "by @" .. (ficha.dueno or "unknown"),
+			Position = UDim2.fromOffset(70, 26), Size = UDim2.new(1, -240, 0, 17),
+		}, card)
+
+		-- Descripcion
+		new("TextLabel", {
+			BackgroundTransparency = 1, Font = FONT, TextSize = 13, ZIndex = 14,
+			TextColor3 = TEXT_DIM, TextXAlignment = Enum.TextXAlignment.Left,
+			TextTruncate = Enum.TextTruncate.AtEnd,
+			Text = (ficha.descripcion and #ficha.descripcion > 0)
+				and ficha.descripcion or "No description.",
+			Position = UDim2.fromOffset(70, 44), Size = UDim2.new(1, -240, 0, 17),
+		}, card)
+
+		-- Cifras
+		new("TextLabel", {
+			BackgroundTransparency = 1, Font = FONT, TextSize = 13, ZIndex = 14,
+			TextColor3 = TEXT_DIM, TextXAlignment = Enum.TextXAlignment.Right,
+			Text = ("%d parts
+%d plays%s"):format(ficha.partes or 0,
+				ficha.visitas or 0, ficha.publicada and "" or "
+private"),
+			Position = UDim2.new(1, -166, 0, 8), Size = UDim2.fromOffset(160, 52),
+		}, card)
+
+		local function resaltar(activo)
+			card.BackgroundColor3 = activo and SEL_BG or GREY_BG
+			for _, hijo in ipairs(card:GetDescendants()) do
+				if hijo:IsA("TextLabel") and hijo.TextColor3 == TEXT_MAIN then
+					hijo.TextColor3 = activo and WHITE or TEXT_MAIN
 				end
 			end
-			row.BackgroundTransparency = 0
-			row.TextColor3 = WHITE
+		end
+
+		card.MouseEnter:Connect(function ()
+			if selected ~= ficha then card.BackgroundColor3 = GREY_PANEL end
+		end)
+		card.MouseLeave:Connect(function ()
+			if selected ~= ficha then card.BackgroundColor3 = GREY_BG end
+		end)
+
+		card.Activated:Connect(function ()
+			for _, otra in ipairs(rows) do
+				if otra:IsA("TextButton") then otra.BackgroundColor3 = GREY_BG end
+			end
+			card.BackgroundColor3 = SEL_BG
 			selected = ficha
 			paintInfo()
 		end)
 
-		table.insert(rows, row)
+		table.insert(rows, card)
 	end
 end
 

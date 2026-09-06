@@ -21,9 +21,9 @@
 					1.0
 				],
 				"Size": [
-					1024,
+					1400,
 					20,
-					1024
+					1400
 				],
 				"Anchored": true,
 				"BrickColor": {
@@ -4467,1312 +4467,6 @@
 			]
 		},
 		{
-			"Name": "Portal_PortalConstruir",
-			"ClassName": "Model",
-			"Children": [
-				{
-					"Name": "Peana",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							-38,
-							3,
-							-40,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							34,
-							4,
-							20
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 199
-						},
-						"TopSurface": "Studs",
-						"BottomSurface": "Inlet",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				},
-				{
-					"Name": "Escalon",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							-38,
-							2,
-							-28,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							38,
-							2,
-							6
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 199
-						},
-						"TopSurface": "Studs",
-						"BottomSurface": "Inlet",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				},
-				{
-					"Name": "PortalConstruir",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							-38,
-							18,
-							-40,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							22,
-							26,
-							3
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 37
-						},
-						"TopSurface": "Smooth",
-						"BottomSurface": "Smooth",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth",
-						"Material": "Neon",
-						"Transparency": 0.35
-					},
-					"Children": [
-						{
-							"Name": "PointLight",
-							"ClassName": "PointLight",
-							"Properties": {
-								"Brightness": 3,
-								"Range": 26,
-								"Color": [
-									0.6,
-									1,
-									0.6
-								]
-							}
-						}
-					]
-				},
-				{
-					"Name": "JambaI",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							-51,
-							19,
-							-40,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							4,
-							32,
-							6
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 1001
-						},
-						"TopSurface": "Smooth",
-						"BottomSurface": "Smooth",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				},
-				{
-					"Name": "JambaD",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							-25,
-							19,
-							-40,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							4,
-							32,
-							6
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 1001
-						},
-						"TopSurface": "Smooth",
-						"BottomSurface": "Smooth",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				},
-				{
-					"Name": "Dintel",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							-38,
-							36,
-							-40,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							34,
-							4,
-							7
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 37
-						},
-						"TopSurface": "Smooth",
-						"BottomSurface": "Smooth",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				},
-				{
-					"Name": "Rotulo",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							-38,
-							43,
-							-40,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							30,
-							8,
-							1
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 1001
-						},
-						"TopSurface": "Smooth",
-						"BottomSurface": "Smooth",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					},
-					"Children": [
-						{
-							"Name": "FichaBack",
-							"ClassName": "SurfaceGui",
-							"Properties": {
-								"Face": "Back",
-								"SizingMode": "PixelsPerStud",
-								"PixelsPerStud": 50,
-								"AlwaysOnTop": false
-							},
-							"Children": [
-								{
-									"Name": "T",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.52,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.04,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "BUILD",
-										"TextColor3": [
-											0.1,
-											0.1,
-											0.1
-										]
-									}
-								},
-								{
-									"Name": "S",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.3,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.6,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "make your own place",
-										"TextColor3": [
-											0.36,
-											0.36,
-											0.36
-										]
-									}
-								}
-							]
-						},
-						{
-							"Name": "FichaFront",
-							"ClassName": "SurfaceGui",
-							"Properties": {
-								"Face": "Front",
-								"SizingMode": "PixelsPerStud",
-								"PixelsPerStud": 50,
-								"AlwaysOnTop": false
-							},
-							"Children": [
-								{
-									"Name": "T",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.52,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.04,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "BUILD",
-										"TextColor3": [
-											0.1,
-											0.1,
-											0.1
-										]
-									}
-								},
-								{
-									"Name": "S",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.3,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.6,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "make your own place",
-										"TextColor3": [
-											0.36,
-											0.36,
-											0.36
-										]
-									}
-								}
-							]
-						}
-					]
-				}
-			]
-		},
-		{
-			"Name": "Portal_PortalGaleria",
-			"ClassName": "Model",
-			"Children": [
-				{
-					"Name": "Peana",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							38,
-							3,
-							-40,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							34,
-							4,
-							20
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 199
-						},
-						"TopSurface": "Studs",
-						"BottomSurface": "Inlet",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				},
-				{
-					"Name": "Escalon",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							38,
-							2,
-							-28,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							38,
-							2,
-							6
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 199
-						},
-						"TopSurface": "Studs",
-						"BottomSurface": "Inlet",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				},
-				{
-					"Name": "PortalGaleria",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							38,
-							18,
-							-40,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							22,
-							26,
-							3
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 23
-						},
-						"TopSurface": "Smooth",
-						"BottomSurface": "Smooth",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth",
-						"Material": "Neon",
-						"Transparency": 0.35
-					},
-					"Children": [
-						{
-							"Name": "PointLight",
-							"ClassName": "PointLight",
-							"Properties": {
-								"Brightness": 3,
-								"Range": 26,
-								"Color": [
-									0.6,
-									0.8,
-									1
-								]
-							}
-						}
-					]
-				},
-				{
-					"Name": "JambaI",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							25,
-							19,
-							-40,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							4,
-							32,
-							6
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 1001
-						},
-						"TopSurface": "Smooth",
-						"BottomSurface": "Smooth",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				},
-				{
-					"Name": "JambaD",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							51,
-							19,
-							-40,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							4,
-							32,
-							6
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 1001
-						},
-						"TopSurface": "Smooth",
-						"BottomSurface": "Smooth",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				},
-				{
-					"Name": "Dintel",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							38,
-							36,
-							-40,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							34,
-							4,
-							7
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 23
-						},
-						"TopSurface": "Smooth",
-						"BottomSurface": "Smooth",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				},
-				{
-					"Name": "Rotulo",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							38,
-							43,
-							-40,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							30,
-							8,
-							1
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 1001
-						},
-						"TopSurface": "Smooth",
-						"BottomSurface": "Smooth",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					},
-					"Children": [
-						{
-							"Name": "FichaBack",
-							"ClassName": "SurfaceGui",
-							"Properties": {
-								"Face": "Back",
-								"SizingMode": "PixelsPerStud",
-								"PixelsPerStud": 50,
-								"AlwaysOnTop": false
-							},
-							"Children": [
-								{
-									"Name": "T",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.52,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.04,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "PLAY",
-										"TextColor3": [
-											0.1,
-											0.1,
-											0.1
-										]
-									}
-								},
-								{
-									"Name": "S",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.3,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.6,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "what others have built",
-										"TextColor3": [
-											0.36,
-											0.36,
-											0.36
-										]
-									}
-								}
-							]
-						},
-						{
-							"Name": "FichaFront",
-							"ClassName": "SurfaceGui",
-							"Properties": {
-								"Face": "Front",
-								"SizingMode": "PixelsPerStud",
-								"PixelsPerStud": 50,
-								"AlwaysOnTop": false
-							},
-							"Children": [
-								{
-									"Name": "T",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.52,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.04,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "PLAY",
-										"TextColor3": [
-											0.1,
-											0.1,
-											0.1
-										]
-									}
-								},
-								{
-									"Name": "S",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.3,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.6,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "what others have built",
-										"TextColor3": [
-											0.36,
-											0.36,
-											0.36
-										]
-									}
-								}
-							]
-						}
-					]
-				}
-			]
-		},
-		{
-			"Name": "Cartel",
-			"ClassName": "Model",
-			"Children": [
-				{
-					"Name": "Poste1",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							-40,
-							22,
-							86,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							5,
-							40,
-							5
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 192
-						},
-						"TopSurface": "Studs",
-						"BottomSurface": "Inlet",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				},
-				{
-					"Name": "Poste2",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							40,
-							22,
-							86,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							5,
-							40,
-							5
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 192
-						},
-						"TopSurface": "Studs",
-						"BottomSurface": "Inlet",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				},
-				{
-					"Name": "Panel",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							0,
-							44,
-							86,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							84,
-							22,
-							2
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 1001
-						},
-						"TopSurface": "Smooth",
-						"BottomSurface": "Smooth",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					},
-					"Children": [
-						{
-							"Name": "FichaBack",
-							"ClassName": "SurfaceGui",
-							"Properties": {
-								"Face": "Back",
-								"SizingMode": "PixelsPerStud",
-								"PixelsPerStud": 50,
-								"AlwaysOnTop": false
-							},
-							"Children": [
-								{
-									"Name": "Titulo",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.46,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.04,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "BYGONE",
-										"TextColor3": [
-											0.1,
-											0.1,
-											0.1
-										]
-									}
-								},
-								{
-									"Name": "Lema",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.16,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.56,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "build classic ROBLOX places, the way they were",
-										"TextColor3": [
-											0.34,
-											0.34,
-											0.34
-										]
-									}
-								},
-								{
-									"Name": "Sub",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.13,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.76,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "every creation here was made by someone who plays here",
-										"TextColor3": [
-											0.44,
-											0.44,
-											0.44
-										]
-									}
-								}
-							]
-						},
-						{
-							"Name": "FichaFront",
-							"ClassName": "SurfaceGui",
-							"Properties": {
-								"Face": "Front",
-								"SizingMode": "PixelsPerStud",
-								"PixelsPerStud": 50,
-								"AlwaysOnTop": false
-							},
-							"Children": [
-								{
-									"Name": "Titulo",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.46,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.04,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "BYGONE",
-										"TextColor3": [
-											0.1,
-											0.1,
-											0.1
-										]
-									}
-								},
-								{
-									"Name": "Lema",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.16,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.56,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "build classic ROBLOX places, the way they were",
-										"TextColor3": [
-											0.34,
-											0.34,
-											0.34
-										]
-									}
-								},
-								{
-									"Name": "Sub",
-									"ClassName": "TextLabel",
-									"Properties": {
-										"BackgroundTransparency": 1,
-										"Size": {
-											"UDim2": [
-												[
-													1,
-													0
-												],
-												[
-													0.13,
-													0
-												]
-											]
-										},
-										"Position": {
-											"UDim2": [
-												[
-													0,
-													0
-												],
-												[
-													0.76,
-													0
-												]
-											]
-										},
-										"Font": "Cartoon",
-										"TextScaled": true,
-										"Text": "every creation here was made by someone who plays here",
-										"TextColor3": [
-											0.44,
-											0.44,
-											0.44
-										]
-									}
-								}
-							]
-						}
-					]
-				},
-				{
-					"Name": "Marquesina",
-					"ClassName": "Part",
-					"Properties": {
-						"CFrame": [
-							0,
-							56,
-							86,
-							1.0,
-							0.0,
-							0.0,
-							0.0,
-							1.0,
-							0.0,
-							-0.0,
-							0.0,
-							1.0
-						],
-						"Size": [
-							88,
-							3,
-							7
-						],
-						"Anchored": true,
-						"BrickColor": {
-							"BrickColor": 1003
-						},
-						"TopSurface": "Smooth",
-						"BottomSurface": "Smooth",
-						"LeftSurface": "Smooth",
-						"RightSurface": "Smooth",
-						"FrontSurface": "Smooth",
-						"BackSurface": "Smooth"
-					}
-				}
-			]
-		},
-		{
 			"Name": "Faroles",
 			"ClassName": "Model",
 			"Children": [
@@ -7865,15 +6559,21 @@
 						"BackSurface": "Smooth",
 						"Shape": "Ball"
 					}
-				},
+				}
+			]
+		},
+		{
+			"Name": "Portal_PortalConstruir",
+			"ClassName": "Model",
+			"Children": [
 				{
-					"Name": "Jardinera2",
+					"Name": "Peana",
 					"ClassName": "Part",
 					"Properties": {
 						"CFrame": [
-							0,
-							5,
-							76,
+							-38,
+							3,
+							-40,
 							1.0,
 							0.0,
 							0.0,
@@ -7885,9 +6585,909 @@
 							1.0
 						],
 						"Size": [
-							12,
-							6,
-							12
+							34,
+							4,
+							20
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Escalon",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-38,
+							2,
+							-28,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							38,
+							2,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "PortalConstruir",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-38,
+							18,
+							-40,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							22,
+							26,
+							3
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon",
+						"Transparency": 0.35
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 3,
+								"Range": 26,
+								"Color": [
+									0.6,
+									1,
+									0.6
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "JambaI",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-51,
+							19,
+							-40,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							4,
+							32,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "JambaD",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-25,
+							19,
+							-40,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							4,
+							32,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Dintel",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-38,
+							36,
+							-40,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							34,
+							4,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Rotulo",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-38,
+							43,
+							-40,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							30,
+							8,
+							1
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					},
+					"Children": [
+						{
+							"Name": "FichaBack",
+							"ClassName": "SurfaceGui",
+							"Properties": {
+								"Face": "Back",
+								"SizingMode": "PixelsPerStud",
+								"PixelsPerStud": 50,
+								"AlwaysOnTop": false
+							},
+							"Children": [
+								{
+									"Name": "T",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.52,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.04,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "BUILD",
+										"TextColor3": [
+											0.1,
+											0.1,
+											0.1
+										]
+									}
+								},
+								{
+									"Name": "S",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.3,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.6,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "make your own place",
+										"TextColor3": [
+											0.36,
+											0.36,
+											0.36
+										]
+									}
+								}
+							]
+						},
+						{
+							"Name": "FichaFront",
+							"ClassName": "SurfaceGui",
+							"Properties": {
+								"Face": "Front",
+								"SizingMode": "PixelsPerStud",
+								"PixelsPerStud": 50,
+								"AlwaysOnTop": false
+							},
+							"Children": [
+								{
+									"Name": "T",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.52,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.04,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "BUILD",
+										"TextColor3": [
+											0.1,
+											0.1,
+											0.1
+										]
+									}
+								},
+								{
+									"Name": "S",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.3,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.6,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "make your own place",
+										"TextColor3": [
+											0.36,
+											0.36,
+											0.36
+										]
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Portal_PortalGaleria",
+			"ClassName": "Model",
+			"Children": [
+				{
+					"Name": "Peana",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							38,
+							3,
+							-40,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							34,
+							4,
+							20
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Escalon",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							38,
+							2,
+							-28,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							38,
+							2,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "PortalGaleria",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							38,
+							18,
+							-40,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							22,
+							26,
+							3
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon",
+						"Transparency": 0.35
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 3,
+								"Range": 26,
+								"Color": [
+									0.6,
+									0.8,
+									1
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "JambaI",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							25,
+							19,
+							-40,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							4,
+							32,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "JambaD",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							51,
+							19,
+							-40,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							4,
+							32,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Dintel",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							38,
+							36,
+							-40,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							34,
+							4,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Rotulo",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							38,
+							43,
+							-40,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							30,
+							8,
+							1
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					},
+					"Children": [
+						{
+							"Name": "FichaBack",
+							"ClassName": "SurfaceGui",
+							"Properties": {
+								"Face": "Back",
+								"SizingMode": "PixelsPerStud",
+								"PixelsPerStud": 50,
+								"AlwaysOnTop": false
+							},
+							"Children": [
+								{
+									"Name": "T",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.52,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.04,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "PLAY",
+										"TextColor3": [
+											0.1,
+											0.1,
+											0.1
+										]
+									}
+								},
+								{
+									"Name": "S",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.3,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.6,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "what others have built",
+										"TextColor3": [
+											0.36,
+											0.36,
+											0.36
+										]
+									}
+								}
+							]
+						},
+						{
+							"Name": "FichaFront",
+							"ClassName": "SurfaceGui",
+							"Properties": {
+								"Face": "Front",
+								"SizingMode": "PixelsPerStud",
+								"PixelsPerStud": 50,
+								"AlwaysOnTop": false
+							},
+							"Children": [
+								{
+									"Name": "T",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.52,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.04,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "PLAY",
+										"TextColor3": [
+											0.1,
+											0.1,
+											0.1
+										]
+									}
+								},
+								{
+									"Name": "S",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.3,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.6,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "what others have built",
+										"TextColor3": [
+											0.36,
+											0.36,
+											0.36
+										]
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Cartel",
+			"ClassName": "Model",
+			"Children": [
+				{
+					"Name": "Poste1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-40,
+							22,
+							86,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							5,
+							40,
+							5
 						],
 						"Anchored": true,
 						"BrickColor": {
@@ -7902,13 +7502,1018 @@
 					}
 				},
 				{
-					"Name": "Tierra2",
+					"Name": "Poste2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							40,
+							22,
+							86,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							5,
+							40,
+							5
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Panel",
 					"ClassName": "Part",
 					"Properties": {
 						"CFrame": [
 							0,
-							8.5,
-							76,
+							44,
+							86,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							84,
+							22,
+							2
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					},
+					"Children": [
+						{
+							"Name": "FichaBack",
+							"ClassName": "SurfaceGui",
+							"Properties": {
+								"Face": "Back",
+								"SizingMode": "PixelsPerStud",
+								"PixelsPerStud": 50,
+								"AlwaysOnTop": false
+							},
+							"Children": [
+								{
+									"Name": "Titulo",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.46,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.04,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "BYGONE",
+										"TextColor3": [
+											0.1,
+											0.1,
+											0.1
+										]
+									}
+								},
+								{
+									"Name": "Lema",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.16,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.56,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "build classic ROBLOX places, the way they were",
+										"TextColor3": [
+											0.34,
+											0.34,
+											0.34
+										]
+									}
+								},
+								{
+									"Name": "Sub",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.13,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.76,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "every creation here was made by someone who plays here",
+										"TextColor3": [
+											0.44,
+											0.44,
+											0.44
+										]
+									}
+								}
+							]
+						},
+						{
+							"Name": "FichaFront",
+							"ClassName": "SurfaceGui",
+							"Properties": {
+								"Face": "Front",
+								"SizingMode": "PixelsPerStud",
+								"PixelsPerStud": 50,
+								"AlwaysOnTop": false
+							},
+							"Children": [
+								{
+									"Name": "Titulo",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.46,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.04,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "BYGONE",
+										"TextColor3": [
+											0.1,
+											0.1,
+											0.1
+										]
+									}
+								},
+								{
+									"Name": "Lema",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.16,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.56,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "build classic ROBLOX places, the way they were",
+										"TextColor3": [
+											0.34,
+											0.34,
+											0.34
+										]
+									}
+								},
+								{
+									"Name": "Sub",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.13,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.76,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "every creation here was made by someone who plays here",
+										"TextColor3": [
+											0.44,
+											0.44,
+											0.44
+										]
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"Name": "Marquesina",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							56,
+							86,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							88,
+							3,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1003
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				}
+			]
+		},
+		{
+			"Name": "Parkour",
+			"ClassName": "Model",
+			"Children": [
+				{
+					"Name": "Rampa",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							4,
+							118,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							16,
+							2,
+							26
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Inicio",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							6,
+							134,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							20,
+							2,
+							20
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "CartelInicio",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							13,
+							143,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							18,
+							6,
+							1
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					},
+					"Children": [
+						{
+							"Name": "FichaBack",
+							"ClassName": "SurfaceGui",
+							"Properties": {
+								"Face": "Back",
+								"SizingMode": "PixelsPerStud",
+								"PixelsPerStud": 50,
+								"AlwaysOnTop": false
+							},
+							"Children": [
+								{
+									"Name": "T",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.5,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.05,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "PARKOUR",
+										"TextColor3": [
+											0.1,
+											0.1,
+											0.1
+										]
+									}
+								},
+								{
+									"Name": "S",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.3,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.6,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "24 jumps to the top",
+										"TextColor3": [
+											0.4,
+											0.4,
+											0.4
+										]
+									}
+								}
+							]
+						},
+						{
+							"Name": "FichaFront",
+							"ClassName": "SurfaceGui",
+							"Properties": {
+								"Face": "Front",
+								"SizingMode": "PixelsPerStud",
+								"PixelsPerStud": 50,
+								"AlwaysOnTop": false
+							},
+							"Children": [
+								{
+									"Name": "T",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.5,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.05,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "PARKOUR",
+										"TextColor3": [
+											0.1,
+											0.1,
+											0.1
+										]
+									}
+								},
+								{
+									"Name": "S",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.3,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.6,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "24 jumps to the top",
+										"TextColor3": [
+											0.4,
+											0.4,
+											0.4
+										]
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"Name": "Plataforma0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0.0,
+							6.0,
+							-132.0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							2,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Poste0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0.0,
+							11.0,
+							-132.0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1.2,
+							8,
+							1.2
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 1.2,
+								"Range": 14,
+								"Color": [
+									1,
+									0.94,
+									0.8
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Plataforma1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							45.68745,
+							9.4,
+							-123.84126,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							2,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Losa2_0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							85.72714,
+							12.8,
+							-100.37359,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							7,
+							1.2,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Losa2_1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							94.24993,
+							12.8,
+							-92.41727,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							7,
+							1.2,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Losa2_2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							102.03738,
+							12.8,
+							-83.73991,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							7,
+							1.2,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Lava2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							102.03738,
+							7.8,
+							-83.73991,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							26,
+							1,
+							26
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 1.4,
+								"Range": 22,
+								"Color": [
+									1,
+									0.4,
+									0.3
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Base3",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							115.16947,
+							16.2,
+							-64.498,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							12,
+							2,
+							12
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 106
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Truss3",
+					"ClassName": "TrussPart",
+					"Properties": {
+						"CFrame": [
+							115.16947,
+							28.2,
+							-64.498,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							2,
+							22,
+							2
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Alto3",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							115.16947,
+							39.2,
+							-64.498,
 							1.0,
 							0.0,
 							0.0,
@@ -7921,14 +8526,14 @@
 						],
 						"Size": [
 							10,
-							1,
+							2,
 							10
 						],
 						"Anchored": true,
 						"BrickColor": {
-							"BrickColor": 192
+							"BrickColor": 106
 						},
-						"TopSurface": "Smooth",
+						"TopSurface": "Studs",
 						"BottomSurface": "Inlet",
 						"LeftSurface": "Smooth",
 						"RightSurface": "Smooth",
@@ -7937,13 +8542,13 @@
 					}
 				},
 				{
-					"Name": "Arbusto2",
+					"Name": "Salto4A",
 					"ClassName": "Part",
 					"Properties": {
 						"CFrame": [
-							0,
-							12,
-							76,
+							130.37486,
+							19.6,
+							-20.64935,
 							1.0,
 							0.0,
 							0.0,
@@ -7955,9 +8560,184 @@
 							1.0
 						],
 						"Size": [
-							8,
-							8,
-							8
+							6,
+							1.6,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Salto4B",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							141.9012,
+							20.6,
+							5.29628,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							1.6,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Meseta5",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							129.46366,
+							23.0,
+							25.75192,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							20,
+							2,
+							20
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "ArcoI5",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							122.46366,
+							30.0,
+							25.75192,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1.4,
+							12,
+							1.4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "ArcoD5",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							136.46366,
+							30.0,
+							25.75192,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1.4,
+							12,
+							1.4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "ArcoT5",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							129.46366,
+							36.0,
+							25.75192,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							16,
+							1.4,
+							1.4
 						],
 						"Anchored": true,
 						"BrickColor": {
@@ -7969,7 +8749,2444 @@
 						"RightSurface": "Smooth",
 						"FrontSurface": "Smooth",
 						"BackSurface": "Smooth",
+						"Material": "Neon"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 1.8,
+								"Range": 20,
+								"Color": [
+									0.6,
+									1,
+									0.6
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Plataforma6",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							112.5485,
+							26.4,
+							68.96981,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							2,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1018
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Poste6",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							112.5485,
+							31.4,
+							68.96981,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1.2,
+							8,
+							1.2
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 1.2,
+								"Range": 14,
+								"Color": [
+									1,
+									0.94,
+									0.8
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Plataforma7",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							81.7204,
+							29.8,
+							103.66183,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							2,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Losa8_0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							40.79024,
+							33.2,
+							125.53946,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							7,
+							1.2,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Losa8_1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							29.55322,
+							33.2,
+							128.64916,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							7,
+							1.2,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Losa8_2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							18.08563,
+							33.2,
+							130.75515,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							7,
+							1.2,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Lava8",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							18.08563,
+							28.2,
+							130.75515,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							26,
+							1,
+							26
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 1.4,
+								"Range": 22,
+								"Color": [
+									1,
+									0.4,
+									0.3
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Base9",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-5.1823,
+							36.6,
+							131.89823,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							12,
+							2,
+							12
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Truss9",
+					"ClassName": "TrussPart",
+					"Properties": {
+						"CFrame": [
+							-5.1823,
+							48.6,
+							131.89823,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							2,
+							22,
+							2
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Alto9",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-5.1823,
+							59.6,
+							131.89823,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							10,
+							2,
+							10
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Salto10A",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-50.51421,
+							40.0,
+							121.9521,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							1.6,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 106
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Salto10B",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-78.65899,
+							41.0,
+							118.22336,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							1.6,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 106
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Meseta11",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-89.6017,
+							43.4,
+							96.93057,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							20,
+							2,
+							20
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "ArcoI11",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-96.6017,
+							50.4,
+							96.93057,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1.4,
+							12,
+							1.4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "ArcoD11",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-82.6017,
+							50.4,
+							96.93057,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1.4,
+							12,
+							1.4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "ArcoT11",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-89.6017,
+							56.4,
+							96.93057,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							16,
+							1.4,
+							1.4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 1.8,
+								"Range": 20,
+								"Color": [
+									0.6,
+									1,
+									0.6
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Plataforma12",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-117.61286,
+							46.8,
+							59.92675,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							2,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 104
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Poste12",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-117.61286,
+							51.8,
+							59.92675,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1.2,
+							8,
+							1.2
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 1.2,
+								"Range": 14,
+								"Color": [
+									1,
+									0.94,
+									0.8
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Plataforma13",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-131.08504,
+							50.2,
+							15.51494,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							2,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1018
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Losa14_0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-128.35283,
+							53.6,
+							-30.81479,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							7,
+							1.2,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Losa14_1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-125.13296,
+							53.6,
+							-42.02074,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							7,
+							1.2,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Losa14_2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-120.93681,
+							53.6,
+							-52.89885,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							7,
+							1.2,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Lava14",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-120.93681,
+							48.6,
+							-52.89885,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							26,
+							1,
+							26
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 1.4,
+								"Range": 22,
+								"Color": [
+									1,
+									0.4,
+									0.3
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Base15",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-109.75399,
+							57.0,
+							-73.33527,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							12,
+							2,
+							12
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Truss15",
+					"ClassName": "TrussPart",
+					"Properties": {
+						"CFrame": [
+							-109.75399,
+							69.0,
+							-73.33527,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							2,
+							22,
+							2
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Alto15",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-109.75399,
+							80.0,
+							-73.33527,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							10,
+							2,
+							10
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Salto16A",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-77.58765,
+							60.4,
+							-106.79024,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							1.6,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Salto16B",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-59.70277,
+							61.4,
+							-128.83935,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							1.6,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Meseta17",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-35.83014,
+							63.8,
+							-127.04409,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							20,
+							2,
+							20
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "ArcoI17",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-42.83014,
+							70.8,
+							-127.04409,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1.4,
+							12,
+							1.4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "ArcoD17",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-28.83014,
+							70.8,
+							-127.04409,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1.4,
+							12,
+							1.4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "ArcoT17",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-35.83014,
+							76.8,
+							-127.04409,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							16,
+							1.4,
+							1.4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 1.8,
+								"Range": 20,
+								"Color": [
+									0.6,
+									1,
+									0.6
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Plataforma18",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							10.3566,
+							67.2,
+							-131.59309,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							2,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Poste18",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							10.3566,
+							72.2,
+							-131.59309,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1.2,
+							8,
+							1.2
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 1.2,
+								"Range": 14,
+								"Color": [
+									1,
+									0.94,
+									0.8
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Plataforma19",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							55.26309,
+							70.6,
+							-119.8749,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							2,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 104
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Losa20_0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							93.3381,
+							74.0,
+							-93.3381,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							7,
+							1.2,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1018
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Losa20_1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							101.21036,
+							74.0,
+							-84.73761,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							7,
+							1.2,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1018
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Losa20_2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							108.29299,
+							74.0,
+							-75.47601,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							7,
+							1.2,
+							7
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1018
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Lava20",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							108.29299,
+							69.0,
+							-75.47601,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							26,
+							1,
+							26
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 1.4,
+								"Range": 22,
+								"Color": [
+									1,
+									0.4,
+									0.3
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Base21",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							119.8749,
+							77.4,
+							-55.26309,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							12,
+							2,
+							12
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Truss21",
+					"ClassName": "TrussPart",
+					"Properties": {
+						"CFrame": [
+							119.8749,
+							89.4,
+							-55.26309,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							2,
+							22,
+							2
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Alto21",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							119.8749,
+							100.4,
+							-55.26309,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							10,
+							2,
+							10
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Salto22A",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							131.59309,
+							80.8,
+							-10.3566,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							1.6,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Salto22B",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							141.04822,
+							81.8,
+							16.41339,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							1.6,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Meseta23",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							127.04409,
+							84.2,
+							35.83014,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							20,
+							2,
+							20
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "ArcoI23",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							120.04409,
+							91.2,
+							35.83014,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1.4,
+							12,
+							1.4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "ArcoD23",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							134.04409,
+							91.2,
+							35.83014,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1.4,
+							12,
+							1.4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "ArcoT23",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							127.04409,
+							97.2,
+							35.83014,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							16,
+							1.4,
+							1.4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 1.8,
+								"Range": 20,
+								"Color": [
+									0.6,
+									1,
+									0.6
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "Mirador",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							90.6099,
+							95.6,
+							65.83195,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							36,
+							2,
+							36
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "BarandaN",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							90.6099,
+							98.6,
+							48.83195,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							36,
+							4,
+							1
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "BarandaS",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							90.6099,
+							98.6,
+							82.83195,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							36,
+							4,
+							1
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "BarandaE",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							107.6099,
+							98.6,
+							65.83195,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1,
+							4,
+							36
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "BarandaO",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							73.6099,
+							98.6,
+							65.83195,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1,
+							4,
+							36
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Trofeo",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							90.6099,
+							100.6,
+							65.83195,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							6,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Material": "Neon",
 						"Shape": "Ball"
+					},
+					"Children": [
+						{
+							"Name": "PointLight",
+							"ClassName": "PointLight",
+							"Properties": {
+								"Brightness": 4,
+								"Range": 40,
+								"Color": [
+									1,
+									0.94,
+									0.8
+								]
+							}
+						}
+					]
+				},
+				{
+					"Name": "CartelCima",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							90.6099,
+							109.6,
+							65.83195,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							30,
+							8,
+							1
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					},
+					"Children": [
+						{
+							"Name": "FichaBack",
+							"ClassName": "SurfaceGui",
+							"Properties": {
+								"Face": "Back",
+								"SizingMode": "PixelsPerStud",
+								"PixelsPerStud": 50,
+								"AlwaysOnTop": false
+							},
+							"Children": [
+								{
+									"Name": "T",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.5,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.05,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "YOU MADE IT",
+										"TextColor3": [
+											0.1,
+											0.1,
+											0.1
+										]
+									}
+								},
+								{
+									"Name": "S",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.3,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.6,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "now go build something",
+										"TextColor3": [
+											0.4,
+											0.4,
+											0.4
+										]
+									}
+								}
+							]
+						},
+						{
+							"Name": "FichaFront",
+							"ClassName": "SurfaceGui",
+							"Properties": {
+								"Face": "Front",
+								"SizingMode": "PixelsPerStud",
+								"PixelsPerStud": 50,
+								"AlwaysOnTop": false
+							},
+							"Children": [
+								{
+									"Name": "T",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.5,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.05,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "YOU MADE IT",
+										"TextColor3": [
+											0.1,
+											0.1,
+											0.1
+										]
+									}
+								},
+								{
+									"Name": "S",
+									"ClassName": "TextLabel",
+									"Properties": {
+										"BackgroundTransparency": 1,
+										"Size": {
+											"UDim2": [
+												[
+													1,
+													0
+												],
+												[
+													0.3,
+													0
+												]
+											]
+										},
+										"Position": {
+											"UDim2": [
+												[
+													0,
+													0
+												],
+												[
+													0.6,
+													0
+												]
+											]
+										},
+										"Font": "Cartoon",
+										"TextScaled": true,
+										"Text": "now go build something",
+										"TextColor3": [
+											0.4,
+											0.4,
+											0.4
+										]
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Checkpoints",
+			"ClassName": "Model",
+			"Children": [
+				{
+					"Name": "Checkpoint0",
+					"ClassName": "SpawnLocation",
+					"Properties": {
+						"CFrame": [
+							129.46366,
+							23.5,
+							25.75192,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							1,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Neutral": true,
+						"Duration": 0
+					}
+				},
+				{
+					"Name": "Checkpoint1",
+					"ClassName": "SpawnLocation",
+					"Properties": {
+						"CFrame": [
+							-89.6017,
+							43.9,
+							96.93057,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							1,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Neutral": true,
+						"Duration": 0
+					}
+				},
+				{
+					"Name": "Checkpoint2",
+					"ClassName": "SpawnLocation",
+					"Properties": {
+						"CFrame": [
+							-35.83014,
+							64.3,
+							-127.04409,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							1,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Neutral": true,
+						"Duration": 0
+					}
+				},
+				{
+					"Name": "Checkpoint3",
+					"ClassName": "SpawnLocation",
+					"Properties": {
+						"CFrame": [
+							127.04409,
+							84.7,
+							35.83014,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							1,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"Neutral": true,
+						"Duration": 0
 					}
 				}
 			]
