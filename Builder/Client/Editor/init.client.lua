@@ -585,23 +585,146 @@ local function seguirArrastre()
 end
 
 --------------------------------------------------------------------------------
--- El suelo, editable como todo lo demas
+-- El suelo
 --------------------------------------------------------------------------------
+--[[
+	Va DENTRO de la obra, no suelto en el Workspace.
 
-local suelo = workspace:FindFirstChild("Baseplate")
+	Antes estaba fuera y eso lo dejaba en tierra de nadie: el boton "Baseplate"
+	lo seleccionaba, le cambiabas el color o el tamano, guardabas... y no se
+	guardaba nada, porque el serializador solo mira dentro de la obra. Y al
+	jugar la creacion aparecia otro suelo distinto generado por el Arcade.
 
-if not suelo then
-	suelo = Instance.new("Part")
-	suelo.Name = "Baseplate"
-	suelo.Size = Vector3.new(512, 8, 512)
-	suelo.Position = Vector3.new(0, -4, 0)
-	suelo.Anchored = true
-	suelo.Locked = true
-	suelo.BrickColor = BrickColor.new(28)
-	suelo.Material = Enum.Material.Plastic
-	suelo.TopSurface = Enum.SurfaceType.Studs
-	suelo.BottomSurface = Enum.SurfaceType.Smooth
-	suelo.Parent = workspace
+	Metido en la obra es una pieza mas: se guarda, viaja con la creacion, y
+	quien no lo quiera lo borra.
+]]
+
+local function crearSuelo()
+	local nuevo = Instance.new("Part")
+	nuevo.Name = "Baseplate"
+	nuevo.Size = Vector3.new(512, 8, 512)
+	nuevo.Position = Vector3.new(0, -4, 0)
+	nuevo.Anchored = true
+	nuevo.BrickColor = BrickColor.new(28)
+	nuevo.Material = Enum.Material.Plastic
+	nuevo.TopSurface = Enum.SurfaceType.Studs
+	nuevo.BottomSurface = Enum.SurfaceType.Smooth
+	nuevo.Parent = obra
+	return nuevo
+end
+
+local function sueloActual()
+	return obra:FindFirstChild("Baseplate")
+end
+
+local suelo = sueloActual() or crearSuelo()
+
+
+
+--------------------------------------------------------------------------------
+-- Plantillas
+--------------------------------------------------------------------------------
+-- Cada una deja piezas normales sobre el suelo. No son un tipo aparte: en
+-- cuanto caen, se editan como cualquier otra cosa.
+
+local function ponerPlantilla(indice)
+	if indice == 1 then
+		return          -- baseplate a secas
+	end
+
+	local function poner(nombre, tam, pos, color, liso)
+		local parte = Instance.new("Part")
+		parte.Name = nombre
+		parte.Size = tam
+		parte.Position = pos
+		parte.Anchored = true
+		parte.BrickColor = BrickColor.new(color)
+		if liso then
+			parte.TopSurface = Enum.SurfaceType.Smooth
+			parte.BottomSurface = Enum.SurfaceType.Smooth
+		else
+			parte.TopSurface = Enum.SurfaceType.Studs
+			parte.BottomSurface = Enum.SurfaceType.Inlet
+		end
+		parte.Parent = obra
+		return parte
+	end
+
+	if indice == 2 then          -- cuarto con hueco de puerta
+		poner("Suelo", Vector3.new(60, 2, 48), Vector3.new(0, 1, 0), 194)
+		poner("MuroN", Vector3.new(60, 22, 2), Vector3.new(0, 13, -24), 1002, true)
+		poner("MuroE", Vector3.new(2, 22, 48), Vector3.new(30, 13, 0), 1002, true)
+		poner("MuroO", Vector3.new(2, 22, 48), Vector3.new(-30, 13, 0), 1002, true)
+		poner("MuroSI", Vector3.new(22, 22, 2), Vector3.new(-19, 13, 24), 1002, true)
+		poner("MuroSD", Vector3.new(22, 22, 2), Vector3.new(19, 13, 24), 1002, true)
+		poner("Dintel", Vector3.new(60, 6, 2), Vector3.new(0, 21, 24), 1002, true)
+
+	elseif indice == 3 then      -- salida de obby y tres saltos
+		poner("Salida", Vector3.new(24, 2, 24), Vector3.new(0, 1, -16), 1001)
+		for k = 1, 3 do
+			poner("Salto" .. k, Vector3.new(10, 1.6, 8),
+			      Vector3.new((k % 2 == 0) and 8 or -8, 1 + k * 3, 4 + k * 14),
+			      ({ 23, 37, 24 })[k])
+		end
+
+	elseif indice == 4 then      -- arena pequena
+		poner("Suelo", Vector3.new(80, 2, 80), Vector3.new(0, 1, 0), 194)
+		for _, m in ipairs({
+			{ "MuroN", Vector3.new(80, 12, 2), Vector3.new(0, 8, -40) },
+			{ "MuroS", Vector3.new(80, 12, 2), Vector3.new(0, 8, 40) },
+			{ "MuroE", Vector3.new(2, 12, 80), Vector3.new(40, 8, 0) },
+			{ "MuroO", Vector3.new(2, 12, 80), Vector3.new(-40, 8, 0) },
+		}) do
+			poner(m[1], m[2], m[3], 199)
+		end
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Modo prueba
+--------------------------------------------------------------------------------
+--[[
+	Andar por lo que acabas de construir sin guardar ni teletransportarte a
+	ningun sitio. Es lo que mas se echa de menos en un constructor: sin esto hay
+	que guardar, publicar, ir al Arcade y volver, solo para ver si un salto
+	llega.
+
+	Las piezas son del cliente, pero el personaje tambien lo simula el cliente,
+	asi que las colisiones salen bien. El servidor solo crea y destruye el
+	cuerpo, que es lo unico que no se puede hacer desde aqui.
+]]
+
+local probando = false
+
+local function alternarPrueba()
+	probando = not probando
+
+	if probando then
+		limpiarSeleccion()
+		gizmos:Refrescar()
+
+		-- Delante de la camara, a ras de lo que estabas mirando.
+		local golpe = rayoDelRaton()
+		local punto = golpe and golpe.Position
+			or (camera.CFrame.Position + camera.CFrame.LookVector * 30)
+
+		canal.Probar:FireServer(true, punto)
+
+		task.spawn(function ()
+			local char = player.Character or player.CharacterAdded:Wait()
+			local humanoide = char:WaitForChild("Humanoid", 10)
+			camera.CameraType = Enum.CameraType.Custom
+			camera.CameraSubject = humanoide
+		end)
+	else
+		canal.Probar:FireServer(false)
+		camera.CameraType = Enum.CameraType.Scriptable
+		camera.CFrame = CFrame.new(camera.CFrame.Position)
+			* CFrame.Angles(0, math.rad(giroCamara.X), 0)
+			* CFrame.Angles(math.rad(giroCamara.Y), 0, 0)
+	end
+
+	return probando
 end
 
 --------------------------------------------------------------------------------
@@ -617,6 +740,8 @@ local api = {
 	estado = estado,
 	obra = obra,
 	suelo = suelo,
+	sueloActual = sueloActual,
+	crearSuelo = crearSuelo,
 	canal = canal,
 	Serializer = Serializer,
 	Palette = Palette,
@@ -629,6 +754,9 @@ local api = {
 	colocarPrefab = colocarPrefab,
 	aplicarTransform = aplicarTransform,
 	seleccionarTodo = seleccionarTodo,
+	alternarPrueba = alternarPrueba,
+	plantilla = ponerPlantilla,
+	estaProbando = function () return probando end,
 	borrar = borrarSeleccion,
 	duplicar = duplicarSeleccion,
 	aplicar = aplicarASeleccion,
@@ -656,10 +784,13 @@ local api = {
 		pintarSeleccion()
 	end,
 
-	vaciar = function ()
+	vaciar = function (conSuelo)
 		apuntar()
 		obra:ClearAllChildren()
 		limpiarSeleccion()
+		if conSuelo ~= false then
+			suelo = crearSuelo()
+		end
 	end,
 }
 
@@ -681,6 +812,15 @@ api.ui = ui
 
 UserInputService.InputBegan:Connect(function (input, procesado)
 	if procesado or gizmos:Ocupado() then
+		return
+	end
+
+	-- Mientras pruebas mandan los controles del juego, no los del editor.
+	if probando then
+		if input.KeyCode == Enum.KeyCode.P then
+			alternarPrueba()
+			ui.refrescarModo()
+		end
 		return
 	end
 
@@ -721,6 +861,10 @@ UserInputService.InputBegan:Connect(function (input, procesado)
 	elseif input.KeyCode == Enum.KeyCode.G then
 		estado.rejilla = estado.rejilla > 0 and 0 or 1
 		ui.refrescarEstado()
+
+	elseif input.KeyCode == Enum.KeyCode.P then
+		alternarPrueba()
+		ui.refrescarModo()
 
 	elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
 		if input.KeyCode == Enum.KeyCode.Z then
@@ -811,6 +955,11 @@ do
 end
 
 RunService.RenderStepped:Connect(function (dt)
+	if probando then
+		ui.refrescarContador()
+		return
+	end
+
 	local mover = Vector3.zero
 	local abajo = UserInputService.IsKeyDown
 

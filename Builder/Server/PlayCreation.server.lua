@@ -33,9 +33,19 @@ local function mensaje(texto)
 	return m
 end
 
-local function suelo()
+--- Suelo de emergencia. Solo si la creacion no trae uno: desde que el editor
+--- guarda su propia baseplate, poner otro encima tapaba el del autor.
+local function suelo(modelo)
 	if workspace:FindFirstChild("SueloBase") then
 		return
+	end
+
+	if modelo then
+		for _, d in ipairs(modelo:GetDescendants()) do
+			if d:IsA("BasePart") and d.Size.X >= 100 and d.Size.Z >= 100 then
+				return
+			end
+		end
 	end
 
 	local base = Instance.new("Part")
@@ -72,15 +82,25 @@ local function ponerSpawn(modelo)
 	punto.Parent = workspace
 end
 
+local montando = false
+
 local function montar(id)
+	-- Dos jugadores que entran a la vez llamaban aqui los dos y la creacion se
+	-- construia por duplicado, una encima de la otra.
+	if montando or montada then
+		return montada
+	end
+	montando = true
 	local entrada = CreationStore.Obtener(id)
 
 	if not entrada then
+		montando = false
 		mensaje("That creation could not be found.")
 		return false
 	end
 
 	if not entrada.meta.publicada then
+		montando = false
 		mensaje("That creation is private.")
 		return false
 	end
@@ -90,6 +110,7 @@ local function montar(id)
 	local modelo = Serializer.Deserializar(entrada.datos, workspace)
 	modelo.Name = entrada.meta.nombre or "Creacion"
 
+	suelo(modelo)
 	ponerSpawn(modelo)
 	CreationStore.ContarVisita(id)
 
@@ -102,6 +123,7 @@ local function montar(id)
 		entrada.meta.dueno or "", entrada.meta.partes or 0)
 	ficha.Parent = ReplicatedStorage
 
+	montando = false
 	aviso:Destroy()
 	return true
 end
@@ -147,8 +169,6 @@ local function alEntrar(player)
 		player:LoadCharacter()
 	end
 end
-
-suelo()
 
 for _, player in ipairs(Players:GetPlayers()) do
 	task.spawn(alEntrar, player)

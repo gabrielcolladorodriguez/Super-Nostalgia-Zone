@@ -55,6 +55,10 @@ local Editar = Instance.new("RemoteEvent")
 Editar.Name = "Editar"
 Editar.Parent = canal
 
+local Probar = Instance.new("RemoteEvent")
+Probar.Name = "Probar"
+Probar.Parent = canal
+
 --------------------------------------------------------------------------------
 -- Ritmo
 --------------------------------------------------------------------------------
@@ -342,5 +346,45 @@ Editar.OnServerEvent:Connect(function (player, id)
 	if not ok then
 		warn("[BuilderService] Teleport al editor fallo: " .. tostring(err))
 		Aviso:FireClient(player, "no se pudo abrir el editor, prueba otra vez")
+	end
+end)
+
+
+--------------------------------------------------------------------------------
+-- Probar la obra sin salir del editor
+--------------------------------------------------------------------------------
+--[[
+	El editor construye en el cliente, asi que el servidor no ve las piezas.
+	Aun asi esto funciona: el personaje del jugador lo simula su propio cliente,
+	y ahi las piezas si existen, asi que choca con ellas con normalidad. El
+	servidor se limita a aceptar la posicion que le manda el dueno del
+	personaje, como con cualquier otro movimiento.
+
+	LoadCharacter y Character:Destroy son de servidor, de ahi este canal.
+]]
+
+Probar.OnServerEvent:Connect(function (player, encender, punto)
+	if encender then
+		if player.Character then
+			return
+		end
+
+		player:LoadCharacter()
+
+		-- Se coloca donde estaba mirando la camara, no en el origen: quien
+		-- prueba quiere caer donde estaba trabajando.
+		if typeof(punto) == "Vector3" and punto.Magnitude < 8192 then
+			local char = player.Character
+			local raiz = char and char:FindFirstChild("HumanoidRootPart")
+			if raiz then
+				raiz.CFrame = CFrame.new(punto + Vector3.new(0, 4, 0))
+			end
+		end
+	else
+		local char = player.Character
+		if char then
+			char:Destroy()
+			player.Character = nil
+		end
 	end
 end)

@@ -683,11 +683,25 @@ function Ui.Crear(api)
 	end
 
 	local botonesModo = {}
+	local btnPrueba
+
 	local function refrescarModo()
 		for modo, b in pairs(botonesModo) do
 			local activo = (estado.modo == modo)
 			b.BackgroundColor3 = activo and UI.SELECCION or UI.FONDO
 			b.TextColor3 = activo and UI.BLANCO or UI.TEXTO
+		end
+
+		if btnPrueba then
+			local probando = api.estaProbando()
+			btnPrueba.Text = probando and "Stop" or "Test"
+			btnPrueba.BackgroundColor3 = probando and UI.ACENTO or UI.FONDO
+			btnPrueba.TextColor3 = probando and UI.BLANCO or UI.TEXTO
+
+			-- Mientras pruebas, las herramientas estorban.
+			for _, v in ipairs(ventanas) do
+				v:Mostrar(not probando and not TACTIL)
+			end
 		end
 	end
 
@@ -698,13 +712,62 @@ function Ui.Crear(api)
 		end)
 	end
 
-	enBarra("New", 50, function ()
-		api.vaciar(); estado.id = nil
-		estado.nombre = "Untitled"; estado.descripcion = ""
-		decir("New creation.")
-	end)
+	--------------------------------------------------------------------------
+	-- Empezar de cero, con plantilla
+	--------------------------------------------------------------------------
+	-- Una baseplate vacia intimida. Estas cuatro dan algo sobre lo que seguir,
+	-- y son piezas normales: se mueven, se pintan y se borran como todo.
+
+	local fondoNuevo, cajaNuevo = dialogo("Start something new", 470, 260)
+
+	local PLANTILLAS = {
+		{ nombre = "Empty baseplate", desc = "Just the ground. Full freedom." },
+		{ nombre = "Walled room", desc = "Four walls, a doorway and a floor." },
+		{ nombre = "Obby start", desc = "A start pad and the first three jumps." },
+		{ nombre = "Small arena", desc = "A square floor with a wall around it." },
+	}
+
+	local listaPlantillas = new("Frame", {
+		BackgroundTransparency = 1, ZIndex = 62,
+		Position = UDim2.fromOffset(14, 36), Size = UDim2.fromOffset(442, 170),
+	}, cajaNuevo)
+	new("UIListLayout", { Padding = UDim.new(0, 6) }, listaPlantillas)
+
+	for i, plantilla in ipairs(PLANTILLAS) do
+		local b = new("TextButton", {
+			BackgroundColor3 = UI.PANEL, BorderSizePixel = 1, BorderColor3 = UI.OSCURO,
+			ZIndex = 62, LayoutOrder = i, Font = UI.FUENTE, TextSize = 15,
+			TextColor3 = UI.TEXTO, AutoButtonColor = true,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			Text = "  " .. plantilla.nombre, Size = UDim2.fromOffset(442, 36),
+		}, listaPlantillas)
+
+		new("TextLabel", {
+			BackgroundTransparency = 1, Font = UI.FUENTE, TextSize = 12, ZIndex = 63,
+			TextColor3 = UI.TENUE, TextXAlignment = Enum.TextXAlignment.Right,
+			Text = plantilla.desc .. "  ",
+			Size = UDim2.new(0, 250, 1, 0), Position = UDim2.new(1, -250, 0, 0),
+		}, b)
+
+		b.Activated:Connect(function ()
+			api.vaciar()
+			estado.id = nil
+			estado.nombre = "Untitled"
+			estado.descripcion = ""
+			api.plantilla(i)
+			fondoNuevo.Visible = false
+			decir(plantilla.nombre .. ": " .. plantilla.desc)
+		end)
+	end
+
+	enBarra("New", 50, function () fondoNuevo.Visible = true end)
 	enBarra("Open", 54, abrirAbrir)
 	enBarra("Save", 54, abrirGuardar)
+	btnPrueba = enBarra("Test", 54, function ()
+		api.alternarPrueba()
+		refrescarModo()
+	end)
+
 	enBarra("Undo", 54, api.deshacer)
 	enBarra("Redo", 54, api.rehacer)
 
