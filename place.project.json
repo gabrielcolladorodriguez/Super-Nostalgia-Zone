@@ -1,0 +1,254 @@
+{
+	"name": "Super Nostalgia Zone (Local)",
+
+	"tree":
+	{
+		"$className": "DataModel",
+
+		"Workspace":
+		{
+			"$className": "Workspace",
+			"$ignoreUnknownInstances": true,
+
+			"$properties":
+			{
+				"FilteringEnabled": true,
+				"StreamingEnabled": false,
+				"Gravity": 196.2
+			},
+
+			"Map":
+			{
+				"$path": "Local/Map.model.json"
+			}
+		},
+
+		"Lighting":
+		{
+			"$className": "Lighting",
+			"$ignoreUnknownInstances": true,
+
+			"$properties":
+			{
+				"Technology": "Compatibility",
+				"Ambient": [0, 0, 0],
+				"OutdoorAmbient": [0.5019608, 0.5019608, 0.5019608],
+				"Brightness": 1,
+				"GlobalShadows": false,
+				"EnvironmentDiffuseScale": 0,
+				"EnvironmentSpecularScale": 0,
+				"ClockTime": 14,
+				"GeographicLatitude": 41.733242,
+				"FogEnd": 100000,
+				"FogStart": 0
+			}
+		},
+
+		"Teams":
+		{
+			"$className": "Teams",
+			"$ignoreUnknownInstances": true,
+
+			"Red Team":
+			{
+				"$className": "Team",
+				"$properties":
+				{
+					"TeamColor": { "BrickColor": 21 },
+					"AutoAssignable": true
+				}
+			},
+
+			"Blue Team":
+			{
+				"$className": "Team",
+				"$properties":
+				{
+					"TeamColor": { "BrickColor": 23 },
+					"AutoAssignable": true
+				}
+			}
+		},
+
+		"Chat":
+		{
+			"$className": "Chat",
+			"$properties":
+			{
+				"LoadDefaultChat": false
+			}
+		},
+
+		"TextChatService":
+		{
+			"$className": "TextChatService",
+			"$ignoreUnknownInstances": true,
+			"$properties":
+			{
+				"ChatVersion": "TextChatService",
+				"CreateDefaultTextChannels": true
+			}
+		},
+
+		"Players":
+		{
+			"$className": "Players",
+			"$properties":
+			{
+				"CharacterAutoLoads": false,
+				"RespawnTime": 5
+			}
+		},
+
+		"ReplicatedFirst":
+		{
+			"$className": "ReplicatedFirst",
+			"$ignoreUnknownInstances": true,
+
+			"JoinScript":
+			{
+				"$path": "join.client.lua",
+
+				"UI":
+				{
+					"$path": "UI"
+				}
+			}
+		},
+
+		"ReplicatedStorage":
+		{
+			"$ignoreUnknownInstances": true,
+			"$className": "ReplicatedStorage",
+			"$path": "Shared"
+		},
+
+		"ServerStorage":
+		{
+			"$ignoreUnknownInstances": true,
+			"$className": "ServerStorage",
+			"$path": "Server/Resources",
+
+			"StandardTools":
+			{
+				"$path": "Tools"
+			},
+
+			"LoadTools":
+			{
+				"$className": "StringValue",
+				"$properties": { "Value": "Sword;Superball;RocketLauncher;Trowel;Slingshot;PaintballGun;Timebomb;Reset" }
+			},
+
+			"LoadBuildTools":
+			{
+				"$className": "BoolValue",
+				"$properties": { "Value": true }
+			},
+
+			"LoadLeaderboard":
+			{
+				"$className": "BoolValue",
+				"$properties": { "Value": true }
+			},
+
+			"LoadTime":
+			{
+				"$className": "BoolValue",
+				"$properties": { "Value": false }
+			},
+
+			"EnableBevels":
+			{
+				"$className": "BoolValue",
+				"$properties": { "Value": false }
+			},
+
+			"DevTestMode":
+			{
+				"$className": "BoolValue",
+				"$properties": { "Value": false }
+			},
+
+			"LooseBranches":
+			{
+				"$className": "BoolValue",
+				"$properties": { "Value": false }
+			},
+
+			"Regeneration":
+			{
+				"$className": "Folder",
+
+				"RegenTime":  { "$className": "NumberValue", "$properties": { "Value": 300 } },
+				"RegenDelay": { "$className": "NumberValue", "$properties": { "Value": 4 } },
+
+				"la torre central":
+				{
+					"$className": "StringValue",
+					"$properties": { "Value": "CentralTower" }
+				}
+			}
+		},
+
+		"StarterGui":
+		{
+			"$className": "StarterGui",
+			"$ignoreUnknownInstances": true,
+
+			"UI [PREVIEW]":
+			{
+				"$path": "UI",
+
+				"$properties":
+				{
+					"Archivable": false
+				}
+			}
+		},
+
+		"ServerScriptService":
+		{
+			"$ignoreUnknownInstances": true,
+			"$className": "ServerScriptService",
+			"$path": "Server/Scripts",
+
+			"Bootstrap":
+			{
+				"$path": "Local/Bootstrap.server.lua"
+			}
+		},
+
+		"StarterPlayer":
+		{
+			"$className": "StarterPlayer",
+
+			"$properties":
+			{
+				"DevComputerMovementMode": "KeyboardMouse",
+				"DevComputerCameraMovementMode": "Classic",
+				"DevTouchMovementMode": "UserChoice",
+				"DevTouchCameraMovementMode": "Classic",
+				"LoadCharacterAppearance": false,
+				"EnableMouseLockOption": false,
+				"GameSettingsAvatar": "R6",
+				"HealthDisplayDistance": 0,
+				"NameDisplayDistance": 0
+			},
+
+			"StarterCharacterScripts":
+			{
+				"$ignoreUnknownInstances": true,
+				"$className": "StarterCharacterScripts",
+				"$path": "Player"
+			},
+
+			"StarterPlayerScripts":
+			{
+				"$ignoreUnknownInstances": true,
+				"$className": "StarterPlayerScripts",
+				"$path": "Client"
+			}
+		}
+	}
+}

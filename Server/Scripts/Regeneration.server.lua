@@ -91,6 +91,20 @@ if regen then
 			else
 				setupModelRegen(v.Value, v.Name)
 			end
+		elseif v:IsA("StringValue") then
+			-- [fork] Permite configurar la regeneracion sin referencias
+			-- directas: el valor es el nombre del modelo dentro de Workspace.
+			local target = workspace:FindFirstChild(v.Value, true)
+
+			if target and target:IsA("Model") then
+				if v.Name == "" then
+					setupModelRegen(target, true)
+				else
+					setupModelRegen(target, v.Name)
+				end
+			else
+				warn("[Regeneration] No se encontro el modelo:", v.Value)
+			end
 		end
 	end
 	

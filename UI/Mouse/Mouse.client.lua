@@ -27,6 +27,23 @@ local activated = false
 local player = Players.LocalPlayer
 local mouseGui = script.Parent
 
+-- [fork] El cursor vivia dentro de la misma ScreenGui que el resto de la
+-- interfaz, asi que cualquier ventana con DisplayOrder mayor lo tapaba. Se
+-- muda a su propia capa, siempre la de mas arriba.
+do
+	local playerGui = player:WaitForChild("PlayerGui")
+
+	local capa = Instance.new("ScreenGui")
+	capa.Name = "MouseLayer"
+	capa.DisplayOrder = 1000000
+	capa.IgnoreGuiInset = true
+	capa.ResetOnSpawn = false
+	capa.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	capa.Parent = playerGui
+
+	mouseGui.Parent = capa
+end
+
 local function onInputBegan(input,gameProcessed)
 	if mouseGui then
 		if input.UserInputType == Enum.UserInputType.Touch and not gameProcessed then
@@ -101,7 +118,12 @@ local function updateMouse()
 	end
 
 	if inGuiFocus then
-		mouseGui.Image = "rbxassetid://1000000"
+		-- [fork] El original ponia aqui un id de imagen inexistente, es decir
+		-- ocultaba el cursor sobre cualquier interfaz. En el juego original no
+		-- se notaba porque casi no hay GUI que sobrevolar; con el menu de
+		-- juegos te quedabas sin cursor y sin poder pulsar nada. Ahora sale la
+		-- flecha clasica.
+		mouseGui.Image = "rbxasset://textures/ArrowCursor.png"
 	end
 	
 	local pos = UserInputService:GetMouseLocation()

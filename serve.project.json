@@ -1,0 +1,134 @@
+{
+	"name": "Super Nostalgia Zone (sync de codigo)",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedFirst": {
+			"$className": "ReplicatedFirst",
+			"$ignoreUnknownInstances": true,
+			"JoinScript": {
+				"$path": "join.client.lua",
+				"UI": {
+					"$path": "UI"
+				}
+			}
+		},
+		"ReplicatedStorage": {
+			"$ignoreUnknownInstances": true,
+			"$className": "ReplicatedStorage",
+			"$path": "Shared"
+		},
+		"ServerStorage": {
+			"$ignoreUnknownInstances": true,
+			"$className": "ServerStorage",
+			"$path": "Server/Resources",
+			"StandardTools": {
+				"$path": "Tools"
+			},
+			"LoadTools": {
+				"$className": "StringValue",
+				"$properties": {
+					"Value": "Sword;Superball;RocketLauncher;Trowel;Slingshot;PaintballGun;Timebomb;Reset"
+				}
+			},
+			"LoadBuildTools": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": true
+				}
+			},
+			"LoadLeaderboard": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": true
+				}
+			},
+			"LoadTime": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": false
+				}
+			},
+			"EnableBevels": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": false
+				}
+			},
+			"DevTestMode": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": false
+				}
+			},
+			"LooseBranches": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": false
+				}
+			},
+			"Regeneration": {
+				"$className": "Folder",
+				"RegenTime": {
+					"$className": "NumberValue",
+					"$properties": {
+						"Value": 300
+					}
+				},
+				"RegenDelay": {
+					"$className": "NumberValue",
+					"$properties": {
+						"Value": 4
+					}
+				},
+				"la torre central": {
+					"$className": "StringValue",
+					"$properties": {
+						"Value": "CentralTower"
+					}
+				}
+			}
+		},
+		"StarterGui": {
+			"$className": "StarterGui",
+			"$ignoreUnknownInstances": true,
+			"UI [PREVIEW]": {
+				"$path": "UI",
+				"$properties": {
+					"Archivable": false
+				}
+			}
+		},
+		"ServerScriptService": {
+			"$ignoreUnknownInstances": true,
+			"$className": "ServerScriptService",
+			"$path": "Server/Scripts",
+			"Bootstrap": {
+				"$path": "Local/Bootstrap.server.lua"
+			}
+		},
+		"StarterPlayer": {
+			"$className": "StarterPlayer",
+			"$properties": {
+				"DevComputerMovementMode": "KeyboardMouse",
+				"DevComputerCameraMovementMode": "Classic",
+				"DevTouchMovementMode": "UserChoice",
+				"DevTouchCameraMovementMode": "Classic",
+				"LoadCharacterAppearance": false,
+				"EnableMouseLockOption": false,
+				"GameSettingsAvatar": "R6",
+				"HealthDisplayDistance": 0,
+				"NameDisplayDistance": 0
+			},
+			"StarterCharacterScripts": {
+				"$ignoreUnknownInstances": true,
+				"$className": "StarterCharacterScripts",
+				"$path": "Player"
+			},
+			"StarterPlayerScripts": {
+				"$ignoreUnknownInstances": true,
+				"$className": "StarterPlayerScripts",
+				"$path": "Client"
+			}
+		}
+	}
+}

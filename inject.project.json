@@ -1,0 +1,100 @@
+{
+	"name": "Motor Nostalgia (inyectable)",
+	"tree": {
+		"$className": "DataModel",
+		"Chat": {
+			"$className": "Chat",
+			"$properties": {
+				"LoadDefaultChat": false
+			}
+		},
+		"TextChatService": {
+			"$className": "TextChatService",
+			"$ignoreUnknownInstances": true,
+			"$properties": {
+				"ChatVersion": "TextChatService",
+				"CreateDefaultTextChannels": true
+			}
+		},
+		"Players": {
+			"$className": "Players",
+			"$properties": {
+				"CharacterAutoLoads": false,
+				"RespawnTime": 5
+			}
+		},
+		"ReplicatedFirst": {
+			"$className": "ReplicatedFirst",
+			"$ignoreUnknownInstances": true,
+			"JoinScript": {
+				"$path": "join.client.lua",
+				"UI": {
+					"$path": "UI"
+				}
+			}
+		},
+		"ReplicatedStorage": {
+			"$ignoreUnknownInstances": true,
+			"$className": "ReplicatedStorage",
+			"$path": "Shared"
+		},
+		"ServerStorage": {
+			"$ignoreUnknownInstances": true,
+			"$className": "ServerStorage",
+			"$path": "Server/Resources",
+			"StandardTools": {
+				"$path": "Tools"
+			},
+			"EnableBevels": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": false
+				}
+			},
+			"DevTestMode": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": false
+				}
+			},
+			"LooseBranches": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": false
+				}
+			}
+		},
+		"ServerScriptService": {
+			"$ignoreUnknownInstances": true,
+			"$className": "ServerScriptService",
+			"$path": "Server/Scripts",
+			"Bootstrap": {
+				"$path": "Local/Bootstrap.server.lua"
+			}
+		},
+		"StarterPlayer": {
+			"$className": "StarterPlayer",
+			"$properties": {
+				"DevComputerMovementMode": "KeyboardMouse",
+				"DevComputerCameraMovementMode": "Classic",
+				"DevTouchMovementMode": "UserChoice",
+				"DevTouchCameraMovementMode": "Classic",
+				"LoadCharacterAppearance": false,
+				"EnableMouseLockOption": false,
+				"GameSettingsAvatar": "R6",
+				"HealthDisplayDistance": 0,
+				"NameDisplayDistance": 0
+			},
+			"StarterCharacterScripts": {
+				"$ignoreUnknownInstances": true,
+				"$className": "StarterCharacterScripts",
+				"$path": "Player"
+			},
+			"StarterPlayerScripts": {
+				"$ignoreUnknownInstances": true,
+				"$className": "StarterPlayerScripts",
+				"$path": "Client"
+			}
+		}
+	}
+}

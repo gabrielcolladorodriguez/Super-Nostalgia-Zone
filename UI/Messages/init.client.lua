@@ -7,6 +7,32 @@ local player = Players.LocalPlayer
 local hintBin = Instance.new("Folder")
 local msgNameFmt = "MsgLbl_%s [%s]"
 
+--[[
+	[fork] Solo estos textos se consideran pantallas de carga.
+
+	Hace falta hilar fino: comprobando el universo entero salieron cinco juegos
+	con un Message permanente que NO es una carga -- "Tornado Inactive",
+	"Now Playing: None", el cartel de bienvenida de un mapa, la linea de estado
+	de un RPG. Son su HUD. Ocultarlos por llevar mucho rato en pantalla les
+	romperia la interfaz, asi que se exige que el texto hable de cargar.
+--]]
+local PALABRAS_DE_CARGA = {
+	"loading", "please wait", "initializing", "initialising",
+	"generating", "downloading", "cargando",
+}
+
+local function pareceCarga(texto)
+	local minus = texto:lower()
+
+	for _, palabra in ipairs(PALABRAS_DE_CARGA) do
+		if minus:find(palabra, 1, true) then
+			return true
+		end
+	end
+
+	return false
+end
+
 local function addMessage(sourceMsg, msgType)
 	local isInPlayer = (sourceMsg.Parent == player)
 	local msgType = sourceMsg.ClassName
@@ -70,8 +96,52 @@ local function addMessage(sourceMsg, msgType)
 	updateText()
 	textUpdater:Connect(updateText)
 	sourceMsg.AncestryChanged:Connect(onAncestryChanged)
-	
+
 	msg.Parent = gui
+
+	--[[
+		[fork] Salvavidas contra los mensajes eternos.
+
+		Muchos lugares de 2008 muestran un Message tipo "Loading models..." y lo
+		quitan cuando termina InsertService:LoadAsset. Hoy esa llamada falla o
+		no vuelve nunca (Roblox ya no deja cargar modelos de otras cuentas), asi
+		que el mensaje se queda tapando la pantalla para siempre y el jugador ni
+		siquiera ve el boton de salir.
+
+		Si un mensaje pasa de este tiempo sin cambiar de texto, lo apagamos. El
+		Message original se queda donde esta: si el juego lo actualiza mas tarde,
+		updateText lo vuelve a encender.
+	--]]
+	if msgType ~= "Hint" then
+		task.spawn(function ()
+			local textoAlEmpezar = msg.Text
+			local restante = 30
+
+			while msg.Parent do
+				task.wait(5)
+
+				if msg.Text ~= textoAlEmpezar then
+					-- Ha cambiado: el juego sigue vivo, reiniciamos la cuenta.
+					textoAlEmpezar = msg.Text
+					restante = 30
+				elseif pareceCarga(msg.Text) then
+					restante = restante - 5
+
+					if restante <= 0 and msg.Visible then
+						warn(("[Messages] '%s' lleva 30s sin avanzar; lo oculto para "
+							.. "no bloquear la pantalla."):format(msg.Text:sub(1, 60)))
+						msg.Visible = false
+						return
+					end
+				else
+					-- No es una carga: se queda. Muchos lugares de 2008 usan
+					-- Message como HUD fijo ("Tornado Inactive", "Now Playing:
+					-- None"...) y ocultarlos les rompe la interfaz.
+					return
+				end
+			end
+		end)
+	end
 end
 
 local function registerMessage(obj)

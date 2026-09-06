@@ -1,0 +1,3226 @@
+{
+	"ClassName": "Folder",
+	"Properties": {},
+	"Children": [
+		{
+			"Name": "Baseplate",
+			"ClassName": "Part",
+			"Properties": {
+				"CFrame": [
+					0,
+					-10,
+					0,
+					1.0,
+					0.0,
+					0.0,
+					0.0,
+					1.0,
+					0.0,
+					-0.0,
+					0.0,
+					1.0
+				],
+				"Size": [
+					512,
+					20,
+					512
+				],
+				"Anchored": true,
+				"BrickColor": {
+					"BrickColor": 28
+				},
+				"TopSurface": "Studs",
+				"BottomSurface": "Smooth",
+				"LeftSurface": "Smooth",
+				"RightSurface": "Smooth",
+				"FrontSurface": "Smooth",
+				"BackSurface": "Smooth",
+				"Locked": true
+			}
+		},
+		{
+			"Name": "Plaza",
+			"ClassName": "Model",
+			"Children": [
+				{
+					"Name": "Floor",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							1,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							120,
+							2,
+							120
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 194
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Curb0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							1.5,
+							61,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							122,
+							3,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Curb1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							1.5,
+							-61,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							122,
+							3,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Curb2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							61,
+							1.5,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							4,
+							3,
+							122
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Curb3",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-61,
+							1.5,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							4,
+							3,
+							122
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pillar0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							50,
+							14,
+							50,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "PillarCap0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							50,
+							27,
+							50,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							8,
+							2,
+							8
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pillar1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-50,
+							14,
+							50,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "PillarCap1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-50,
+							27,
+							50,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							8,
+							2,
+							8
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pillar2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							50,
+							14,
+							-50,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "PillarCap2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							50,
+							27,
+							-50,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							8,
+							2,
+							8
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pillar3",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-50,
+							14,
+							-50,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "PillarCap3",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-50,
+							27,
+							-50,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							8,
+							2,
+							8
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				}
+			]
+		},
+		{
+			"Name": "BaseRed",
+			"ClassName": "Model",
+			"Children": [
+				{
+					"Name": "Platform",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							6,
+							170,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							80,
+							4,
+							80
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "WallL",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-38,
+							16,
+							170,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							4,
+							16,
+							80
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "WallR",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							38,
+							16,
+							170,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							4,
+							16,
+							80
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "WallBack",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							16,
+							208,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							80,
+							16,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Tower",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							28,
+							190,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							16,
+							40,
+							16
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "TowerTop",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							49.5,
+							190,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							22,
+							3,
+							22
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Spawn",
+					"ClassName": "SpawnLocation",
+					"Properties": {
+						"CFrame": [
+							0,
+							8.5,
+							150,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							12,
+							1,
+							12
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"TeamColor": {
+							"BrickColor": 21
+						},
+						"Neutral": false,
+						"Duration": 0,
+						"AllowTeamChangeOnTouch": true
+					}
+				}
+			]
+		},
+		{
+			"Name": "BaseBlue",
+			"ClassName": "Model",
+			"Children": [
+				{
+					"Name": "Platform",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							6,
+							-170,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							80,
+							4,
+							80
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "WallL",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-38,
+							16,
+							-170,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							4,
+							16,
+							80
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "WallR",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							38,
+							16,
+							-170,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							4,
+							16,
+							80
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "WallBack",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							16,
+							-208,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							80,
+							16,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Tower",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							28,
+							-190,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							16,
+							40,
+							16
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "TowerTop",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							49.5,
+							-190,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							22,
+							3,
+							22
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Spawn",
+					"ClassName": "SpawnLocation",
+					"Properties": {
+						"CFrame": [
+							0,
+							8.5,
+							-150,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							12,
+							1,
+							12
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Smooth",
+						"BottomSurface": "Smooth",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth",
+						"TeamColor": {
+							"BrickColor": 23
+						},
+						"Neutral": false,
+						"Duration": 0,
+						"AllowTeamChangeOnTouch": true
+					}
+				}
+			]
+		},
+		{
+			"Name": "Ramps",
+			"ClassName": "Model",
+			"Children": [
+				{
+					"Name": "RampRed",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							4.5,
+							100,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							0.990268,
+							-0.139173,
+							0.0,
+							0.139173,
+							0.990268
+						],
+						"Size": [
+							28,
+							2,
+							60
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "RampBlue",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							4.5,
+							-100,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							0.990268,
+							0.139173,
+							0.0,
+							-0.139173,
+							0.990268
+						],
+						"Size": [
+							28,
+							2,
+							60
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				}
+			]
+		},
+		{
+			"Name": "Bridges",
+			"ClassName": "Model",
+			"Children": [
+				{
+					"Name": "BridgeDeck0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-90,
+							12,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							2,
+							260
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pier0_0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-90,
+							0,
+							-120,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pier0_1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-90,
+							0,
+							-60,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pier0_2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-90,
+							0,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pier0_3",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-90,
+							0,
+							60,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pier0_4",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-90,
+							0,
+							120,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Rail0A",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-96.5,
+							15,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1,
+							4,
+							260
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Rail0B",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-83.5,
+							15,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1,
+							4,
+							260
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "BridgeDeck1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							90,
+							12,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							2,
+							260
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pier1_0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							90,
+							0,
+							-120,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pier1_1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							90,
+							0,
+							-60,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pier1_2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							90,
+							0,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pier1_3",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							90,
+							0,
+							60,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Pier1_4",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							90,
+							0,
+							120,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							6,
+							24,
+							6
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Rail1A",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							83.5,
+							15,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1,
+							4,
+							260
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Rail1B",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							96.5,
+							15,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1,
+							4,
+							260
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				}
+			]
+		},
+		{
+			"Name": "Cover",
+			"ClassName": "Model",
+			"Children": [
+				{
+					"Name": "Cover0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-40,
+							6,
+							30,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							10,
+							8,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Cover1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							40,
+							6,
+							30,
+							0.798636,
+							0.0,
+							0.601815,
+							0.0,
+							1.0,
+							0.0,
+							-0.601815,
+							0.0,
+							0.798636
+						],
+						"Size": [
+							10,
+							8,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 106
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Cover2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-40,
+							6,
+							-30,
+							0.275637,
+							0.0,
+							0.961262,
+							0.0,
+							1.0,
+							0.0,
+							-0.961262,
+							0.0,
+							0.275637
+						],
+						"Size": [
+							10,
+							8,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Cover3",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							40,
+							6,
+							-30,
+							-0.358368,
+							0.0,
+							0.93358,
+							0.0,
+							1.0,
+							0.0,
+							-0.93358,
+							0.0,
+							-0.358368
+						],
+						"Size": [
+							10,
+							8,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Cover4",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							6,
+							40,
+							-0.848048,
+							0.0,
+							0.529919,
+							0.0,
+							1.0,
+							0.0,
+							-0.529919,
+							0.0,
+							-0.848048
+						],
+						"Size": [
+							10,
+							8,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Cover5",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							6,
+							-40,
+							-0.996195,
+							0.0,
+							-0.087156,
+							0.0,
+							1.0,
+							0.0,
+							0.087156,
+							0.0,
+							-0.996195
+						],
+						"Size": [
+							10,
+							8,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Cover6",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-25,
+							6,
+							0,
+							-0.743145,
+							0.0,
+							-0.669131,
+							0.0,
+							1.0,
+							0.0,
+							0.669131,
+							0.0,
+							-0.743145
+						],
+						"Size": [
+							10,
+							8,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Cover7",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							25,
+							6,
+							0,
+							-0.190809,
+							0.0,
+							-0.981627,
+							0.0,
+							1.0,
+							0.0,
+							0.981627,
+							0.0,
+							-0.190809
+						],
+						"Size": [
+							10,
+							8,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Cover8",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							-55,
+							6,
+							20,
+							0.438371,
+							0.0,
+							-0.898794,
+							0.0,
+							1.0,
+							0.0,
+							0.898794,
+							0.0,
+							0.438371
+						],
+						"Size": [
+							10,
+							8,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Cover9",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							55,
+							6,
+							-20,
+							0.891007,
+							0.0,
+							-0.45399,
+							0.0,
+							1.0,
+							0.0,
+							0.45399,
+							0.0,
+							0.891007
+						],
+						"Size": [
+							10,
+							8,
+							4
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 106
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				}
+			]
+		},
+		{
+			"Name": "CentralTower",
+			"ClassName": "Model",
+			"Children": [
+				{
+					"Name": "Tier0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							4,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							26,
+							6,
+							26
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Tier1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							10,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							24,
+							6,
+							24
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 106
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Tier2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							16,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							22,
+							6,
+							22
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Tier3",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							22,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							20,
+							6,
+							20
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Tier4",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							28,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							18,
+							6,
+							18
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Tier5",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							34,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							16,
+							6,
+							16
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Tier6",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							40,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							14,
+							6,
+							14
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Tier7",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							46,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							12,
+							6,
+							12
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Flag",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							60,
+							0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							2,
+							16,
+							2
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 26
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Banner",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							0,
+							60,
+							6.5,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							1,
+							8,
+							12
+						],
+						"Anchored": true,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				}
+			]
+		},
+		{
+			"Name": "LooseBricks",
+			"ClassName": "Model",
+			"Children": [
+				{
+					"Name": "Brick0",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							126.0,
+							3.0,
+							100.0,
+							1.0,
+							0.0,
+							0.0,
+							0.0,
+							1.0,
+							0.0,
+							-0.0,
+							0.0,
+							1.0
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick1",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							122.180423,
+							5.2,
+							118.682313,
+							0.920505,
+							0.0,
+							0.390731,
+							0.0,
+							1.0,
+							0.0,
+							-0.390731,
+							0.0,
+							0.920505
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 106
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick2",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							105.438949,
+							7.4,
+							131.534391,
+							0.694658,
+							0.0,
+							0.71934,
+							0.0,
+							1.0,
+							0.0,
+							-0.71934,
+							0.0,
+							0.694658
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick3",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							82.330386,
+							9.6,
+							130.212328,
+							0.358368,
+							0.0,
+							0.93358,
+							0.0,
+							1.0,
+							0.0,
+							-0.93358,
+							0.0,
+							0.358368
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick4",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							64.195551,
+							3.0,
+							112.72955,
+							-0.034899,
+							0.0,
+							0.999391,
+							0.0,
+							1.0,
+							0.0,
+							-0.999391,
+							0.0,
+							-0.034899
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick5",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							75.652126,
+							5.2,
+							90.879636,
+							-0.422618,
+							0.0,
+							0.906308,
+							0.0,
+							1.0,
+							0.0,
+							-0.906308,
+							0.0,
+							-0.422618
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick6",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							85.782436,
+							7.4,
+							74.724303,
+							-0.743145,
+							0.0,
+							0.669131,
+							0.0,
+							1.0,
+							0.0,
+							-0.669131,
+							0.0,
+							-0.743145
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick7",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							105.968396,
+							9.6,
+							68.561516,
+							-0.945519,
+							0.0,
+							0.325568,
+							0.0,
+							1.0,
+							0.0,
+							-0.325568,
+							0.0,
+							-0.945519
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick8",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							127.144806,
+							3.0,
+							77.905668,
+							-0.997564,
+							0.0,
+							-0.069756,
+							0.0,
+							1.0,
+							0.0,
+							0.069756,
+							0.0,
+							-0.997564
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick9",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							137.994628,
+							5.2,
+							100.638928,
+							-0.891007,
+							0.0,
+							-0.45399,
+							0.0,
+							1.0,
+							0.0,
+							0.45399,
+							0.0,
+							-0.891007
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 106
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick10",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							119.601459,
+							7.4,
+							117.081652,
+							-0.642788,
+							0.0,
+							-0.766044,
+							0.0,
+							1.0,
+							0.0,
+							0.766044,
+							0.0,
+							-0.642788
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick11",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							104.447842,
+							9.6,
+							128.656879,
+							-0.292372,
+							0.0,
+							-0.956305,
+							0.0,
+							1.0,
+							0.0,
+							0.956305,
+							0.0,
+							-0.292372
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick12",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							83.382763,
+							3.0,
+							127.347165,
+							0.104528,
+							0.0,
+							-0.994522,
+							0.0,
+							1.0,
+							0.0,
+							0.994522,
+							0.0,
+							0.104528
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick13",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							66.829744,
+							5.2,
+							111.168443,
+							0.48481,
+							0.0,
+							-0.87462,
+							0.0,
+							1.0,
+							0.0,
+							0.87462,
+							0.0,
+							0.48481
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick14",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							64.643802,
+							7.4,
+							86.073793,
+							0.788011,
+							0.0,
+							-0.615661,
+							0.0,
+							1.0,
+							0.0,
+							0.615661,
+							0.0,
+							0.788011
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick15",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							87.63604,
+							9.6,
+							77.12791,
+							0.965926,
+							0.0,
+							-0.258819,
+							0.0,
+							1.0,
+							0.0,
+							0.258819,
+							0.0,
+							0.965926
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick16",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							105.887141,
+							3.0,
+							71.603846,
+							0.990268,
+							0.0,
+							0.139173,
+							0.0,
+							1.0,
+							0.0,
+							-0.139173,
+							0.0,
+							0.990268
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 24
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick17",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							125.154249,
+							5.2,
+							80.219612,
+							0.857167,
+							0.0,
+							0.515038,
+							0.0,
+							1.0,
+							0.0,
+							-0.515038,
+							0.0,
+							0.857167
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 106
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick18",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							134.98021,
+							7.4,
+							101.176807,
+							0.587785,
+							0.0,
+							0.809017,
+							0.0,
+							1.0,
+							0.0,
+							-0.809017,
+							0.0,
+							0.587785
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 37
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick19",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							128.224469,
+							9.6,
+							125.443651,
+							0.224951,
+							0.0,
+							0.97437,
+							0.0,
+							1.0,
+							0.0,
+							-0.97437,
+							0.0,
+							0.224951
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 1001
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick20",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							103.555168,
+							3.0,
+							125.755791,
+							-0.173648,
+							0.0,
+							0.984808,
+							0.0,
+							1.0,
+							0.0,
+							-0.984808,
+							0.0,
+							-0.173648
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 21
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick21",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							84.526053,
+							5.2,
+							124.526658,
+							-0.544639,
+							0.0,
+							0.838671,
+							0.0,
+							1.0,
+							0.0,
+							-0.838671,
+							0.0,
+							-0.544639
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 23
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick22",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							69.505507,
+							7.4,
+							109.699787,
+							-0.829038,
+							0.0,
+							0.559193,
+							0.0,
+							1.0,
+							0.0,
+							-0.559193,
+							0.0,
+							-0.829038
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 192
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				},
+				{
+					"Name": "Brick23",
+					"ClassName": "Part",
+					"Properties": {
+						"CFrame": [
+							67.655352,
+							9.6,
+							86.6275,
+							-0.981627,
+							0.0,
+							0.190809,
+							0.0,
+							1.0,
+							0.0,
+							-0.190809,
+							0.0,
+							-0.981627
+						],
+						"Size": [
+							4,
+							2,
+							8
+						],
+						"Anchored": false,
+						"BrickColor": {
+							"BrickColor": 199
+						},
+						"TopSurface": "Studs",
+						"BottomSurface": "Inlet",
+						"LeftSurface": "Smooth",
+						"RightSurface": "Smooth",
+						"FrontSurface": "Smooth",
+						"BackSurface": "Smooth"
+					}
+				}
+			]
+		},
+		{
+			"Name": "GameMusic",
+			"ClassName": "Sound",
+			"Properties": {
+				"SoundId": "",
+				"Looped": true,
+				"Volume": 0.35
+			}
+		}
+	]
+}

@@ -131,13 +131,36 @@ local message = gameJoin:WaitForChild("Message")
 local exitOverride = gameJoin:WaitForChild("ExitOverride")
 local exitBuffer = "Continue holding down 'Back' to return to the menu.\nExiting in...\n%.1f"
 
+-- [fork] El original teletransportaba al hub de MaximumADHD (998374377). En
+-- otro universo eso echa al jugador a un juego ajeno, asi que el destino se
+-- lee de ReplicatedStorage.HubPlaceId, que inyecta el conversor. Sin ese
+-- valor no se teletransporta a ningun sitio.
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local function getHubPlaceId()
+    local valor = ReplicatedStorage:FindFirstChild("HubPlaceId")
+
+    if valor and valor:IsA("IntValue") and valor.Value > 0 then
+        return valor.Value
+    end
+
+    return nil
+end
+
 local function onExitActivated()
     if not exitOverride.Visible then
+        local hub = getHubPlaceId()
+
+        if not hub or hub == game.PlaceId then
+            warn("[Topbar] Sin HubPlaceId al que volver; no se teletransporta.")
+            return
+        end
+
         exitOverride.Visible = true
         message.Visible = false
         gameJoin.Visible = true
 
-        TeleportService:Teleport(998374377)
+        TeleportService:Teleport(hub)
     end
 end
 

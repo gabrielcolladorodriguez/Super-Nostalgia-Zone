@@ -44,10 +44,20 @@ local function iterPageItems(pages)
 	end)
 end
 
-for place in iterPageItems(AssetService:GetGamePlacesAsync()) do
-	if not place.Name:lower():find("devtest") and not place.Name:find("Super Nostalgia Zone") then
-		placeCount = placeCount + 1
+-- [fork] GetGamePlacesAsync falla en archivos locales o en universos
+-- sin acceso a la API; lo envolvemos para no romper el resto del script.
+local okPlaces, placesPages = pcall(function ()
+	return AssetService:GetGamePlacesAsync()
+end)
+
+if okPlaces then
+	for place in iterPageItems(placesPages) do
+		if not place.Name:lower():find("devtest") and not place.Name:find("Super Nostalgia Zone") then
+			placeCount = placeCount + 1
+		end
 	end
+else
+	warn("[Badges] No se pudo listar los lugares del universo:", placesPages)
 end
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

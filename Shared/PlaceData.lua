@@ -1,5 +1,15 @@
 local AssetService = game:GetService("AssetService")
-local places = AssetService:GetGamePlacesAsync()
+
+-- [fork] En un archivo local (o sin acceso a la API) esta llamada lanza error
+-- y tumbaba el modulo entero; ahora devuelve una lista vacia.
+local okPlaces, places = pcall(function ()
+	return AssetService:GetGamePlacesAsync()
+end)
+
+if not okPlaces then
+	warn("[PlaceData] GetGamePlacesAsync fallo:", places)
+	return {}
+end
 
 local creators =
 {

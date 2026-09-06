@@ -1,2 +1,7 @@
 
 sourcemap.json
+
+# Lugares compilados por rojo: se generan, no se versionan.
+SuperNostalgiaZone.rbxlx
+HubNostalgia.rbxlx
+MotorNostalgia.rbxlx
