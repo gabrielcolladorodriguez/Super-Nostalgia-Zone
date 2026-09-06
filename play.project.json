@@ -1,0 +1,69 @@
+{
+	"name": "Bygone Play",
+	"tree": {
+		"$className": "DataModel",
+		"Workspace": {
+			"$className": "Workspace",
+			"$ignoreUnknownInstances": true,
+			"$properties": {
+				"FilteringEnabled": true,
+				"StreamingEnabled": false,
+				"Gravity": 196.2
+			}
+		},
+		"Lighting": {
+			"$className": "Lighting",
+			"$ignoreUnknownInstances": true,
+			"$properties": {
+				"Technology": "Compatibility",
+				"Ambient": [
+					0,
+					0,
+					0
+				],
+				"OutdoorAmbient": [
+					0.5019608,
+					0.5019608,
+					0.5019608
+				],
+				"Brightness": 1,
+				"GlobalShadows": false,
+				"ClockTime": 14,
+				"FogEnd": 100000
+			}
+		},
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"$ignoreUnknownInstances": true,
+			"Serializer": {
+				"$path": "Builder/Shared/Serializer.lua"
+			},
+			"HubPlaceId": {
+				"$className": "IntValue",
+				"$properties": {
+					"Value": 119520946831406
+				}
+			}
+		},
+		"ServerStorage": {
+			"$className": "ServerStorage",
+			"$ignoreUnknownInstances": true,
+			"CreationStore": {
+				"$path": "Builder/Server/CreationStore.lua"
+			}
+		},
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"$ignoreUnknownInstances": true,
+			"PlayCreation": {
+				"$path": "Builder/Server/PlayCreation.server.lua"
+			}
+		},
+		"Players": {
+			"$className": "Players",
+			"$properties": {
+				"CharacterAutoLoads": false
+			}
+		}
+	}
+}

@@ -1,0 +1,91 @@
+{
+	"name": "Retired",
+	"tree": {
+		"$className": "DataModel",
+		"Workspace": {
+			"$className": "Workspace",
+			"$properties": {
+				"FilteringEnabled": true,
+				"StreamingEnabled": false
+			},
+			"Baseplate": {
+				"$className": "Part",
+				"$properties": {
+					"Size": [
+						200,
+						20,
+						200
+					],
+					"CFrame": [
+						0,
+						-10,
+						0,
+						1,
+						0,
+						0,
+						0,
+						1,
+						0,
+						0,
+						0,
+						1
+					],
+					"Anchored": true,
+					"Locked": true,
+					"BrickColor": {
+						"BrickColor": 194
+					},
+					"TopSurface": "Smooth",
+					"BottomSurface": "Smooth"
+				}
+			},
+			"SpawnLocation": {
+				"$className": "SpawnLocation",
+				"$properties": {
+					"Size": [
+						12,
+						1,
+						12
+					],
+					"CFrame": [
+						0,
+						0.5,
+						0,
+						1,
+						0,
+						0,
+						0,
+						1,
+						0,
+						0,
+						0,
+						1
+					],
+					"Anchored": true,
+					"Neutral": true,
+					"Duration": 0,
+					"BrickColor": {
+						"BrickColor": 1001
+					},
+					"TopSurface": "Smooth",
+					"BottomSurface": "Smooth"
+				}
+			}
+		},
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"HubPlaceId": {
+				"$className": "IntValue",
+				"$properties": {
+					"Value": 119520946831406
+				}
+			}
+		},
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"Retired": {
+				"$path": "Retired/Retired.server.lua"
+			}
+		}
+	}
+}

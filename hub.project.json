@@ -96,8 +96,26 @@
 			"$ignoreUnknownInstances": true,
 			"$className": "ReplicatedStorage",
 			"$path": "Shared",
-			"CatalogoJuegos": {
-				"$path": "Hub/CatalogoJuegos.lua"
+			"Serializer": {
+				"$path": "Builder/Shared/Serializer.lua"
+			},
+			"StudioPlaceId": {
+				"$className": "IntValue",
+				"$properties": {
+					"Value": 98061725331225
+				}
+			},
+			"PlayPlaceId": {
+				"$className": "IntValue",
+				"$properties": {
+					"Value": 82973593857191
+				}
+			},
+			"HubPlaceId": {
+				"$className": "IntValue",
+				"$properties": {
+					"Value": 119520946831406
+				}
 			}
 		},
 		"ServerStorage": {
@@ -136,6 +154,9 @@
 				"$properties": {
 					"Value": "Reset"
 				}
+			},
+			"CreationStore": {
+				"$path": "Builder/Server/CreationStore.lua"
 			}
 		},
 		"StarterGui": {
@@ -158,8 +179,8 @@
 			"Bootstrap": {
 				"$path": "Local/Bootstrap.server.lua"
 			},
-			"Herramientas": {
-				"$path": "Hub/Herramientas"
+			"BuilderService": {
+				"$path": "Builder/Server/BuilderService.server.lua"
 			}
 		},
 		"StarterPlayer": {

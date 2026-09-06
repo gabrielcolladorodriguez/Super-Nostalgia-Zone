@@ -1,0 +1,128 @@
+<roblox version="4">
+  <Item class="ReplicatedStorage" referent="0">
+    <Properties>
+      <string name="Name">ReplicatedStorage</string>
+    </Properties>
+    <Item class="IntValue" referent="1">
+      <Properties>
+        <string name="Name">HubPlaceId</string>
+        <int64 name="Value">119520946831406</int64>
+      </Properties>
+    </Item>
+  </Item>
+  <Item class="ServerScriptService" referent="2">
+    <Properties>
+      <string name="Name">ServerScriptService</string>
+    </Properties>
+    <Item class="Script" referent="3">
+      <Properties>
+        <string name="Name">Retired</string>
+        <token name="RunContext">0</token>
+        <string name="Source"><![CDATA[--!nocheck
+--[[
+	Lugar retirado.
+
+	Open Cloud sabe actualizar un lugar pero no borrarlo, asi que los lugares
+	cuyo contenido se retira del universo se sobrescriben con este: un cuarto
+	vacio que explica por que y devuelve al jugador al vestibulo.
+]]
+
+local Players = game:GetService("Players")
+local TeleportService = game:GetService("TeleportService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local TEXTO = "This place has been retired.\n\nIt is not part of Bygone any more.\nReturning to the lobby..."
+
+local function alEntrar(player)
+	local aviso = Instance.new("Message")
+	aviso.Text = TEXTO
+	aviso.Parent = player:FindFirstChildOfClass("PlayerGui") or player
+
+	task.delay(5, function ()
+		local hub = ReplicatedStorage:FindFirstChild("HubPlaceId")
+
+		if hub and hub.Value > 0 and hub.Value ~= game.PlaceId then
+			pcall(function ()
+				TeleportService:Teleport(hub.Value, player)
+			end)
+		end
+	end)
+end
+
+for _, player in ipairs(Players:GetPlayers()) do
+	alEntrar(player)
+end
+
+Players.PlayerAdded:Connect(alEntrar)
+]]></string>
+      </Properties>
+    </Item>
+  </Item>
+  <Item class="Workspace" referent="4">
+    <Properties>
+      <string name="Name">Workspace</string>
+      <bool name="FilteringEnabled">true</bool>
+      <bool name="NeedsPivotMigration">false</bool>
+      <bool name="StreamingEnabled">false</bool>
+    </Properties>
+    <Item class="Part" referent="5">
+      <Properties>
+        <string name="Name">Baseplate</string>
+        <bool name="Anchored">true</bool>
+        <token name="BottomSurface">0</token>
+        <Color3uint8 name="Color">10724005</Color3uint8>
+        <CoordinateFrame name="CFrame">
+          <X>0</X>
+          <Y>-10</Y>
+          <Z>0</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <bool name="Locked">true</bool>
+        <Vector3 name="size">
+          <X>200</X>
+          <Y>20</Y>
+          <Z>200</Z>
+        </Vector3>
+        <token name="TopSurface">0</token>
+      </Properties>
+    </Item>
+    <Item class="SpawnLocation" referent="6">
+      <Properties>
+        <string name="Name">SpawnLocation</string>
+        <bool name="Anchored">true</bool>
+        <token name="BottomSurface">0</token>
+        <Color3uint8 name="Color">16316664</Color3uint8>
+        <CoordinateFrame name="CFrame">
+          <X>0</X>
+          <Y>0.5</Y>
+          <Z>0</Z>
+          <R00>1</R00>
+          <R01>0</R01>
+          <R02>0</R02>
+          <R10>0</R10>
+          <R11>1</R11>
+          <R12>0</R12>
+          <R20>0</R20>
+          <R21>0</R21>
+          <R22>1</R22>
+        </CoordinateFrame>
+        <int name="Duration">0</int>
+        <bool name="Neutral">true</bool>
+        <Vector3 name="size">
+          <X>12</X>
+          <Y>1</Y>
+          <Z>12</Z>
+        </Vector3>
+        <token name="TopSurface">0</token>
+      </Properties>
+    </Item>
+  </Item>
+</roblox>

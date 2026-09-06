@@ -1,31 +1,59 @@
 # -*- coding: utf-8 -*-
-"""Genera Hub/Lobby.model.json: el vestibulo del hub, estilo 2008."""
+"""
+Genera Hub/Lobby.model.json: el vestibulo de Bygone.
+
+No es un mapa fijo: se construye a partir del catalogo. Cada juego recibe su
+propio expositor en la sala, con el titulo, el autor y la etiqueta de
+procedencia escritos en el panel. Asi el vestibulo crece o mengua solo cuando
+cambia el catalogo, y nunca queda un hueco vacio ni un cartel mintiendo.
+
+Cada expositor lleva una parte llamada "Portal" con un StringValue "Juego"
+dentro; el script del hub la usa para saber a que lugar teletransportar.
+
+Uso:  python generate_lobby.py
+"""
 
 import json
 import math
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+CATALOGO = os.path.join(os.path.expanduser("~"), "Desktop",
+                        "Classic_Roblox_2008_Games", "catalogo_limpio.json")
 
 BC = {
-    "Bright red": 21, "Bright blue": 23, "Bright yellow": 24,
-    "Bright green": 37, "Bright orange": 106, "Dark green": 28,
-    "Medium stone grey": 194, "Dark stone grey": 199,
-    "Reddish brown": 192, "Institutional white": 1001,
-    "Really black": 26, "White": 1,
+    "rojo": 21, "azul": 23, "amarillo": 24, "verde": 37, "naranja": 106,
+    "verde oscuro": 28, "gris": 194, "gris oscuro": 199, "marron": 192,
+    "blanco": 1001, "negro": 26, "burdeos": 1003,
 }
-PALETTE = ["Bright red", "Bright yellow", "Bright green", "Bright blue",
-           "Bright orange", "Institutional white"]
+
+BADGE = {
+    "licencia":     ("MIT / OPEN SOURCE", [0.16, 0.44, 0.16]),
+    "uncopylocked": ("UNCOPYLOCKED",      [0.16, 0.32, 0.56]),
+    "oficial":      ("OFFICIAL ROBLOX",   [0.16, 0.44, 0.16]),
+    "comunitario":  ("COMMUNITY ARCHIVE", [0.47, 0.36, 0.08]),
+}
+
+# Un color por categoria, para que la sala se lea de un vistazo.
+COLOR_CATEGORIA = {
+    "Brickbattle y combate": "rojo",
+    "Obbies y parkour": "amarillo",
+    "Desastres y fisica": "naranja",
+    "Zombis y terror": "verde oscuro",
+    "Vehiculos y tycoons": "azul",
+    "Rol y ciudades": "verde",
+    "Clasicos varios": "burdeos",
+}
 
 
-def part(name, size, pos, color="Medium stone grey", top="Studs", bottom="Inlet",
+def part(name, size, pos, color="gris", top="Studs", bottom="Inlet",
          anchored=True, rot_y=0.0, classname="Part", extra=None, children=None):
     a = math.radians(rot_y)
     c, s = math.cos(a), math.sin(a)
     props = {
-        "CFrame": [round(v, 6) for v in
+        "CFrame": [round(v, 5) for v in
                    [pos[0], pos[1], pos[2], c, 0.0, s, 0.0, 1.0, 0.0, -s, 0.0, c]],
-        "Size": list(size),
+        "Size": [round(v, 3) for v in size],
         "Anchored": anchored,
         "BrickColor": {"BrickColor": BC[color]},
         "TopSurface": top, "BottomSurface": bottom,
@@ -40,85 +68,139 @@ def part(name, size, pos, color="Medium stone grey", top="Studs", bottom="Inlet"
     return node
 
 
-world = []
-
-# Suelo
-world.append(part("Baseplate", (400, 20, 400), (0, -10, 0), "Dark green",
-                  top="Studs", bottom="Smooth", extra={"Locked": True}))
-
-# Plaza circular del vestibulo
-plaza = [part("Floor", (160, 2, 160), (0, 1, 0), "Medium stone grey")]
-for i, (dx, dz, sx, sz) in enumerate([(0, 81, 162, 4), (0, -81, 162, 4),
-                                      (81, 0, 4, 162), (-81, 0, 4, 162)]):
-    plaza.append(part("Curb%d" % i, (sx, 3, sz), (dx, 1.5, dz), "Dark stone grey"))
-world.append({"Name": "Plaza", "ClassName": "Model", "Children": plaza})
-
-# Cartel grande
-sign = []
-sign.append(part("Post1", (4, 30, 4), (-26, 16, -60), "Reddish brown"))
-sign.append(part("Post2", (4, 30, 4), (26, 16, -60), "Reddish brown"))
-# El cartel lleva el nombre por las dos caras: en Roblox la cara "Front" de
-# una parte mira hacia -Z, asi que la que da a la plaza es "Back".
-def rotulo(face):
+def label(name, texto, color, y, alto):
     return {
-        "Name": "Rotulo" + face, "ClassName": "SurfaceGui",
-        "Properties": {"Face": face, "SizingMode": "PixelsPerStud",
-                       "PixelsPerStud": 50, "AlwaysOnTop": False},
-        "Children": [
-            {"Name": "Titulo", "ClassName": "TextLabel", "Properties": {
-                "BackgroundTransparency": 1,
-                "Size": {"UDim2": [[1, 0], [0.62, 0]]},
-                "Position": {"UDim2": [[0, 0], [0.04, 0]]},
-                "Font": "Cartoon", "TextScaled": True, "Text": "BYGONE",
-                "TextColor3": [0.11, 0.11, 0.11]}},
-            {"Name": "Lema", "ClassName": "TextLabel", "Properties": {
-                "BackgroundTransparency": 1,
-                "Size": {"UDim2": [[1, 0], [0.24, 0]]},
-                "Position": {"UDim2": [[0, 0], [0.68, 0]]},
-                "Font": "Cartoon", "TextScaled": True,
-                "Text": "los clasicos de 2006-2010, tal y como eran",
-                "TextColor3": [0.36, 0.36, 0.36]}},
-        ],
+        "Name": name, "ClassName": "TextLabel",
+        "Properties": {
+            "BackgroundTransparency": 1,
+            "Size": {"UDim2": [[1, 0], [alto, 0]]},
+            "Position": {"UDim2": [[0, 0], [y, 0]]},
+            "Font": "Cartoon", "TextScaled": True,
+            "Text": texto, "TextColor3": color,
+        },
     }
 
-sign.append(part("Board", (60, 16, 2), (0, 34, -60), "Institutional white",
-                 top="Smooth", bottom="Smooth",
-                 children=[rotulo("Back"), rotulo("Front")]))
-for i, c in enumerate(PALETTE):
-    sign.append(part("Stripe%d" % i, (10, 3, 2.4), (-25 + i * 10, 24, -60), c,
+
+def panel_doble(textos):
+    """Misma ficha en las dos caras: en Roblox "Front" mira hacia -Z."""
+    return [{
+        "Name": "Ficha" + face, "ClassName": "SurfaceGui",
+        "Properties": {"Face": face, "SizingMode": "PixelsPerStud",
+                       "PixelsPerStud": 50, "AlwaysOnTop": False},
+        "Children": textos,
+    } for face in ("Back", "Front")]
+
+
+def construir(fichas):
+    mundo = []
+
+    # --- Suelo y sala -------------------------------------------------------
+    mundo.append(part("Baseplate", (600, 20, 600), (0, -10, 0), "verde oscuro",
+                      top="Studs", bottom="Smooth", extra={"Locked": True}))
+
+    sala = [part("Floor", (240, 2, 240), (0, 1, 0), "gris")]
+    for i, (dx, dz, sx, sz) in enumerate([(0, 121, 242, 4), (0, -121, 242, 4),
+                                          (121, 0, 4, 242), (-121, 0, 4, 242)]):
+        sala.append(part("Zocalo%d" % i, (sx, 6, sz), (dx, 3, dz), "gris oscuro"))
+    sala.append(part("Alfombra", (64, 0.4, 64), (0, 2.2, 0), "burdeos",
                      top="Smooth", bottom="Smooth"))
-world.append({"Name": "Cartel", "ClassName": "Model", "Children": sign})
+    mundo.append({"Name": "Sala", "ClassName": "Model", "Children": sala})
 
-# Kiosco del menu: al acercarse sale el aviso para elegir juego.
-kiosk = [
-    # El menu localiza este kiosco por su nombre (rojo no escribe atributos
-    # desde .model.json).
-    part("KioscoDeJuegos", (10, 10, 6), (0, 6, 20), "Bright yellow"),
-    part("KioscoBase", (14, 2, 10), (0, 2, 20), "Dark stone grey"),
-    part("KioscoTecho", (14, 1, 10), (0, 11.5, 20), "Bright red",
-         top="Smooth", bottom="Smooth"),
-]
-world.append({"Name": "Kiosco", "ClassName": "Model", "Children": kiosk})
+    # --- Cartel de entrada --------------------------------------------------
+    rotulo = [
+        label("Titulo", "BYGONE", [0.1, 0.1, 0.1], 0.06, 0.48),
+        label("Lema", "the classic ROBLOX places, as they were",
+              [0.35, 0.35, 0.35], 0.60, 0.17),
+        label("Cuenta", "%d games  -  every one open source or uncopylocked"
+              % len(fichas), [0.42, 0.42, 0.42], 0.80, 0.13),
+    ]
+    mundo.append({"Name": "Cartel", "ClassName": "Model", "Children": [
+        part("Poste1", (4, 34, 4), (-34, 18, -118), "marron"),
+        part("Poste2", (4, 34, 4), (34, 18, -118), "marron"),
+        part("Panel", (72, 20, 2), (0, 38, -118), "blanco",
+             top="Smooth", bottom="Smooth", children=panel_doble(rotulo)),
+    ]})
 
-# Aparicion
-world.append(part("SpawnLocation", (16, 1, 16), (0, 2.5, 0), "Institutional white",
-                  classname="SpawnLocation", top="Smooth", bottom="Smooth",
-                  extra={"Neutral": True, "Duration": 0}))
+    # --- Un expositor por juego --------------------------------------------
+    expositores = []
+    n = max(len(fichas), 1)
+    radio = max(56, 9.5 * n / math.pi)
 
-# Un anillo de pilares de colores, puro adorno de la epoca
-ring = []
-for i in range(12):
-    ang = (i / 12.0) * math.tau
-    x, z = math.cos(ang) * 66, math.sin(ang) * 66
-    ring.append(part("Pillar%d" % i, (5, 20, 5), (x, 12, z), PALETTE[i % len(PALETTE)]))
-    ring.append(part("Cap%d" % i, (7, 2, 7), (x, 23, z), "Institutional white"))
-world.append({"Name": "Pilares", "ClassName": "Model", "Children": ring})
+    for i, ficha in enumerate(fichas):
+        ang = (i / n) * math.tau - math.pi / 2
+        x, z = math.cos(ang) * radio, math.sin(ang) * radio
+        mirando = math.degrees(-ang) + 90          # el panel mira al centro
 
-world.append({"Name": "GameMusic", "ClassName": "Sound",
-              "Properties": {"SoundId": "", "Looped": True, "Volume": 0.35}})
+        color = COLOR_CATEGORIA.get(ficha.get("categoria"), "gris")
+        etiqueta, tinte = BADGE.get(ficha.get("procedencia"),
+                                    ("ARCHIVE", [0.4, 0.4, 0.4]))
 
-out = {"ClassName": "Folder", "Properties": {}, "Children": world}
-path = os.path.join(HERE, "Lobby.model.json")
-with open(path, "w", encoding="utf-8") as f:
-    json.dump(out, f, indent="\t")
-print("OK ->", path)
+        anio = (" - %s" % ficha["anio"]) if ficha.get("anio") else ""
+        textos = [
+            label("Nombre", ficha["titulo"][:44], [0.1, 0.1, 0.1], 0.04, 0.30),
+            label("Autor", "by %s%s" % (ficha.get("creador") or "unknown", anio),
+                  [0.35, 0.35, 0.35], 0.40, 0.15),
+            label("Categoria", ficha.get("categoria", ""),
+                  [0.45, 0.45, 0.45], 0.57, 0.12),
+            label("Licencia", etiqueta, tinte, 0.75, 0.14),
+        ]
+
+        expositores.append({
+            "Name": "Expositor%02d" % (i + 1), "ClassName": "Model",
+            "Children": [
+                part("Base", (16, 3, 10), (x, 2.5, z), "gris oscuro", rot_y=mirando),
+                part("Portal", (12, 12, 2), (x, 10, z), color, rot_y=mirando,
+                     children=[{"Name": "Juego", "ClassName": "StringValue",
+                                "Properties": {"Value": ficha["titulo"]}}]),
+                part("Panel", (16, 9, 1), (x, 21, z), "blanco", rot_y=mirando,
+                     top="Smooth", bottom="Smooth", children=panel_doble(textos)),
+                part("Techo", (18, 1, 12), (x, 26.5, z), color, rot_y=mirando,
+                     top="Smooth", bottom="Smooth"),
+            ],
+        })
+
+    mundo.append({"Name": "Expositores", "ClassName": "Model",
+                  "Children": expositores})
+
+    mundo.append(part("SpawnLocation", (18, 1, 18), (0, 2.7, 0), "blanco",
+                      classname="SpawnLocation", top="Smooth", bottom="Smooth",
+                      extra={"Neutral": True, "Duration": 0}))
+
+    # --- Faroles, para que la sala no sea un plano gris ---------------------
+    faroles = []
+    for i in range(8):
+        ang = (i / 8) * math.tau
+        x, z = math.cos(ang) * 32, math.sin(ang) * 32
+        faroles.append(part("Poste%d" % i, (2, 18, 2), (x, 11, z), "gris oscuro"))
+        faroles.append(part("Luz%d" % i, (4, 2, 4), (x, 21, z), "amarillo",
+                            top="Smooth", bottom="Smooth",
+                            extra={"Material": "Neon"},
+                            children=[{
+                                "Name": "PointLight", "ClassName": "PointLight",
+                                "Properties": {"Brightness": 1.4, "Range": 34,
+                                               "Color": [1, 0.96, 0.83]},
+                            }]))
+    mundo.append({"Name": "Faroles", "ClassName": "Model", "Children": faroles})
+
+    mundo.append({"Name": "GameMusic", "ClassName": "Sound",
+                  "Properties": {"SoundId": "", "Looped": True, "Volume": 0.35}})
+
+    return mundo
+
+
+def main():
+    with open(CATALOGO, encoding="utf-8") as f:
+        fichas = json.load(f)
+
+    salida = {"ClassName": "Folder", "Properties": {},
+              "Children": construir(fichas)}
+
+    ruta = os.path.join(HERE, "Lobby.model.json")
+    with open(ruta, "w", encoding="utf-8") as f:
+        json.dump(salida, f, indent="\t")
+
+    print("Vestibulo generado para %d juegos -> %s" % (len(fichas), ruta))
+
+
+if __name__ == "__main__":
+    main()

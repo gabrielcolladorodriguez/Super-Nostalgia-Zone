@@ -83,3 +83,46 @@ redistributed here.
 ## Licence
 
 MPL-2.0, same as upstream. See `LICENSE`.
+
+---
+
+## Update: Bygone is a builder now
+
+The project changed direction. Republishing archived places was legally shaky
+even after filtering by licence — an author's "uncopylocked" was never a
+redistribution grant, and a third party putting a licence on someone else's
+archived work grants nothing at all. So the archive was retired entirely and
+Bygone became a place where people build their own classic-style places.
+
+New folders, all outside the upstream tree:
+
+### `Builder/Shared/Serializer.lua`
+Turns a build into a table and back. Numbered arrays instead of named keys
+because a DataStore key holds 4 MB and it is the difference between fitting and
+not. `Sanear()` is the trust boundary: the editor runs on the client, so nothing
+it sends is believed until this has checked every part's size, position and
+rotation for NaNs, infinities and absurd values.
+
+### `Builder/Server/CreationStore.lua`
+Three stores: the creations themselves, an index per user, and an
+OrderedDataStore for the gallery — a normal DataStore cannot sort or page, so
+listing "the ten most recent" would mean reading every key. Every call is
+wrapped and retried with backoff; Roblox throttles these more than people expect.
+
+### `Builder/Server/BuilderService.server.lua`
+Ownership is checked against what is stored, never against what the client
+claims. Per-player rate limits so nobody can burn the experience's DataStore
+quota. Names and descriptions go through `TextService` before anyone else sees
+them, and a filter failure rejects the save rather than publishing unfiltered
+text.
+
+### `Builder/Client/Editor/`
+The editor: free camera, insert, select, drag with stud snapping, rotate,
+duplicate, undo/redo, the classic 64-colour BrickColor palette, period
+materials and surfaces. Undo keeps whole snapshots rather than per-operation
+inverses — at 2,500 parts the memory is cheap and it avoids the class of bug
+where undo and redo drift apart.
+
+### `Builder/Server/PlayCreation.server.lua`
+Serves one creation per server. The id arrives in the teleport data, not as a
+client argument, so nobody can request a private build by typing an id.
