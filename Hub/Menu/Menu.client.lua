@@ -573,32 +573,123 @@ searchBox:GetPropertyChangedSignal("Text"):Connect(function ()
 	pintarRejilla()
 end)
 
+
+--------------------------------------------------------------------------------
+-- Velo de carga
+--------------------------------------------------------------------------------
+-- La pantalla de SetTeleportGui solo aparece cuando Roblox empieza a mover al
+-- jugador, y entre el clic y ese momento pasan varios segundos en los que no
+-- ocurre nada visible. Este velo tapa ese hueco: sale al instante.
+
+local velo = new("Frame", {
+	Name = "Velo", BackgroundColor3 = Color3.fromRGB(24, 26, 30),
+	BorderSizePixel = 0, Size = UDim2.fromScale(1, 1), ZIndex = 90,
+	Visible = false,
+}, screen)
+
+local veloTitulo = new("TextLabel", {
+	BackgroundTransparency = 1, Font = FONT, TextSize = 34, ZIndex = 91,
+	TextColor3 = Color3.fromRGB(238, 238, 238), Text = "BYGONE",
+	AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.44),
+	Size = UDim2.fromOffset(600, 44),
+}, velo)
+
+local veloDestino = new("TextLabel", {
+	BackgroundTransparency = 1, Font = FONT, TextSize = 20, ZIndex = 91,
+	TextColor3 = Color3.fromRGB(150, 158, 170), Text = "Loading",
+	AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.53),
+	Size = UDim2.fromOffset(600, 28),
+}, velo)
+
+local veloCarril = new("Frame", {
+	BackgroundColor3 = Color3.fromRGB(48, 52, 58), BorderSizePixel = 0, ZIndex = 91,
+	AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.61),
+	Size = UDim2.fromOffset(320, 8),
+}, velo)
+
+local veloPastilla = new("Frame", {
+	BackgroundColor3 = Color3.fromRGB(120, 170, 230), BorderSizePixel = 0,
+	ZIndex = 92, Size = UDim2.new(0.3, 0, 1, 0),
+}, veloCarril)
+
+local veloCancelar = new("TextButton", {
+	BackgroundColor3 = Color3.fromRGB(60, 64, 72), BorderSizePixel = 0, ZIndex = 92,
+	Font = FONT, TextSize = 15, TextColor3 = Color3.fromRGB(220, 220, 220),
+	Text = "Cancel", AutoButtonColor = true, Visible = false,
+	AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.72),
+	Size = UDim2.fromOffset(130, 34),
+}, velo)
+
+local veloToken = 0
+
+local function mostrarVelo(texto)
+	veloToken += 1
+	local mio = veloToken
+
+	veloDestino.Text = texto or "Loading"
+	veloCancelar.Visible = false
+	velo.Visible = true
+
+	task.spawn(function ()
+		local t = 0
+		while velo.Visible and veloToken == mio do
+			t += 0.03
+			veloPastilla.Position = UDim2.fromScale((math.sin(t) * 0.5 + 0.5) * 0.7, 0)
+			task.wait(0.03)
+		end
+	end)
+
+	-- Si a los diez segundos seguimos aqui, algo ha fallado y el jugador tiene
+	-- que poder volver en vez de mirar una barra para siempre.
+	task.delay(10, function ()
+		if velo.Visible and veloToken == mio then
+			veloDestino.Text = "This is taking longer than usual."
+			veloCancelar.Visible = true
+		end
+	end)
+end
+
+local function ocultarVelo()
+	veloToken += 1
+	velo.Visible = false
+end
+
+veloCancelar.Activated:Connect(ocultarVelo)
+
 --------------------------------------------------------------------------------
 -- Teletransporte
 --------------------------------------------------------------------------------
 
-local function irA(placeId, datos, etiqueta)
-	if not placeId or placeId <= 0 then
+--[[
+	Jugar una creacion lo hace el SERVIDOR.
+
+	TeleportAsync, que es la unica forma de mandar datos con el salto, solo se
+	puede llamar desde el servidor: desde un LocalScript devuelve "can only be
+	called from the server" y no pasa nada. Era exactamente lo que ocurria al
+	pulsar Play. Ahora el cliente manda el identificador y el servidor comprueba
+	permisos y teletransporta.
+
+	Ir al editor no lleva datos, asi que basta con el Teleport de toda la vida.
+]]
+
+local function irAlEditor()
+	local destino = studioId and studioId.Value
+
+	if not destino or destino <= 0 then
 		status.TextColor3 = ROJO
-		status.Text = "That place is not set up yet."
+		status.Text = "Bygone Studios is not set up yet."
 		return
 	end
 
-	status.TextColor3 = TENUE
-	status.Text = "Loading..."
-	anunciarDestino(etiqueta)
+	mostrarVelo("Bygone Studios")
+	anunciarDestino("Bygone Studios")
 
 	local ok, err = pcall(function ()
-		if datos then
-			local opciones = Instance.new("TeleportOptions")
-			opciones:SetTeleportData(datos)
-			TeleportService:TeleportAsync(placeId, { player }, opciones)
-		else
-			TeleportService:Teleport(placeId, player)
-		end
+		TeleportService:Teleport(destino, player)
 	end)
 
 	if not ok then
+		ocultarVelo()
 		status.TextColor3 = ROJO
 		status.Text = "Teleporting only works in the published game."
 		warn("[Menu] Teleport failed:", err)
@@ -606,15 +697,34 @@ local function irA(placeId, datos, etiqueta)
 end
 
 playBtn.Activated:Connect(function ()
-	if seleccion and playBtn.Active then
-		irA(playId and playId.Value, { creacion = seleccion.id },
-		    seleccion.nombre or "Loading")
+	if not (seleccion and playBtn.Active) then
+		return
 	end
+
+	if not canal then
+		status.TextColor3 = ROJO
+		status.Text = "Not connected to the server."
+		return
+	end
+
+	mostrarVelo(seleccion.nombre or "Loading")
+	anunciarDestino(seleccion.nombre or "Loading")
+	canal.Jugar:FireServer(seleccion.id)
 end)
 
-buildBtn.Activated:Connect(function ()
-	irA(studioId and studioId.Value, nil, "Bygone Studios")
-end)
+buildBtn.Activated:Connect(irAlEditor)
+
+-- Si el servidor rechaza el salto, hay que quitar el velo y decir por que.
+if canal then
+	local avisoRemoto = canal:WaitForChild("Aviso", 10)
+	if avisoRemoto then
+		avisoRemoto.OnClientEvent:Connect(function (mensaje)
+			ocultarVelo()
+			status.TextColor3 = ROJO
+			status.Text = tostring(mensaje)
+		end)
+	end
+end
 
 --------------------------------------------------------------------------------
 -- Abrir y cerrar

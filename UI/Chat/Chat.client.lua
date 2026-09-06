@@ -9,6 +9,13 @@ local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local chat = script.Parent
+
+-- [fork] En el vestibulo la barra de chat estorba: ocupa todo el pie de
+-- pantalla, que en movil es justo donde va el boton del menu.
+if game:GetService("ReplicatedStorage"):FindFirstChild("OcultarChat") then
+	chat.Visible = false
+	return
+end
 local util = chat:WaitForChild("Utility")
 
 local chatBar = chat:WaitForChild("ChatBar")

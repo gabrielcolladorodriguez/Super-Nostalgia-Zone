@@ -20,6 +20,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
+local TeleportService = game:GetService("TeleportService")
 local TextService = game:GetService("TextService")
 
 local CreationStore = require(ServerStorage:WaitForChild("CreationStore"))
@@ -46,6 +47,10 @@ local MisCreaciones = remoteFunction("MisCreaciones")
 local Galeria = remoteFunction("Galeria")
 local Borrar = remoteFunction("Borrar")
 
+local Jugar = Instance.new("RemoteEvent")
+Jugar.Name = "Jugar"
+Jugar.Parent = canal
+
 --------------------------------------------------------------------------------
 -- Ritmo
 --------------------------------------------------------------------------------
@@ -58,6 +63,7 @@ local ESPERA = {
 	MisCreaciones = 3,
 	Galeria = 3,
 	Borrar = 4,
+	Jugar = 3,
 }
 
 local function vaMuyRapido(player, accion)
@@ -224,3 +230,63 @@ end)
 
 print(("[BuilderService] Listo. DataStores: %s")
 	:format(CreationStore.Disponible and "si" or "NO"))
+
+
+--------------------------------------------------------------------------------
+-- Entrar a una creacion
+--------------------------------------------------------------------------------
+--[[
+	El teletransporte se hace aqui y no en el cliente porque TeleportAsync es
+	una llamada de servidor: desde un LocalScript devuelve "can only be called
+	from the server" y no pasa nada, que es justo lo que ocurria.
+
+	Ademas asi el permiso se comprueba antes de mover a nadie: el cliente manda
+	un identificador, no un destino.
+]]
+
+local Aviso = Instance.new("RemoteEvent")
+Aviso.Name = "Aviso"
+Aviso.Parent = canal
+
+local lugarDeJuego = ReplicatedStorage:FindFirstChild("PlayPlaceId")
+
+Jugar.OnServerEvent:Connect(function (player, id)
+	local rapido, motivo = vaMuyRapido(player, "Jugar")
+	if rapido then
+		Aviso:FireClient(player, motivo)
+		return
+	end
+
+	if type(id) ~= "string" then
+		Aviso:FireClient(player, "identificador invalido")
+		return
+	end
+
+	if not (lugarDeJuego and lugarDeJuego.Value > 0) then
+		Aviso:FireClient(player, "Bygone Arcade no esta configurado en este lugar")
+		return
+	end
+
+	local entrada = CreationStore.Obtener(id)
+	if not entrada then
+		Aviso:FireClient(player, "esa creacion ya no existe")
+		return
+	end
+
+	if not entrada.meta.publicada and entrada.meta.duenoId ~= player.UserId then
+		Aviso:FireClient(player, "esa creacion es privada")
+		return
+	end
+
+	local opciones = Instance.new("TeleportOptions")
+	opciones:SetTeleportData({ creacion = id })
+
+	local ok, err = pcall(function ()
+		TeleportService:TeleportAsync(lugarDeJuego.Value, { player }, opciones)
+	end)
+
+	if not ok then
+		warn("[BuilderService] Teleport fallo: " .. tostring(err))
+		Aviso:FireClient(player, "no se pudo entrar, prueba otra vez")
+	end
+end)
