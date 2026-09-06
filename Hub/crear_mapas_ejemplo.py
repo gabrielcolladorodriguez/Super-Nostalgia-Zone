@@ -62,162 +62,209 @@ def cartel(texto, cara=0, rgb=(30, 30, 30)):
 # Los mapas
 # ---------------------------------------------------------------------------
 
-def obby_clasico():
-    partes = [p((60, 2, 60), (0, 1, -70), "verde oscuro")]
+def spawn(pos, color="blanco"):
+    """Punto de aparicion. Todo mapa debe traer uno o apareces flotando."""
+    return [6, [14, 1, 14], list(pos), [0, 0, 0], C[color], 0, 0, 0,
+            ANCLADO_SOLIDO, LISO, None]
 
-    # Escalones que suben girando, con lava debajo
-    x, y, z = 0, 4, -30
-    for i in range(18):
-        color = ["azul", "verde", "amarillo", "naranja", "rojo"][i % 5]
-        ancho = 8 if i % 4 else 14
-        partes.append(p((ancho, 1.6, 8), (x, y, z), color))
 
-        if i % 5 == 4:
-            partes.append(p((26, 1, 26), (x, y - 8, z), "rojo", sup=LISO,
-                            material=12, extras=luz(1.4, 20, (255, 90, 70))))
+# ---------------------------------------------------------------------------
+# Un obby recto y legible: desde cada plataforma se ve la siguiente.
+# ---------------------------------------------------------------------------
 
-        ang = i * 0.42
-        x += math.cos(ang) * 16
-        z += math.sin(ang) * 12 + 10
-        y += 3.2
+def obby():
+    partes = [p((30, 2, 30), (0, 1, -20), "blanco"), spawn((0, 3, -20))]
 
-    # Meta
-    partes.append(p((24, 2, 24), (x, y, z), "blanco"))
-    partes.append(p((6, 6, 6), (x, y + 5, z), "amarillo", forma=1, sup=LISO,
-                    material=12, extras=luz(4, 34)))
-    partes.append(p((20, 6, 1), (x, y + 12, z), "blanco", sup=LISO,
+    z, y = 6, 2
+    colores = ["azul", "verde", "amarillo", "naranja", "rojo", "morado"]
+
+    for tramo in range(6):
+        color = colores[tramo]
+
+        for k in range(4):
+            # Cada salto sube 3 y avanza 14: alcanzable de sobra con R6.
+            y += 3
+            z += 14
+            ancho = 10 if k % 2 == 0 else 7
+            desvio = 0 if k % 2 == 0 else (6 if tramo % 2 == 0 else -6)
+            partes.append(p((ancho, 1.6, 8), (desvio, y, z), color))
+
+        # Lava debajo del tramo, para que se vea lo que hay en juego.
+        partes.append(p((44, 1, 62), (0, y - 14, z - 22), "rojo", sup=LISO,
+                        material=12, extras=luz(1.2, 26, (255, 90, 70))))
+
+        # Descanso con punto de aparicion propio.
+        z += 16
+        y += 2
+        partes.append(p((20, 2, 20), (0, y, z), "verde"))
+        partes.append(spawn((0, y + 1.5, z), "verde"))
+        partes.append(p((1.4, 12, 1.4), (-8, y + 7, z), "verde", sup=LISO))
+        partes.append(p((1.4, 12, 1.4), (8, y + 7, z), "verde", sup=LISO))
+        partes.append(p((18, 1.4, 1.4), (0, y + 13, z), "verde", sup=LISO,
+                        material=12, extras=luz(1.6, 18, (140, 255, 140))))
+
+    z += 20
+    partes.append(p((28, 2, 28), (0, y + 2, z), "blanco"))
+    partes.append(p((7, 7, 7), (0, y + 7, z), "amarillo", forma=1, sup=LISO,
+                    material=12, extras=luz(4, 40)))
+    partes.append(p((24, 6, 1), (0, y + 15, z), "blanco", sup=LISO,
                     extras=cartel("FINISH")))
 
     return {
-        "nombre": "Classic Obby",
-        "descripcion": "Eighteen jumps over lava, the way obbies were in 2008.",
+        "nombre": "Obby Course",
+        "descripcion": "Six sections with a checkpoint after each, lava below. "
+                       "Every jump is 3 up and 14 across, so R6 always reaches.",
         "partes": partes,
     }
 
 
-def arena_brickbattle():
-    partes = [p((120, 2, 120), (0, 1, 0), "gris")]
+# ---------------------------------------------------------------------------
+# Arena simetrica: cuatro bases iguales, nadie sale ganando de salida.
+# ---------------------------------------------------------------------------
 
-    # Muro perimetral
-    for dx, dz, sx, sz in [(0, 60, 120, 3), (0, -60, 120, 3),
-                           (60, 0, 3, 120), (-60, 0, 3, 120)]:
-        partes.append(p((sx, 14, sz), (dx, 8, dz), "gris oscuro"))
+def arena():
+    partes = [p((160, 2, 160), (0, 1, 0), "gris")]
 
-    # Dos torres enfrentadas
-    for lado, color in ((1, "azul"), (-1, "rojo")):
-        z = 38 * lado
-        partes.append(p((28, 3, 28), (0, 3, z), color))
-        for i in range(3):
-            w = 22 - i * 5
-            partes.append(p((w, 8, w), (0, 8 + i * 8, z), color))
-        partes.append(p((12, 1, 12), (0, 33, z), "blanco", forma=6, sup=LISO))
-        partes.append(p((2, 14, 2), (0, 40, z), "negro", sup=LISO))
-        partes.append(p((1, 8, 12), (0, 44, z + 6), color, sup=LISO))
+    for dx, dz, sx, sz in [(0, 80, 164, 4), (0, -80, 164, 4),
+                           (80, 0, 4, 164), (-80, 0, 4, 164)]:
+        partes.append(p((sx, 18, sz), (dx, 11, dz), "gris oscuro"))
 
-    # Cobertura repartida
-    for i in range(12):
-        a = (i / 12) * math.tau
-        x, z = math.cos(a) * 34, math.sin(a) * 24
-        partes.append(p((10, 7, 4), (x, 5.5, z),
-                        ["amarillo", "naranja", "verde", "morado"][i % 4],
-                        rot=(0, math.degrees(a), 0)))
-
-    # Puente central
-    partes.append(p((14, 2, 60), (0, 14, 0), "marron"))
-    for lado in (-1, 1):
-        partes.append(p((1, 5, 60), (6.5 * lado, 17, 0), "amarillo", sup=LISO))
-    for i in range(4):
-        partes.append(p((4, 12, 4), (0, 7, -22 + i * 15), "marron"))
-
-    return {
-        "nombre": "Brickbattle Arena",
-        "descripcion": "Two towers, a bridge and plenty of cover. Bring a sword.",
-        "partes": partes,
-    }
-
-
-def torre_de_studs():
-    partes = [p((70, 2, 70), (0, 1, 0), "verde oscuro")]
-
-    colores = ["azul", "verde", "amarillo", "naranja", "rojo", "morado"]
-    for piso in range(14):
-        color = colores[piso % len(colores)]
-        w = 46 - piso * 2.6
-        y = 4 + piso * 9
-
-        partes.append(p((w, 2, w), (0, y, 0), color))
-        # Cuatro pilares por piso
-        for sx in (-1, 1):
-            for sz in (-1, 1):
-                partes.append(p((3, 7, 3), (sx * (w / 2 - 3), y + 4.5,
-                                            sz * (w / 2 - 3)), "blanco"))
-        # Rampa al siguiente
-        partes.append(p((7, 1.4, 14), (w / 4, y + 4, -w / 4), color,
-                        rot=(-18, piso * 26, 0)))
-
-    cima = 4 + 14 * 9
-    partes.append(p((10, 10, 10), (0, cima + 6, 0), "amarillo", forma=1,
-                    sup=LISO, material=12, extras=luz(5, 50)))
-    partes.append(p((22, 6, 1), (0, cima + 14, 0), "blanco", sup=LISO,
-                    extras=cartel("TOP OF THE TOWER")))
-
-    return {
-        "nombre": "Tower of Studs",
-        "descripcion": "Fourteen floors up a ramp tower. No lava, just height.",
-        "partes": partes,
-    }
-
-
-def plaza_del_pueblo():
-    partes = [p((160, 2, 160), (0, 1, 0), "verde oscuro")]
-
-    # Calle empedrada
     for i in range(-4, 5):
-        for j in range(-4, 5):
-            col = "gris" if (i + j) % 2 == 0 else "gris oscuro"
-            partes.append(p((16, 1, 16), (i * 16, 2.5, j * 16), col))
+        for dz in (80, -80):
+            partes.append(p((8, 4, 5), (i * 18, 22, dz), "gris"))
+        for dx in (80, -80):
+            partes.append(p((5, 4, 8), (dx, 22, i * 18), "gris"))
 
-    # Cuatro casas alrededor
-    casas = [(-52, -52, "crema", "burdeos"), (52, -52, "amarillo", "marron"),
-             (-52, 52, "azul", "gris oscuro"), (52, 52, "verde", "marron")]
+    esquinas = [(-1, -1, "azul"), (1, -1, "rojo"),
+                (-1, 1, "verde"), (1, 1, "amarillo")]
 
-    for k, (cx, cz, muro, techo) in enumerate(casas):
-        partes.append(p((30, 18, 26), (cx, 12, cz), muro, sup=LISO))
-        partes.append(p((34, 3, 30), (cx, 22, cz), techo, sup=LISO))
-        partes.append(p((36, 2, 8), (cx, 24, cz), techo, rot=(30, 0, 0), sup=LISO))
-        # Puerta y ventanas
-        partes.append(p((7, 11, 1), (cx, 8.5, cz - 13.2), "marron", sup=LISO))
-        for sx in (-1, 1):
-            partes.append(p((6, 6, 1), (cx + sx * 10, 14, cz - 13.2), "crema",
-                            sup=LISO, transp=45))
-        partes.append(p((26, 5, 1), (cx, 26, cz - 15), "blanco", sup=LISO,
-                        extras=cartel(["Bakery", "Post Office",
-                                       "Town Hall", "Toy Shop"][k])))
+    for sx, sz, color in esquinas:
+        bx, bz = sx * 52, sz * 52
+        partes.append(p((36, 4, 36), (bx, 4, bz), color))
+        partes.append(p((14, 1, 14), (bx, 6.5, bz), color, forma=6, sup=LISO))
+        partes.append(p((14, 20, 14), (bx, 16, bz - sz * 12), color))
+        partes.append(p((18, 2, 18), (bx, 27, bz - sz * 12), "blanco"))
+        partes.append(p((22, 6, 3), (bx, 9, bz - sz * 16), color))
+        partes.append(p((3, 6, 22), (bx - sx * 16, 9, bz), color))
 
-    # Fuente central
-    partes.append(p((26, 3, 26), (0, 3.5, 0), "gris oscuro"))
-    partes.append(p((20, 2, 20), (0, 5, 0), "azul", sup=LISO, transp=35))
-    partes.append(p((5, 12, 5), (0, 10, 0), "blanco", forma=2, sup=LISO))
-    partes.append(p((9, 9, 9), (0, 18, 0), "azul", forma=1, sup=LISO,
-                    transp=30, extras=luz(2.5, 26, (150, 200, 255))))
-
-    # Farolas
-    for i in range(8):
-        a = (i / 8) * math.tau
-        x, z = math.cos(a) * 42, math.sin(a) * 42
-        partes.append(p((3, 2, 3), (x, 3.5, z), "negro"))
-        partes.append(p((1.4, 16, 1.4), (x, 11, z), "negro", sup=LISO))
-        partes.append(p((3.4, 3.4, 3.4), (x, 20, z), "amarillo", sup=LISO,
-                        material=12, extras=luz(2.2, 26)))
+    # Centro elevado con una rampa por cada lado.
+    partes.append(p((36, 4, 36), (0, 12, 0), "marron"))
+    partes.append(p((6, 14, 6), (0, 7, 0), "marron"))
+    for sx, sz in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+        partes.append(p((14 if sz else 26, 1.4, 26 if sz else 14),
+                        (sx * 26, 7.5, sz * 26), "marron",
+                        rot=(18 * sz, 0, -18 * sx)))
+    partes.append(p((5, 5, 5), (0, 17, 0), "amarillo", forma=1, sup=LISO,
+                    material=12, extras=luz(3, 34)))
 
     return {
-        "nombre": "Town Square",
-        "descripcion": "Four shops, a fountain and cobbles. A place to hang around.",
+        "nombre": "Four Corners Arena",
+        "descripcion": "Four identical bases, a raised centre with a ramp from "
+                       "every side, and battlements to hide behind.",
         "partes": partes,
     }
 
 
-MAPAS = [obby_clasico, arena_brickbattle, torre_de_studs, plaza_del_pueblo]
+# ---------------------------------------------------------------------------
+# Una casa en la que se entra de verdad: puerta, ventanas y dos cuartos.
+# ---------------------------------------------------------------------------
+
+def casa():
+    partes = [p((120, 2, 120), (0, 1, 0), "verde oscuro"), spawn((0, 3, 44))]
+
+    for i in range(5):
+        partes.append(p((12, 1, 10), (0, 2.5, 36 - i * 10), "gris"))
+
+    partes.append(p((72, 2, 56), (0, 3, 0), "gris oscuro"))
+    partes.append(p((68, 1, 52), (0, 4.5, 0), "marron", sup=LISO))
+
+    ALTO = 22
+    Y = 4 + ALTO / 2
+
+    partes.append(p((22, ALTO, 2), (-23, Y, 26), "crema", sup=LISO))
+    partes.append(p((22, ALTO, 2), (23, Y, 26), "crema", sup=LISO))
+    partes.append(p((68, 6, 2), (0, 4 + ALTO - 3, 26), "crema", sup=LISO))
+    partes.append(p((68, ALTO, 2), (0, Y, -26), "crema", sup=LISO))
+    partes.append(p((2, ALTO, 54), (-34, Y, 0), "crema", sup=LISO))
+    partes.append(p((2, ALTO, 54), (34, Y, 0), "crema", sup=LISO))
+
+    partes.append(p((2, ALTO, 20), (0, Y, -16), "crema", sup=LISO))
+    partes.append(p((2, ALTO, 20), (0, Y, 16), "crema", sup=LISO))
+
+    for x, z in [(-34, -14), (-34, 14), (34, -14), (34, 14)]:
+        partes.append(p((0.6, 10, 12), (x, 14, z), "crema", sup=LISO, transp=55))
+
+    partes.append(p((10, 16, 0.8), (0, 12, 26), "marron", sup=LISO))
+    partes.append(p((1.4, 1.4, 1.4), (3.5, 12, 25.2), "amarillo", forma=1, sup=LISO))
+
+    for i in range(7):
+        w = 74 - i * 9
+        partes.append(p((w, 2, 58), (0, 4 + ALTO + 1 + i * 2, 0), "burdeos", sup=LISO))
+    partes.append(p((6, 10, 6), (-20, 4 + ALTO + 16, -14), "gris oscuro", sup=LISO))
+
+    partes.append(p((14, 3, 8), (-18, 6, -8), "marron"))
+    partes.append(p((10, 1.2, 6), (16, 6, 8), "marron"))
+    partes.append(p((3, 3, 3), (0, 4 + ALTO - 4, 0), "amarillo", sup=LISO,
+                    material=12, extras=luz(2.6, 34)))
+    partes.append(p((20, 5, 1), (0, 4 + ALTO + 2, 27), "blanco", sup=LISO,
+                    extras=cartel("HOME")))
+
+    return {
+        "nombre": "Cottage",
+        "descripcion": "A house you can walk into: door, windows, two rooms "
+                       "and a pitched roof.",
+        "partes": partes,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Circuito ovalado con quitamiedos, meta y gradas.
+# ---------------------------------------------------------------------------
+
+def circuito():
+    partes = [p((300, 2, 220), (0, 1, 0), "verde oscuro"), spawn((0, 3, 78))]
+
+    RX, RZ, ANCHO, n = 108, 68, 22, 40
+
+    for i in range(n):
+        a = (i / n) * math.tau
+        b = ((i + 1) / n) * math.tau
+        x, z = math.cos(a) * RX, math.sin(a) * RZ
+        x2, z2 = math.cos(b) * RX, math.sin(b) * RZ
+
+        largo = math.sqrt((x2 - x) ** 2 + (z2 - z) ** 2) + 3
+        giro = math.degrees(math.atan2(x2 - x, z2 - z))
+        color = "gris oscuro" if i % 8 < 4 else "gris"
+
+        partes.append(p((ANCHO, 1.4, largo), ((x + x2) / 2, 2.5, (z + z2) / 2),
+                        color, rot=(0, giro, 0), sup=LISO))
+
+        for lado in (1, -1):
+            ox = math.cos(a) * (ANCHO / 2 + 1.5) * lado
+            oz = math.sin(a) * (ANCHO / 2 + 1.5) * lado
+            partes.append(p((1.2, 4, largo),
+                            ((x + x2) / 2 + ox, 4.5, (z + z2) / 2 + oz),
+                            "rojo" if i % 4 < 2 else "blanco",
+                            rot=(0, giro, 0), sup=LISO))
+
+    partes.append(p((ANCHO + 6, 1, 4), (RX, 3.4, 0), "blanco", sup=LISO))
+    partes.append(p((2, 20, 2), (RX - 14, 12, 0), "blanco", sup=LISO))
+    partes.append(p((2, 20, 2), (RX + 14, 12, 0), "blanco", sup=LISO))
+    partes.append(p((30, 5, 1), (RX, 22, 0), "blanco", sup=LISO,
+                    extras=cartel("START / FINISH")))
+
+    for k in range(4):
+        partes.append(p((60, 3, 10), (0, 3 + k * 3, 96 + k * 10), "gris"))
+
+    return {
+        "nombre": "Speedway",
+        "descripcion": "An oval circuit with kerbs and barriers, a start line "
+                       "and a small grandstand.",
+        "partes": partes,
+    }
+
+
+MAPAS = [obby, arena, casa, circuito]
 
 
 # ---------------------------------------------------------------------------

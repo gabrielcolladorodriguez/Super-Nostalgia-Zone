@@ -609,12 +609,14 @@ end
 closeBtn.Activated:Connect(function () setOpen(false) end)
 
 local openBtn = new("TextButton", {
-	Name = "OpenMenu", BackgroundColor3 = FONDO, BorderSizePixel = 1,
-	BorderColor3 = OSCURO, ZIndex = 9, Font = FONT, TextSize = 16,
-	TextColor3 = TEXTO, Text = "Creations", AutoButtonColor = true,
+	Name = "OpenMenu", BackgroundColor3 = ACENTO, BorderSizePixel = 2,
+	BorderColor3 = OSCURO, ZIndex = 9, Font = FONT, TextSize = TOUCH and 24 or 22,
+	TextColor3 = BLANCO, Text = "MENU", AutoButtonColor = true,
 	AnchorPoint = Vector2.new(0.5, 1),
-	Size = UDim2.fromOffset(TOUCH and 150 or 128, TOUCH and 46 or 36),
-	Position = UDim2.new(0.5, 0, 1, -14),
+	-- En tactil se sube del borde: abajo del todo compite con la barra del
+	-- sistema y con el pulgar que sujeta el telefono.
+	Size = UDim2.fromOffset(TOUCH and 190 or 150, TOUCH and 58 or 44),
+	Position = UDim2.new(0.5, 0, 1, TOUCH and -84 or -16),
 }, screen)
 bisel(openBtn, 9)
 
@@ -637,4 +639,7 @@ GuiService:GetPropertyChangedSignal("TopbarInset"):Connect(ajustar)
 ajustar()
 pintarDetalle()
 
-task.delay(1.5, function () setOpen(true) end)
+-- El menu se abre solo al entrar: es lo primero que hay que ver, y quien no
+-- lo quiera lo cierra. Medio segundo de margen para que la interfaz este ya
+-- montada cuando aparezca.
+task.delay(0.5, function () setOpen(true) end)

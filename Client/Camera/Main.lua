@@ -322,13 +322,27 @@ do
 		if flaggedDynamic[input] ~= nil then
 			return flaggedDynamic[input]
 		end
-		
-		if GameSettings.TouchMovementMode ~= Enum.TouchMovementMode.DynamicThumbstick then
+
+		--[[
+			[fork] Aqui estaba el fallo de movil: mover el joystick giraba
+			tambien la camara.
+
+			El original solo respetaba la zona del joystick si
+			GameSettings.TouchMovementMode valia exactamente DynamicThumbstick.
+			Pero el ajuste por defecto del jugador es "Default", que Roblox
+			resuelve a joystick dinamico sin cambiar el valor. Con "Default" la
+			comprobacion fallaba, el dedo sobre el joystick contaba como
+			arrastre de camara, y el personaje andaba mirando a otro lado.
+
+			Ahora manda la existencia del propio marco: si el joystick esta en
+			pantalla, su area no gira la camara, diga lo que diga el ajuste.
+		--]]
+		local df = getDynamicThumbstickFrame()
+
+		if not df then
+			flaggedDynamic[input] = false
 			return false
 		end
-
-		local df = getDynamicThumbstickFrame()
-		if not df then return end
 		
 		local pos = input.Position
 		local p0 = df.AbsolutePosition
