@@ -157,6 +157,12 @@
 			},
 			"CreationStore": {
 				"$path": "Builder/Server/CreationStore.lua"
+			},
+			"LoadLeaderboard": {
+				"$className": "BoolValue",
+				"$properties": {
+					"Value": false
+				}
 			}
 		},
 		"StarterGui": {

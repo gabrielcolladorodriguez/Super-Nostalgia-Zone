@@ -29,6 +29,7 @@ local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 
 local Palette = require(script:WaitForChild("Palette"))
+local Piezas = require(script:WaitForChild("Piezas"))
 local Gizmos = require(script:WaitForChild("Gizmos"))
 local Serializer = require(ReplicatedStorage:WaitForChild("Serializer"))
 
@@ -217,7 +218,7 @@ local function hayHueco(cuantas)
 end
 
 local function nuevaParte()
-	local forma = Palette.FORMAS[estado.forma]
+	local forma = Piezas.FORMAS[estado.forma]
 	local info = Serializer.FORMAS[forma.indice]
 
 	local parte = Instance.new(info.clase)
@@ -381,6 +382,139 @@ local function aplicarASeleccion(fn)
 	return true
 end
 
+
+--------------------------------------------------------------------------------
+-- Prefabricados
+--------------------------------------------------------------------------------
+-- Se montan como partes normales y corrientes: en cuanto caen, el editor ya no
+-- los distingue de nada colocado a mano. Por eso el formato de guardado no
+-- necesita saber que existen.
+
+local function colocarPrefab(prefab)
+	local cuantas = #prefab.partes
+	if not hayHueco(cuantas) then
+		return nil, "no caben mas partes"
+	end
+
+	-- El punto de apoyo se calcula con la pieza mas baja, para que el conjunto
+	-- descanse sobre lo que haya debajo en vez de hundirse.
+	local base = puntoBajoElRaton(Vector3.new(1, 0.1, 1))
+
+	apuntar()
+	local creadas = {}
+
+	for _, def in ipairs(prefab.partes) do
+		local clase = Serializer.FORMAS[def.clase or 0] or Serializer.FORMAS[0]
+		local parte = Instance.new(clase.clase)
+
+		parte.Name = def.nombre
+		parte.Size = def.tam
+		parte.Position = base + def.pos
+		parte.Anchored = true
+		parte.BrickColor = BrickColor.new(def.color or estado.color)
+
+		if def.neon then
+			parte.Material = Enum.Material.Neon
+		else
+			parte.Material = Serializer.MATERIALES[estado.material]
+				or Enum.Material.Plastic
+		end
+
+		if def.transparencia then
+			parte.Transparency = def.transparencia
+		end
+
+		if def.superficie == "Smooth" then
+			parte.TopSurface = Enum.SurfaceType.Smooth
+			parte.BottomSurface = Enum.SurfaceType.Smooth
+		elseif parte:IsA("Part") then
+			parte.TopSurface = Enum.SurfaceType.Studs
+			parte.BottomSurface = Enum.SurfaceType.Inlet
+		end
+
+		if def.luz then
+			local luz = Instance.new("PointLight")
+			luz.Brightness = def.luz.brillo or 2
+			luz.Range = def.luz.alcance or 20
+			luz.Color = parte.BrickColor.Color
+			luz.Parent = parte
+		end
+
+		if def.cartel then
+			Extras.Cartel(parte, def.cartel, Enum.NormalId.Front)
+		end
+
+		parte.Parent = obra
+		table.insert(creadas, parte)
+	end
+
+	seleccionar(creadas, false)
+	return creadas
+end
+
+--------------------------------------------------------------------------------
+-- Numeros exactos
+--------------------------------------------------------------------------------
+
+--- Aplica lo escrito en los tres campos de una fila. Un campo vacio o con
+--- basura se deja como estaba: escribir mal una casilla no debe mover nada.
+local function aplicarTransform(clave, cajas)
+	if #estado.seleccion == 0 then
+		return false
+	end
+
+	local valores = {}
+	local alguno = false
+
+	for i = 1, 3 do
+		local n = tonumber(cajas[i].Text)
+		if n and n == n and math.abs(n) < 1e6 then
+			valores[i] = n
+			alguno = true
+		end
+	end
+
+	if not alguno then
+		return false
+	end
+
+	apuntar()
+
+	for _, parte in ipairs(estado.seleccion) do
+		if clave == "pos" then
+			local p = parte.Position
+			parte.Position = Vector3.new(valores[1] or p.X, valores[2] or p.Y,
+			                             valores[3] or p.Z)
+		elseif clave == "tam" then
+			local t = parte.Size
+			parte.Size = Vector3.new(
+				math.max(0.05, valores[1] or t.X),
+				math.max(0.05, valores[2] or t.Y),
+				math.max(0.05, valores[3] or t.Z))
+		elseif clave == "rot" then
+			local rx, ry, rz = parte.CFrame:ToOrientation()
+			parte.CFrame = CFrame.new(parte.Position)
+				* CFrame.fromOrientation(
+					math.rad(valores[1] or math.deg(rx)),
+					math.rad(valores[2] or math.deg(ry)),
+					math.rad(valores[3] or math.deg(rz)))
+		end
+	end
+
+	pintarSeleccion()
+	return true
+end
+
+local function seleccionarTodo()
+	local todas = {}
+	for _, d in ipairs(obra:GetDescendants()) do
+		if d:IsA("BasePart") then
+			table.insert(todas, d)
+		end
+	end
+	seleccionar(todas, false)
+end
+
 --------------------------------------------------------------------------------
 -- Camara
 --------------------------------------------------------------------------------
@@ -482,6 +616,9 @@ local api = {
 
 	contarPartes = contarPartes,
 	colocar = colocar,
+	colocarPrefab = colocarPrefab,
+	aplicarTransform = aplicarTransform,
+	seleccionarTodo = seleccionarTodo,
 	borrar = borrarSeleccion,
 	duplicar = duplicarSeleccion,
 	aplicar = aplicarASeleccion,
